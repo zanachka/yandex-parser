@@ -137,6 +137,7 @@ class YandexParser(object):
 
         return {
             'url': url_image,
+            'form_action': form.action,
             'form_data': form_data,
         }
 
