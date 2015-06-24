@@ -10,7 +10,7 @@ def release():
         version[-1] = str(int(version[-1]) + 1)
         new_version = '.'.join(version)
         local("sed -isetup.py 's/VERSION =.*/VERSION = \"{0}\"/g' setup.py".format(new_version))
-        local('git commit -am "new version {}"'.format(new_version))
+        local('git commit -am "new version {0}"'.format(new_version))
         local('git tag -a v{0} -m \'new version {0}\''.format(new_version))
         local('git push origin master --tags')
     local("python setup.py register")
