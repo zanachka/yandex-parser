@@ -33,7 +33,13 @@ class YandexParser(object):
         
         return {'pc': pagecount, 'sn': snippets}
 
+    def pagination_exists(self):
+        return '<span class="pager__group">' in self.content
+
     def get_pagecount(self):
+        if self.is_not_found():
+            return 0
+
         match = self.patterns['pagecount'].match(self.content)
         if not match:
             return

@@ -64,6 +64,16 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
         self.assertEquals(parser.get_region_code(), 213)
 
+    def test_pagination_exists_1(self):
+        html = self.get_data('serp_1.html')
+        parser = YandexParser(html)
+        self.assertTrue(parser.pagination_exists())
+
+    def test_pagination_exists_2(self):
+        html = self.get_data('serp_3.html')
+        parser = YandexParser(html)
+        self.assertFalse(parser.pagination_exists())
+
     def test_pagecount_1(self):
         html = self.get_data('serp_1.html')
         parser = YandexParser(html)
