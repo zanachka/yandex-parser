@@ -37,6 +37,6 @@ class YandexBarParser(object):
         result = ''
         match_part = re.findall(regexp, response, re.DOTALL | re.IGNORECASE | re.UNICODE | re.MULTILINE)
         if match_part:
-            result = match_part[0].strip()
+            result = str(match_part[0].strip())
         return result
         
