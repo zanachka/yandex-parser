@@ -105,14 +105,14 @@ class YandexParser(object):
             }
 
             if 't' in self.snippet_fileds:
-                snippet['t'] = str(link.text_content())
+                snippet['t'] = unicode(link.text_content())
             if 's' in self.snippet_fileds:
                 children = sn_div.getchildren()
                 if len(children) == 2:
                     decr_div = children[1] 
                 else:
                     decr_div = children[2] 
-                snippet['s'] = str(decr_div.text_content())
+                snippet['s'] = unicode(decr_div.text_content())
             
             snippets.append(snippet)
 
