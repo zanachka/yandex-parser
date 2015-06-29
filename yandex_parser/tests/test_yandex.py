@@ -12,7 +12,7 @@ class YandexParserTestCase(YandexParserTests):
         html = self.get_data('captcha_1.html')
         parser = YandexParser(html)
         captcha_data = parser.get_captcha_data()
-        
+         
         exp = {
             'url': u'http://yandex.ru/captchaimg?aHR0cDovL3MuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT1kM1I3SDhDRGlTT3RlVzNvYk9zcFo4bk1lc0NOUjhXQw,,_0/1435077202/853e18711cde74266e45da1315dacee2_2bf39001bd241d1c6539b7db6a0464ad', 
             'form_action': '/checkcaptcha',
@@ -22,8 +22,8 @@ class YandexParserTestCase(YandexParserTests):
             }
         }
         self.assertEquals(captcha_data, exp)
-
-    
+ 
+     
     def test_bar_info_1(self):
         html = self.get_data('bar_info_1.xml')
         parser = YandexBarParser(html)
@@ -41,7 +41,7 @@ class YandexParserTestCase(YandexParserTests):
         bar = parser.get_bar_info()
         for k, v in exp.iteritems():
             self.assertEquals(bar[k], v)
-
+ 
     def test_suggest_1(self):
         html = self.get_data('suggest_1.html')
         parser = YandexSuggestParser(html)
@@ -59,79 +59,101 @@ class YandexParserTestCase(YandexParserTests):
         ]
         suggest = parser.get_suggest()
         self.assertEquals(suggest, exp)
-        
+         
     def test_region_code_1(self):
         html = self.get_data('region_code_1.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_region_code(), 213)
-
+ 
     def test_pagination_exists_1(self):
         html = self.get_data('serp_1.html')
         parser = YandexParser(html)
         self.assertTrue(parser.pagination_exists())
-
+ 
     def test_pagination_exists_2(self):
         html = self.get_data('serp_3.html')
         parser = YandexParser(html)
         self.assertFalse(parser.pagination_exists())
-
+ 
     def test_pagecount_1(self):
         html = self.get_data('serp_1.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_pagecount(), 124000000)
-
+ 
     def test_pagecount_2(self):
         html = self.get_data('serp_2.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_pagecount(), 354000)
-
+ 
     def test_pagecount_3(self):
         html = self.get_data('serp_3.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_pagecount(), 22)
-
+ 
     def test_not_found(self):
         html = self.get_data('not_found_1.html')
         parser = YandexParser(html)
         self.assertTrue(parser.is_not_found())
-    
+     
     def test_serp_1(self):
         html = self.get_data('serp_1.html')
-          
+           
         parser = YandexParser(html)
         serp = parser.get_serp()
-          
+           
         self.assertFalse(parser.is_not_found())
-          
+           
         self.assertEquals(serp['pc'], 124000000)
         self.assertEquals(len(serp['sn']), 51)
-         
+          
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_1_snippets[i]
 #             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-            
+             
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
             self.assertEquals(sn['s'], exp_sn[3])
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
-
+ 
     def test_serp_2(self):
         html = self.get_data('serp_2.html')
-          
+           
         parser = YandexParser(html)
         serp = parser.get_serp()
-          
+           
         self.assertFalse(parser.is_not_found())
-          
+           
         self.assertEquals(serp['pc'], 354000)
         self.assertEquals(len(serp['sn']), 50)
-         
+          
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_2_snippets[i]
 #             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-            
+             
+            self.assertEquals(sn['p'], exp_sn[0])
+            self.assertEquals(sn['u'], exp_sn[1])
+            self.assertEquals(sn['t'], exp_sn[2])
+            self.assertEquals(sn['s'], exp_sn[3])
+            self.assertEquals(sn['m'], exp_sn[4])
+            self.assertEquals(sn['i'], exp_sn[5])
+ 
+    def test_serp_3(self):
+        html = self.get_data('serp_3.html')
+           
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+           
+        self.assertFalse(parser.is_not_found())
+           
+        self.assertEquals(serp['pc'], 22)
+        self.assertEquals(len(serp['sn']), 15)
+          
+        for i, sn in enumerate(serp['sn']):
+            exp_sn = serp_3_snippets[i]
+#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
+             
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
@@ -139,20 +161,20 @@ class YandexParserTestCase(YandexParserTests):
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
 
-    def test_serp_3(self):
-        html = self.get_data('serp_3.html')
+    def test_serp_4(self):
+        html = self.get_data('serp_4.html')
           
         parser = YandexParser(html)
         serp = parser.get_serp()
           
         self.assertFalse(parser.is_not_found())
           
-        self.assertEquals(serp['pc'], 22)
-        self.assertEquals(len(serp['sn']), 15)
+        self.assertEquals(serp['pc'], 159000)
+        self.assertEquals(len(serp['sn']), 50)
          
         for i, sn in enumerate(serp['sn']):
-            exp_sn = serp_3_snippets[i]
-#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
+            exp_sn = serp_4_snippets[i]
+#            print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
             
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
@@ -292,6 +314,60 @@ serp_3_snippets = [
     (14, "http://www.downanddirtyobstaclerace.com/wp-content/uploads/MIA-5K_AgeGroup.pdf", u"Cobra Kai Cobra Kai", u"Посмотреть", False, False),
     (15, "http://www.attachmentnewengland.com/FamilyAdventureCamp.mht", u"attachmentnewengland.com/FamilyAdventureCamp.mht", u"...KG0AdV42j+etWEGw3WZPugOt0FuFCpE6RCSqovLVIlstpz8KOYEqA9k9BpuOTJS5aUu3bfqNSm8h.", False, False),
 ]
+
+serp_4_snippets = [
+    (1, "http://www.megatec.ru/?m=60", u"...«Мегатек»), программа для туризма, туроператор...", u"Мастер-Тур:: Программа для туроператоров. ... Мастер-Тур (Компания «Мегатек»), программа для туризма, туроператор, поисковый туризм, скачать программу.", False, False),
+    (2, "http://mastertur62.ru/", u"Турагентство Мастер Тур - горящие туры, дешевые...", u"Мастер-Тур предлагает провести отпуск. в отличных отелях сети MEDPLAYA в Испании. ... «Мастер-Тур» приглашает провести. лето во всероссийском детском. центре Орлёнок.", False, False),
+    (3, "http://tour-master.net/", u"Тур-Мастер | Главная", u"© 2013 Тур-Мастер.", False, False),
+    (4, "http://www.yell.ru/moscow/com/tur-master_9767302/", u"...туроператор Тур-Мастер Новокосино, цены на горящие...", u"Отзывы о турфирме Тур-Мастер, а также контактная информация Тур-Мастер Новокосинская: официальный сайт, адреса офисов, телефоны в справочнике Yell.ru. Оставьте свой отзыв о турагентстве.", False, False),
+    (5, "http://master-tour.kiev.ua/", u"Мастер-тур | ...туризм, спортивный туризм, горящие туры", u"Киев...Подбор тура. Направления, путевки, туры на отдых в ОАЭ, Египет, Грецию, автобусные туры в Европу, Чехия, Польша. Горящие туры Киев .", False, False),
+    (6, "http://www.mtspb.ru/", u"Горящие туры из Санкт-Петербурга, магазин... - Мастер Тур", u"Турфирма \"Мастер Тур\" предлагает туры и горящие путевки в теплые страны: Египет, Турция, Доминикана, Греция, Тайланд, ОАЭ и другие. ... Магазин горящих путевок и туров в Санкт-Петербурге.", False, False),
+    (7, "http://mastertura.com.ua/", u"Мастер тура - Сообщество профессионалов тур бизнеса", u"Проект МастерLike от Мастер тура.", False, False),
+    (8, "http://master-tour.pro/", u"Турниры по настольному теннису «Мастер-Тур»", u"Турниры по настольному теннису «Мастер-Тур». Победитель 110-го турнира по настольному теннису серии Мастер-Тур среди женщин Светлана Крекина. Поздравляем !!!", False, False),
+    (9, "http://www.tourshow.ru/mfirms/msk/7166.html", u"Турфирма Мастер-Тур (Москва) - карточка турфирмы...", u"Доверив компании «Мастер-тур» организацию Вашего отдыха, или деловей поездки, Вы получите отличный результат, освободив себя от забот, и Вам останется только наслаждаться ... Мы сотрудничаем с надежными и крупными туроператорами.", False, False),
+    (10, "http://www.WebStarStudio.com/turizm/master_tur.htm", u"Мастер Тур", u"Добрый день. Интирессует цена программы Мастер тур или Самотур. Роман Елькин 02 Фев 2012, 20:31. ... Добрый день! Кде можно купить программу мастер тур для тур агентов и туроператоров в Казахстане?", False, False),
+    (11, "http://turmir.com/firms/firm_3690.html", u"Мастер-Тур, Туроператор Мастер-Тур, Туроператор...", u"Туроператор Мастер-Тур. Украина. Киев. ... Мастер-тур один из ведущих туроператоров г.Киева.Официальный партнер ФК \"Шахтер-Донецк\".Все больше людей, доверевших свой отдых нам, становятся нашими постоянными клиентами.Мы...", False, False),
+    (12, "http://firms.turizm.ru/agency/master_tur1/15096/", u"Турфирма Мастер тур (город Ярославль) - телефон, адрес...", u"Здраствуйте. От турфирмы \"Мастер-тур\" езжу уже больше 8 лет. Фирма предлагает обширный выбор туров и разных спецпредложений,но мои предпочтения они уже давно знают...", False, False),
+    (13, "http://vk.com/id185193554", u"Мастер Тур | ВКонтакте", u"Мастер Тур. Эгейское побережье турции!!! ДИДИМ ОТЕЛЬ GARDEN OF SUN HOTEL 5* ВСЁ ВКЛЮЧЕНО ВЫЛЕТ 8 ИЮНЯ НА 8 ДНЕЙ/7 НОЧЕЙ 41 000 рублей на двоих с учётом топливного сбора.", False, False),
+    (14, "http://pegast.ru/samo5/cl_wizard", u"Мастер туров Pegasys - Pegas Touristik", u"Заявка, оформленная через мастер туров, не является черновиком и после сохранения сразу направляется на рассмотрение поставщикам услуг.", False, False),
+    (15, "http://www.StudFiles.ru/preview/400060/", u"Программный комплекс Мастер Тур", u"Особенность и уникальность ПК \"Мастер-Тур\" - это гибкость в настройках, которая позволяет работать как многопрофильным туроператорам по разным направлениям, так и операторам работающих с индивидуальными туристами...", False, False),
+    (16, "https://www.facebook.com/btmasterturru", u"Мастер Тур | Facebook", u"всем привет мы уже готовимся к новому сезону сегодня пришли с печати наши брошуры скоро на нашем сайт появяться новые программы и даты туров25.06.2015", False, False),
+    (17, "http://rubrikator.org/russia/yekaterinburg/master-tur", u"Мастер Тур — Екатеринбург, Сакко и Ванцетти...", u"Мастер Тур. Туристическая фирма. ТЕЛЕФОН. ... В других городах: Мастер-тур в Перми, Мастер-Тур в Нижнем Новгороде, Мастер-тур в Ярославле.", False, False),
+    (18, "http://turbiz.turistua.com/firm/master-tur.htm", u"Мастер-тур - Турфирмы и турагенства // Каталог...", u"ООО \"Мастер-тур\" - надежный туроператор, который находится на туристическом рынке более 14 лет. Мы предлагаем туры в различные страны мира (Австрия, Испания, Кипр, Греция, Франция, Чехия, Польша, Словакия, Черногория, Египет, Турция, Тунис...", False, False),
+    (19, "http://ryazan.turizmik.ru/firm/master-tur-1094207/", u"Мастер тур - туристические агентства - Рязань, Костычева, 2", u"Мастер тур, туристическое агентство. Рейтинг. Категория.", False, False),
+    (20, "http://www.spr.ru/novokosino/tur-master-1015986.html", u"ТУР-МАСТЕР: адрес, телефон, сайт | авиа...", u"ТУР-МАСТЕР в Москве и области (телефон, адрес, сайт, отзывы о ТУР-МАСТЕР) - страница на SPR. ... Организация \"ТУР-МАСТЕР\" расположена в разделе \"Авиабилеты и ж/д билеты в авиакассах и железнодорожных кассах\".", False, False),
+    (21, "/search/infected?url=http%3A%2F%2Fwww.1-tur.ru%2F&lang=ru&fmode=inject&tld=ru&la=1433189248&text=1-tur.ru%20%D0%A2%D1%83%D1%80%D1%86%D0%B8%D1%8F%2C%20%D0%BE%D1%82%D0%B4%D1%8B%D1%85%20%D0%B2%20%D0%A2%D1%83%D1%80%D1%86%D0%B8%D0%B8%2C%20%D1%86%D0%B5%D0%BD%D1%8B%20%D0%BD%D0%B0%20%D0%B3%D0%BE%D1%80%D1%8F%D1%89%D0%B8%D0%B5%20%D1%82%D1%83%D1%80%D1%8B%20%D0%B2%20%D0%A2%D1%83%D1%80%D1%86%D0%B8%D1%8E%20%D0%BE%D1%82%20%D1%82%D1%83%D1%80%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B%20%7C%20%D0%A2%D1%83%D1%80-%D0%9C%D0%B0%D1%81%D1%82%D0%B5%D1%80&l10n=ru&mime=html", u"...туры в Турцию от туроператоров Москвы | Тур-Мастер", u"Подбор туров в Египет, Тунис, Турцию, на Кипр и в др. страны, речных круизов по России. Горящие путевки. Онлайн-бронирование туров. Туристический форум.", False, False),
+    (22, "http://www.infoyar.ru/246m1.htm", u"Мастер-тур > г. Ярославль, ул. Свободы, 41, оф. 27", u"Мастер-тур тел.: +7 (4852) 25-98-03 написать письмо, схема проезда.", False, False),
+    (23, "http://nnov-gorod.ru/firmy-Novgoroda/master-tur.html", u"туристическое агентство Мастер-Тур в Н Новгороде...", u"Время работы туристического агентства Мастер-Тур в Нижнем Новгороде и адрес на электронной карте города, схему проезда до туристического агентства можно посмотреть по карте, кликнув на адрес.", False, False),
+    (24, "http://www.turpravda.ua/%D0%A2%D1%83%D1%80%D1%84%D0%B8%D1%80%D0%BC%D1%8B/%D0%9C%D0%90%D0%A1%D0%A2%D0%95%D0%A0-%D0%A2%D0%A3%D0%A0-2318/", u"Турагентство МАСТЕР-ТУР (Черкассы): отзывы туристов...", u"Отзывы о турфирме МАСТЕР-ТУР (Черкассы). Рейтинг турфирмы — 10. ... Отзывы о турфирме мастер-тур.", False, False),
+    (25, "http://gmstar.ru/moscow/1-386967-tur-master.html", u"Тур-Мастер: Москва, метро Чкаловская, Курская, Курская....", u"Основным направлением деятельности «Тур-Мастер» является массовый туризм и соответствующие туристические направления, к которым можно отнести Турцию, Кипр, Египет, Испанию, Италию, ОАЭ, Таиланд и многие другие страны.", False, False),
+    (26, "http://clavistour.ru/it-specialist-master-tur/", u"IT-специалист по программе Мастер-Тур | Клавис Тур", u"IT-специалист по программе Мастер-Тур. ... Тестирование обновлений версий ПК «Мастер-Тур», в том числе модулей «Мастер-Финансы», «Мастер-Агент», «Мастер-Web» и др.", False, False),
+    (27, "http://www.zelsoft.ru/products/mtplugins", u"...модули для программного комплекса Мастер-Тур", u"Позволяет загружать в Мастер-Тур цены на услуги проживания в отеле, а также цены на дополнительные услуги в отеле, предоставляемые партнерами в любом ... Сервис может быть подключен с веб-сайту туроператора или к внешним поисковым системам.", False, False),
+    (28, "http://www.rasprodaga.ru/company/tur_master/", u"ТУР МАСТЕР в Москве: все распродажи, акции и скидки...", u"Фирма ТУР МАСТЕР в Москве предлагает товары: отдых и развлечения, туры. ... Компания ТУР-МАСТЕР существует с 2001 года. Профиль компании - массовый туризм.", False, False),
+    (29, "http://www.plan1.ru/moscow/section/mebel/tur_master-59316", u"Тур-мастер у м. Новогиреево: адрес, телефон, сайт - 59316", u"г. Москва, Новокосинская ул., 23.", False, False),
+    (30, "http://masterturov.ru/", u"masterturov.ru", u"", False, False),
+    (31, "http://uabrand.com/kiev/master-tur-ul-fedorova-1/", u"Мастер-тур - Киев, ул. Федорова, 1 - Туристические...", u"Мастер-тур. Мы - \"профессиональная независимая туристическая фирма\", которая работает для клиента (туриста).", False, False),
+    (32, "http://www.tury62.ru/turagentstva/:master-tur-turisticheskoe-agentstvo", u"«Мастер-тур», туристическое агентство - Туристический...", u"Туры в любую точку мира, оформление шенгенских виз, продажа авиа-ж/д билетов, бронирование отелей. ... «Мастер-тур», туристическое агентство. Адрес: г. Рязань, ул. Соборная, д. 21.", False, False),
+    (33, "http://www.clubcrocodile.ru/blogposts/post_576", u"Клуб дайверов «Крокодил» — ...1tur - Блог - Тур-Мастер", u"«Тур-Мастер» работает – Вы отдыхаете! ... Ключевые слова: туры в турцию, отдых в ОАЭ, горящие туры в Египет, молодежный отдых на Кипре.", False, False),
+    (34, "http://Skidka-NNovgorod.ru/companiya/master-tur.html", u"Мастер-Тур в Нижнем Новгороде: отзывы, адрес, телефон...", u"Отзывы для компании «Мастер-Тур», содержащие лишь восторженно-положительный (\"Лучший магазин! Лучшие цены!\") или отрицательный тон текста, публиковаться на сайте «Скидка-Нижний Новгород» не будут.", False, False),
+    (35, "http://xn----7sbauny0aebgfgdog.xn--p1ai/", u"тарифмастер-тур.рф", u"", False, False),
+    (36, "http://www.rest-portal.ru/firm/337", u"Турагентство «Мастер-ТУР» в Рязани | REST-PORTAL.RU", u"Турагентство «Мастер-ТУР» в Рязани | REST-PORTAL.RU в Рязани. Отзывы клиентов, новости и информация об акциях. ... Горящий тур в Тайланд на 2 декабря (Пхукет3*) на 9 ночей .На двоих 41300!!!", False, False),
+    (37, "http://medunivers.h1.ru/imit/m_tour.htm", u"Мастер-тур", u"Мастер-тур. Задачи автоматизации компании встают с момента переезда в новый офис или с момента, когда возможностей существующих коммуникаций становится недостаточно для эффективной работы.", False, False),
+    (38, "http://spb.blizko.ru/firms/11638603", u"Турагентство Мастер-Тур – г Санкт-Петербург, ул. Ефимова...", u"Турагентство Мастер-Тур в справочнике BLIZKO.ru. Туристические фирмы - отдых за границей. Новый год за границей. ... Все новости. Отзывы о компании Мастер-Тур. Добавить отзыв.", False, False),
+    (39, "http://master-tur72.ru/", u"Мастер-Тур - Главная", u"Турагентство Тюмени - поиск туров, горящие туры из Тюмени, Екатеринбурга, Челябинска, Москвы.", False, False),
+    (40, "http://MountainAltai.ru/category/chemalskii_raion/mastertur.html", u"Горный Алтай : Чемальский район : Мастер-тур", u"Туры в Горный Алтай. Республика Алтай отдых. Горный Алтай тур. Базы Горного Алтая.", False, False),
+    (41, "http://moscowgid.net/%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B/%D1%82%D1%83%D1%80%D1%84%D0%B8%D1%80%D0%BC%D0%B0_%D0%A2%D1%83%D1%80-%D0%9C%D0%B0%D1%81%D1%82%D0%B5%D1%80", u"туристическое агентство Тур-Мастер в Москве, построить...", u"Турагентство Тур-Мастер г Москва. Карточка организации «Тур-Мастер, туристическое агентство».", False, False),
+    (42, "http://master-tour.all.biz/", u"Мастер тур, ООО на All.biz - Киев (Украина) - Товары...", u"Мастер тур, ООО предлагает свои товары и услуги на All.biz. Витрина товаров (услуг) Мастер тур, ООО, продажа оптом и в розницу, информация о компании.", False, False),
+    (43, "http://www.zabron.ru/turfirms/msk/master-tur.html", u"Турфирма Мастер-Тур Москва. Отзывы о турфирме...", u"Мастер-Тур. Мы можем предложить Вам туры на любой вкус. Семейный отдых на море или отдых на песчаных пляжах, лечебные туры или поездки на горнолыжные курорты, оздоровительный и развлекательный отдых в Подмосковье .", False, False),
+    (44, "http://naydi-magazin.ru/catalog/sport_ohota_turizm/mastertur", u"Мастер-Тур : Спорт, охота, туризм : Магазины", u"В пакете предложений туристической компании “Мастер-Тур”- экскурсионные и горнолыжные туры, отдых на море, озерах, термальных источниках, морские путешествия, обучающие поездки и бизнес-туры...", False, False),
+    (45, "http://www.smtur.ru/", u"...ТУР Турагентство Шоу Мастер Тур в Орле.Турфирма...", u"Туристическая фирма Шоу Мастер Тур в Орле Туры в Орле , Горчие туры в Орле, туристические агентства города, туризм в Орле? Куда поехать Зимой. О туристических компаниях Орла.", False, False),
+    (46, "http://www.youtube.com/watch?v=F6ZQf3oDxGc", u"Оформление клиентов Мастер-Тур - YouTube", u"Смотреть4:26youtube.comСохранённая копияПоказать ещё с сайтаПожаловатьсяTravel, master-tour. 02 апреля 2008·3 тыс. просмотров", False, False),
+    (47, "http://rumb.ru/travel_agency/37.html", u"Турфирма Мастер-Тур, Санкт Петербург. Туры из Санкт...", u"RUMB.RU – предложение туров от фирмы . А также, огромный выбор туров в любые страны от турфирм Санкт Петербурга. ГОРЯЩИЕ ТУРЫ. Подробная информация по странам и отелям. Поиск попутчиков, пары в тур.", False, False),
+    (48, "http://yar.spravker.ru/turfirmy/master-tur.htm", u"Мастер тур в Ярославле", u"Мастер тур. Контактная информация: Адрес", False, False),
+    (49, "http://tiptu.ru/ta/master-tur.html", u"Турагентство Мастер-Тур", u"Мастер-Тур. тел (812)335-55-96. www mtspb.ru.", False, False),
+    (50, "http://www.littleone.ru/catalog/travel/travel/1300004171", u"МАСТЕР-ТУР (Центральный район) - отзывы", u"МАСТЕР-ТУР (Центральный район) - отзывы. Район: Центральный Телефон: (812) 764-01-97 Адрес: Кузнечный переулок, д. 4 Веб-сайт: www.mtspb.ru.", False, False),                   
+]
+
 
 if __name__ == '__main__':
     unittest.main()

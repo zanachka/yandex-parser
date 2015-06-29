@@ -67,9 +67,22 @@ class YandexParser(object):
             if 'serp-adv' in sn.attrib['class']:
                 #реклама
                 continue
-            
+
+
             sn_div = sn.find('div')
-            link = sn_div.find('h2').find('a')
+            h2 = None
+            while True:
+                h2 = sn_div.find('h2')
+                if h2 is not None:
+                    break
+                else:
+                    div = sn_div.find('div')
+                    if div is None: 
+                        raise Exception('parse error')
+                    
+                    sn_div = div 
+            
+            link = h2.find('a')
             url = link.attrib['href']
 
             is_map = False
@@ -93,7 +106,7 @@ class YandexParser(object):
                 domain = get_full_domain_without_scheme(url)
             except UnicodeError as e:
                 raise e
-            
+
             snippet = {
                 'd': domain,
                 'p': position,
