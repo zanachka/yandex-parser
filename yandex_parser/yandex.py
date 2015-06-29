@@ -13,7 +13,7 @@ class YandexParser(object):
 
     patterns = {
         'pagecount': re.compile(u'.*?found"\:"&mdash;&nbsp;(.*?)отв', params_regexr),
-        'infected': re.compile(u'infected[^$]+url=([^&]+)&amp;fmode', params_regexr),
+        'infected': re.compile(u'/search/infected\?url=(.*?)&', params_regexr),
         'captcha': re.compile(u'<img class="image form__captcha".*?src=\"([^\"]+)\"', params_regexr),
     }
 
@@ -97,9 +97,9 @@ class YandexParser(object):
 
             infected = False
             if 'infected' in url:
-                match_url_infected = self.patterns['infected'].findall(url)
-                if len(match_url_infected) > 0:
-                    url = urllib.unquote(match_url_infected[0])
+                match_url_infected = self.patterns['infected'].match(url)
+                if match_url_infected:
+                    url = urllib.unquote(match_url_infected.group(1))
                     infected = True
 
             try:
@@ -109,6 +109,7 @@ class YandexParser(object):
 
             snippet = {
                 'd': domain,
+                'domain': domain,
                 'p': position,
                 'u': url, 
                 'm': is_map, 
@@ -154,5 +155,3 @@ class YandexParser(object):
             'form_data': form_data,
         }
 
-        
-        
