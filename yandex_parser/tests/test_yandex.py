@@ -12,7 +12,7 @@ class YandexParserTestCase(YandexParserTests):
         html = self.get_data('captcha_1.html')
         parser = YandexParser(html)
         captcha_data = parser.get_captcha_data()
-         
+           
         exp = {
             'url': u'http://yandex.ru/captchaimg?aHR0cDovL3MuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT1kM1I3SDhDRGlTT3RlVzNvYk9zcFo4bk1lc0NOUjhXQw,,_0/1435077202/853e18711cde74266e45da1315dacee2_2bf39001bd241d1c6539b7db6a0464ad', 
             'form_action': '/checkcaptcha',
@@ -22,8 +22,8 @@ class YandexParserTestCase(YandexParserTests):
             }
         }
         self.assertEquals(captcha_data, exp)
- 
-     
+   
+       
     def test_bar_info_1(self):
         html = self.get_data('bar_info_1.xml')
         parser = YandexBarParser(html)
@@ -41,7 +41,7 @@ class YandexParserTestCase(YandexParserTests):
         bar = parser.get_bar_info()
         for k, v in exp.iteritems():
             self.assertEquals(bar[k], v)
- 
+   
     def test_suggest_1(self):
         html = self.get_data('suggest_1.html')
         parser = YandexSuggestParser(html)
@@ -59,79 +59,101 @@ class YandexParserTestCase(YandexParserTests):
         ]
         suggest = parser.get_suggest()
         self.assertEquals(suggest, exp)
-         
+           
     def test_region_code_1(self):
         html = self.get_data('region_code_1.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_region_code(), 213)
- 
+   
     def test_pagination_exists_1(self):
         html = self.get_data('serp_1.html')
         parser = YandexParser(html)
         self.assertTrue(parser.pagination_exists())
- 
+   
     def test_pagination_exists_2(self):
         html = self.get_data('serp_3.html')
         parser = YandexParser(html)
         self.assertFalse(parser.pagination_exists())
- 
+   
     def test_pagecount_1(self):
         html = self.get_data('serp_1.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_pagecount(), 124000000)
- 
+   
     def test_pagecount_2(self):
         html = self.get_data('serp_2.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_pagecount(), 354000)
- 
+   
     def test_pagecount_3(self):
         html = self.get_data('serp_3.html')
         parser = YandexParser(html)
         self.assertEquals(parser.get_pagecount(), 22)
- 
+   
     def test_not_found(self):
         html = self.get_data('not_found_1.html')
         parser = YandexParser(html)
         self.assertTrue(parser.is_not_found())
-     
+       
     def test_serp_1(self):
         html = self.get_data('serp_1.html')
-           
+             
         parser = YandexParser(html)
         serp = parser.get_serp()
-           
+             
         self.assertFalse(parser.is_not_found())
-           
+             
         self.assertEquals(serp['pc'], 124000000)
         self.assertEquals(len(serp['sn']), 51)
-          
+            
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_1_snippets[i]
 #             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-             
+               
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
             self.assertEquals(sn['s'], exp_sn[3])
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
- 
+   
     def test_serp_2(self):
         html = self.get_data('serp_2.html')
-           
+             
         parser = YandexParser(html)
         serp = parser.get_serp()
-           
+             
         self.assertFalse(parser.is_not_found())
-           
+             
         self.assertEquals(serp['pc'], 354000)
         self.assertEquals(len(serp['sn']), 50)
-          
+            
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_2_snippets[i]
 #             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
+               
+            self.assertEquals(sn['p'], exp_sn[0])
+            self.assertEquals(sn['u'], exp_sn[1])
+            self.assertEquals(sn['t'], exp_sn[2])
+            self.assertEquals(sn['s'], exp_sn[3])
+            self.assertEquals(sn['m'], exp_sn[4])
+            self.assertEquals(sn['i'], exp_sn[5])
+   
+    def test_serp_3(self):
+        html = self.get_data('serp_3.html')
              
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+             
+        self.assertFalse(parser.is_not_found())
+             
+        self.assertEquals(serp['pc'], 22)
+        self.assertEquals(len(serp['sn']), 15)
+            
+        for i, sn in enumerate(serp['sn']):
+            exp_sn = serp_3_snippets[i]
+#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
+               
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
@@ -139,19 +161,19 @@ class YandexParserTestCase(YandexParserTests):
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
  
-    def test_serp_3(self):
-        html = self.get_data('serp_3.html')
+    def test_serp_4(self):
+        html = self.get_data('serp_4.html')
            
         parser = YandexParser(html)
         serp = parser.get_serp()
            
         self.assertFalse(parser.is_not_found())
            
-        self.assertEquals(serp['pc'], 22)
-        self.assertEquals(len(serp['sn']), 15)
+        self.assertEquals(serp['pc'], 159000)
+        self.assertEquals(len(serp['sn']), 50)
           
         for i, sn in enumerate(serp['sn']):
-            exp_sn = serp_3_snippets[i]
+            exp_sn = serp_4_snippets[i]
 #             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
              
             self.assertEquals(sn['p'], exp_sn[0])
@@ -161,27 +183,28 @@ class YandexParserTestCase(YandexParserTests):
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
 
-    def test_serp_4(self):
-        html = self.get_data('serp_4.html')
-          
+    def test_infected_1(self):
+        html = self.get_data('infected_1.html')
+           
         parser = YandexParser(html)
         serp = parser.get_serp()
-          
+           
         self.assertFalse(parser.is_not_found())
-          
-        self.assertEquals(serp['pc'], 159000)
+           
+        self.assertEquals(serp['pc'], 35000)
         self.assertEquals(len(serp['sn']), 50)
-         
+          
         for i, sn in enumerate(serp['sn']):
-            exp_sn = serp_4_snippets[i]
-#            print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-            
+            exp_sn = infected_1[i]
+#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
+             
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
             self.assertEquals(sn['s'], exp_sn[3])
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
+
 
 #     def test_captcha_found(self):
 #         html = self.get_data('not_found_1.html')
@@ -336,7 +359,7 @@ serp_4_snippets = [
     (18, "http://turbiz.turistua.com/firm/master-tur.htm", u"Мастер-тур - Турфирмы и турагенства // Каталог...", u"ООО \"Мастер-тур\" - надежный туроператор, который находится на туристическом рынке более 14 лет. Мы предлагаем туры в различные страны мира (Австрия, Испания, Кипр, Греция, Франция, Чехия, Польша, Словакия, Черногория, Египет, Турция, Тунис...", False, False),
     (19, "http://ryazan.turizmik.ru/firm/master-tur-1094207/", u"Мастер тур - туристические агентства - Рязань, Костычева, 2", u"Мастер тур, туристическое агентство. Рейтинг. Категория.", False, False),
     (20, "http://www.spr.ru/novokosino/tur-master-1015986.html", u"ТУР-МАСТЕР: адрес, телефон, сайт | авиа...", u"ТУР-МАСТЕР в Москве и области (телефон, адрес, сайт, отзывы о ТУР-МАСТЕР) - страница на SPR. ... Организация \"ТУР-МАСТЕР\" расположена в разделе \"Авиабилеты и ж/д билеты в авиакассах и железнодорожных кассах\".", False, False),
-    (21, "/search/infected?url=http%3A%2F%2Fwww.1-tur.ru%2F&lang=ru&fmode=inject&tld=ru&la=1433189248&text=1-tur.ru%20%D0%A2%D1%83%D1%80%D1%86%D0%B8%D1%8F%2C%20%D0%BE%D1%82%D0%B4%D1%8B%D1%85%20%D0%B2%20%D0%A2%D1%83%D1%80%D1%86%D0%B8%D0%B8%2C%20%D1%86%D0%B5%D0%BD%D1%8B%20%D0%BD%D0%B0%20%D0%B3%D0%BE%D1%80%D1%8F%D1%89%D0%B8%D0%B5%20%D1%82%D1%83%D1%80%D1%8B%20%D0%B2%20%D0%A2%D1%83%D1%80%D1%86%D0%B8%D1%8E%20%D0%BE%D1%82%20%D1%82%D1%83%D1%80%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B%20%7C%20%D0%A2%D1%83%D1%80-%D0%9C%D0%B0%D1%81%D1%82%D0%B5%D1%80&l10n=ru&mime=html", u"...туры в Турцию от туроператоров Москвы | Тур-Мастер", u"Подбор туров в Египет, Тунис, Турцию, на Кипр и в др. страны, речных круизов по России. Горящие путевки. Онлайн-бронирование туров. Туристический форум.", False, False),
+    (21, "http://www.1-tur.ru/", u"...туры в Турцию от туроператоров Москвы | Тур-Мастер", u"Подбор туров в Египет, Тунис, Турцию, на Кипр и в др. страны, речных круизов по России. Горящие путевки. Онлайн-бронирование туров. Туристический форум.", False, True),
     (22, "http://www.infoyar.ru/246m1.htm", u"Мастер-тур > г. Ярославль, ул. Свободы, 41, оф. 27", u"Мастер-тур тел.: +7 (4852) 25-98-03 написать письмо, схема проезда.", False, False),
     (23, "http://nnov-gorod.ru/firmy-Novgoroda/master-tur.html", u"туристическое агентство Мастер-Тур в Н Новгороде...", u"Время работы туристического агентства Мастер-Тур в Нижнем Новгороде и адрес на электронной карте города, схему проезда до туристического агентства можно посмотреть по карте, кликнув на адрес.", False, False),
     (24, "http://www.turpravda.ua/%D0%A2%D1%83%D1%80%D1%84%D0%B8%D1%80%D0%BC%D1%8B/%D0%9C%D0%90%D0%A1%D0%A2%D0%95%D0%A0-%D0%A2%D0%A3%D0%A0-2318/", u"Турагентство МАСТЕР-ТУР (Черкассы): отзывы туристов...", u"Отзывы о турфирме МАСТЕР-ТУР (Черкассы). Рейтинг турфирмы — 10. ... Отзывы о турфирме мастер-тур.", False, False),
@@ -365,9 +388,61 @@ serp_4_snippets = [
     (47, "http://rumb.ru/travel_agency/37.html", u"Турфирма Мастер-Тур, Санкт Петербург. Туры из Санкт...", u"RUMB.RU – предложение туров от фирмы . А также, огромный выбор туров в любые страны от турфирм Санкт Петербурга. ГОРЯЩИЕ ТУРЫ. Подробная информация по странам и отелям. Поиск попутчиков, пары в тур.", False, False),
     (48, "http://yar.spravker.ru/turfirmy/master-tur.htm", u"Мастер тур в Ярославле", u"Мастер тур. Контактная информация: Адрес", False, False),
     (49, "http://tiptu.ru/ta/master-tur.html", u"Турагентство Мастер-Тур", u"Мастер-Тур. тел (812)335-55-96. www mtspb.ru.", False, False),
-    (50, "http://www.littleone.ru/catalog/travel/travel/1300004171", u"МАСТЕР-ТУР (Центральный район) - отзывы", u"МАСТЕР-ТУР (Центральный район) - отзывы. Район: Центральный Телефон: (812) 764-01-97 Адрес: Кузнечный переулок, д. 4 Веб-сайт: www.mtspb.ru.", False, False),                   
+    (50, "http://www.littleone.ru/catalog/travel/travel/1300004171", u"МАСТЕР-ТУР (Центральный район) - отзывы", u"МАСТЕР-ТУР (Центральный район) - отзывы. Район: Центральный Телефон: (812) 764-01-97 Адрес: Кузнечный переулок, д. 4 Веб-сайт: www.mtspb.ru.", False, False),               
 ]
 
+infected_1 = [
+    (1, "https://reg.ru-tld.ru/", u"Система регистрации доменных имен в зонах... - ru-tld.ru", u"ПреимуществаМоментальная регистрация доменов на Ваши данныеАвтонастройка доменов для Google.MailХостинг сайтов CMS: 1С-Битрикс, UMI.CMS, HOSTCMS, Netcat и другие Панель...", False, False),
+    (2, "http://searchengines.guru/showthread.php?t=881842", u"ru-tld.ru: Регистрация и Продление доменов. Супер цены....", u"16 января 2015 Сервис регистрации доменов и хостинга *.ru-tld.ru предлагает Регистрацию и Продление доменов по отличным ценам через разных Регистраторов.Всего 10 сообщений ", False, False),
+    (3, "http://sport-zero.ru/", u"sport-zero.ru/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (4, "http://www.gouskazka.ru/wp-content/uploads/karty/adresa-odji-v-moskve.html", u"...Сервис регистрации доменов и хостинга *.RU-TLD.RU", u"домен vefome.ru зарегистрирован. через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне", False, True),
+    (5, "http://www.donedhardyicing.com/timthumb/aforizmy/raspisanie-392-avtobusa-korolev-moskva.php", u"...Сервис регистрации доменов и хостинга *.RU-TLD.RU", u"домен vefome.ru зарегистрирован. через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне", False, False),
+    (6, "http://enmsk.ru/uploads/tablitsa/aktery-seriala-metod-lavrovoy.html", u"...Сервис регистрации доменов и хостинга *.RU-TLD.RU", u"домен vefome.ru зарегистрирован. через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне", False, False),
+    (7, "http://www.CMSmagazine.ru/clients/92591/", u"Сервис регистрации доменов и хостинга *.RU-TLD.RU...", u"В каталоге проекта: 8 708 веб-студий, 838 CMS, 171 955 сайтов. Регистрация Вход.", False, False),
+    (8, "http://forum.nic.ru/showthread.php?t=9736", u"Партнер ru-tld.ru и недобросовестная конкуренция | Форум", u"31 января 2014 Вверху сайта висит реклама о том, что регистрация в РуЦентре по 80рублей - это реально! и далее идет ссылка на партнера ru-tld.ru.14 марта 2015 Илью знаю очень давно, почти с момента когда он начал заниматься доменами. проблем с ним не когда не было.Всего 6 сообщений ", False, False),
+    (9, "http://saiter.ru/otzyvy/site/privoxy.org.ru/?id=17423", u"privoxy.org.ru отзывы: ...регистрации доменов и хостинга...", u"privoxy.org.ru/ - Сервис регистрации доменов и хостинга *.RU-TLD.RU. Это ваш сайт? ... + rarephones.ru 23 мая 2015 г. Заказывал nokia 7610, пришел годный аппарат в пленках, отличный. по требованию предоставили трэк код для отслеживания, вообщем...", False, False),
+    (10, "http://coins.su/top/content.php?id=185", u"...Сервис регистрации доменов и хостинга *.RU-TLD.RU", u"Title страницы: ukrcoins.ru/ - Сервис регистрации доменов и хостинга *.RU-TLD.RU. Ключевые слова", False, False),
+    (11, "http://hostdb.ru/providers/opinions/id/3367", u"Отзывы о *.RU-TLD.RU.", u"Регистрация хостинг провайдера. ... И еще большой плюс, что через их сервис my.ru-tld.ru я могу продлевать свои домены по оптовым ценам, что для меня очень выгодно.", False, False),
+    (12, "http://domenforum.net/showthread.php?t=178109", u"Регистрация и продление через... | Форум", u" 9 марта 2014 Скидки на регистрацию доменов RU/РФ/SU и 3го уровня в количестве от 1т доменов. 7 апреля 2014 Какие цены на .рф хостинг? Можно ли использовать хостинг для идн.com?Всего более 40 сообщений ", False, False),
+    (13, "http://electrobrand.ru/pic/1202.html", u"...Сервис регистрации доменов и хостинга *.RU-TLD.RU", u"домен www.pankuem.ru зарегистрирован. через сервис регистрации доменов и хостинга *.ru-tld.ru. ... Регистрация доменов в зоне: .RU от 88 до 125 руб.", False, False),
+    (14, "http://hosting101.ru/ru-tld.ru", u"...серверах Ru-tld, обзор провайдера dedicated-хостинга", u"Отзывы о Ru-tld.ru. Гость 05.07.2014 10:29. Интересно, два отзыва с не подтвержденными Доменами на dns-серверах провайдера, а один отзыв вообще о регистрации доменов, да как, регистратор безусловно не плох, а вот как хостинг...", False, False),
+    (15, "http://whois.miraculix.ru/?ajaxreq=srvinfo&host=nob.su", u"www.nob.su/ - Сервис регистрации доменов и хостинга...", u"www.nob.su/ - Сервис регистрации доменов и хостинга *.RU-TLD.RU.", False, False),
+    (16, "http://www.1whois.ru/?ajaxreq=srvinfo&host=youday.ru", u"youday.ru/ - Сервис регистрации доменов и хостинга...", u"youday.ru/ - Сервис регистрации доменов и хостинга *.RU-TLD.RU.", False, False),
+    (17, "http://www.dndialog.com/index.php?showtopic=5767", u"Форум поддержки ru-tld.ru", u" 6 июня 2010 Данный раздел создан для сервиса регистраций доменов ru-tld.ru.23 ноября 2012 1. Регистратор один Reggi.ru, думаю у них на сайте написано о данной услуге 2. nn.ru-tld.ru (Наунет), в сл. году еще добавятся.Всего 7 сообщений ", False, False),
+    (18, "http://2domains.ru/services.php", u"...доменов RU от 90 рублей. Дополнительные сервисы.", u"Регистрация доменов RU и РФ по уникальным ценам! ... Ниже представлены ссылки на дополнительные сервисы, которые мы разработали специально для работы с доменами", False, False),
+    (19, "http://web-russia.ru/services/registratsiya-domenov/", u"Регистрация доменов", u"- Регистрация доменов и хостинг. ... Регистрация доменов. Размещение на хостинге Сайтов Любой Сложности.", False, False),
+    (20, "http://hostline.ru/zona-us.html", u"Доменное имя US. Регистрация домена в зоне US", u"При покупке домена предоставляется хостинг на 1 месяц бесплатно*. ... Регистрация домена в зоне US. Главная Поддержка Домены Зоны доменов Доменное имя US.", False, False),
+    (21, "http://www.hostinger.ru/podarok-domen", u"Подарок от Hostinger - Бесплатная Регистрация Домена", u"Получите бесплатную регистрацию домена (2-го уровня) на один год в зоне .ru. ... Сервисы Хостинг Бесплатный Хостинг VPS Хостинг Веб-Дизайн Бесплатный Домен.", False, False),
+    (22, "http://yapl.ru/rf/%D0%B9%D0%BE%D1%88%D0%BA%D0%B0%D1%80-%D0%B4%D0%B2%D0%B5%D1%80%D0%B8.%D1%80%D1%84/", u"...Сервис регистрации доменов и хостинга *.ru-tld.ru", u"Доменное имя - йошкар-двери.рф. Название сайта - xn----7sbhhgsbi9awe2g.xn--p1ai/ - Сервис регистрации доменов и хостинга *.ru-tld.ru. ... % By submitting a query to RIPN's Whois Service % you agree to abide by the following terms of use: % http...", False, False),
+    (23, "http://help.hc.ru/entry/2630/", u"Раздел помощи — Хостинг-Центр", u"Регистрация доменов и DNS. ... Как добавить домен на хостинг с панелью управления cPanel. Версия для печати. Добавить домен на площадку хостинга возможно двумя способами.", False, False),
+    (24, "http://www.nigma.ru/index.html?sa=braless.ru", u"Нигма-интернет : braless.ru", u"Braless.ru » URL Analysis » Информационная безопасность. К сожалению, на сервисе „Web of Trust” отсутствуют данные о сайте braless.ru и вот почему на данный момент сайт не может ... braless.ru/ - Сервис регистрации доменов и хостинга *.RU-TLD.RU...", False, False),
+    (25, "http://sweb.ru/services/order", u"SpaceWeb | Заказ услуг | Выберите тип хостинга", u"Для услуг регистрации домена, виртуального-, CMS-, VIP- и почтового хостинга аккаунт создается автоматически сразу после заполнения формы.", False, False),
+    (26, "http://keeper3.webmoney.ru/html/hosting.html", u"Хостинг и домены", u"RU-CENTER. Айпи Сервер. ... DNZ. Сервис регистрации доменов и хостинга по лучшим ценам *.ru-tld.ru.", False, False),
+    (27, "http://hosting.agava.ru/faq/general/domain.shtml", u"AGAVA.RU - Часто задаваемые вопросы: домены", u"Описание ответа whois-сервиса для доменов зон .RU и .РФ. ... добавить домен в личном кабинете в разделе \"Добавить услуги\"->\"Регистрация доменного имени без покупки услуг хостинга\".", False, False),
+    (28, "http://hosting-ninja.ru/rating/timeweb/videouroki.html", u"Бесплатные уроки по хостингу Timeweb", u"В 2014 году для регистрации открываются доменные зоны .moscow и .москва. ... Провайдер хостинга Reg.ru для своих клиентов подключил специализированный сервис для ... В этом уроке я расскажу, как привязывается домен к хостингу.", False, False),
+    (29, "https://online.sberbank.ru/", u"Сбербанк Онлайн - Москва", u"Не могу войти. Регистрация. Нужна карта Сбербанка и мобильный телефон. ... Анализируйте свои расходы. Воспользуйтесь сервисом анализа расходов в мобильном приложении Сбербанк Онлайн.", False, False),
+    (30, "http://Timeweb.com/ru/services/domain_registration/", u"...купить доменное имя, регистрация домена и хостинга...", u"Правила регистрации доменов в зоне RU и РФ. ... Название домена или имя пользователя: Сумма, руб: Оплата хостинга. Регистрация / продление домена.", False, False),
+    (31, "http://www.hostland.ru/services/hosting", u"Хостинг тарифы на размещение сайтов, цены на хостинг...", u"Регистрация доменов. ... неограниченно. POP3/IMAP/SMTP Cервисы с шифрованием для работы с почтой. ... Удобные условия оплаты услуг хостинга. Бесплатный перенос сайтов на наш хостинг 4.", False, False),
+    (32, "http://ivaness.ru/page/gde-luchshe-zaregistrirovat-domen", u"Где и как лучше регистрировать домен второго уровня.", u"Если вы зарегистрируете домен через хостинг, а потом ... Цены на регистрацию и продление доменов у них существенно ниже за счет того, что ... Но решение есть и на это - сервис billing.ru-tld.ru (или my.ru-tld.ru), куда можно передать на обслуживание...", False, False),
+    (33, "http://easydomen.ru/", u"EasyDomen - домены .RU/.РФ по 99 рублей. Система...", u"Закажи \"Создание и продвижение сайта под ключ\" и получи Домен .RU/.РФ и хостинг на год бесплатно! Цена: от 5000 руб. ... Моментальная регистрация доменов на Ваши данные.", False, False),
+    (34, "http://ammo1.livejournal.com/437656.html", u"Жизнь, полная впечатлений - Регистрация доменов...", u"Розничные цены на регистрацию и продление доменов .ru и .рф у всех регистраторов составляют около 600 рублей. ... Раньше я не знал всех этих секретов и натолкнулся на маленький дешёвый автоматический сервис регистрации webst.ru.18 ноября 2013", False, False),
+    (35, "https://hosting.reg.ru/web-sites/web-forwarding", u"Переадресация домена / Web-forwarding | REG.RU", u"Мои домены. Хостинг и серверы. ... Облачные сервисы. ... Услуга Переадресации может использоваться при регистрации дополнительного имени для уже существующего web-сайта.", False, False),
+    (36, "http://WebImho.ru/topic/6739/", u"Dedicated сервера и хостинг от сервиса *.ru-tld.ru... | Форум", u"31 августа 2013 *.RU-TLD.RU сообщает о продолжении летней акции по аренде физических серверов Hewlett Packard (HP). 1 сентября 2013 Ну регистрация дешевых доменов это конечно же легче, но пока что полет нормальный ) Если вдруг захотите переехать обращайтесь!Всего более 20 сообщений ", False, False),
+    (37, "http://pdd2007.ru/", u"pdd2007.ru/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (38, "http://www.gazeta.el-school12.ru/", u"www.gazeta.el-school12.ru/ - ...доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (39, "http://www.e-noni.ru/", u"www.e-noni.ru/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (40, "http://www.dobry-svet.ru/", u"www.dobry-svet.ru/ - ...регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (41, "http://www.rv3mav.ru/", u"www.rv3mav.ru/ - ...регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (42, "http://6i.su/", u"6i.su/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (43, "http://stopran.ru/", u"stopran.ru/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (44, "http://tacio.ru/", u"tacio.ru/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (45, "http://s-bean.ru/", u"s-bean.ru/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (46, "http://www.cy-pr.com/forum/f22/t40543/m891384", u"Где лучше зарегистрировать домен и чем отличаются...", u"Где лучше зарегистрировать домен в зоне .ru? Отличаются ли регистраторы чем то, кроме цены? ... Регистрирую именно у регистратора. Мне нравится и хостинг и домены - ну нет претензий.20 июня 2015", False, False),
+    (47, "http://World-Fashion.su/", u"World-Fashion.su", u"Ссылки на страницу содержат: Сервис регистрации доменов и хостинга *.ru-tld.ru....", False, False),
+    (48, "http://69w.ru/", u"69w.ru/ - Сервис регистрации доменов и хостинга...", u"через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне: .RU от 88 руб.", False, False),
+    (49, "http://atamas.ru/language/shema/raspisanie-moskva-astana.php", u"...Сервис регистрации доменов и хостинга *.RU-TLD.RU", u"домен vefome.ru зарегистрирован. через сервис регистрации доменов и хостинга *.ru-tld.ru. Регистрация доменов в зоне", False, False),
+    (50, "http://www.domenus.ru/domain/ru.html", u"Домены. Регистрация доменов в зонах RU...", u"Регистрация доменов в зонах RU, SU. Сервисное обслуживание доменов. ... Скрытие персональных данных: бесплатно. Действующие Сервисы на домене у регистратора Domenus.ru", False, False),
+]
 
 if __name__ == '__main__':
     unittest.main()
