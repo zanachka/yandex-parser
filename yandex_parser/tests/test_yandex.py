@@ -108,8 +108,7 @@ class YandexParserTestCase(YandexParserTests):
             
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_1_snippets[i]
-#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-               
+            # print i, '\n', sn['s'], '\n', exp_sn[3]
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
@@ -130,8 +129,7 @@ class YandexParserTestCase(YandexParserTests):
             
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_2_snippets[i]
-#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-               
+
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
@@ -152,8 +150,7 @@ class YandexParserTestCase(YandexParserTests):
             
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_3_snippets[i]
-#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-               
+
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
@@ -174,8 +171,6 @@ class YandexParserTestCase(YandexParserTests):
           
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_4_snippets[i]
-#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-             
             self.assertEquals(sn['p'], exp_sn[0])
             self.assertEquals(sn['u'], exp_sn[1])
             self.assertEquals(sn['t'], exp_sn[2])
@@ -183,36 +178,15 @@ class YandexParserTestCase(YandexParserTests):
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
 
-    def test_infected_1(self):
-        html = self.get_data('infected_1.html')
+    def test1(self):
+        html = self.get_data('serp_5.html')
            
         parser = YandexParser(html)
         serp = parser.get_serp()
-           
-        self.assertFalse(parser.is_not_found())
-           
-        self.assertEquals(serp['pc'], 35000)
+
+        self.assertEquals(serp['pc'], 290000000)
         self.assertEquals(len(serp['sn']), 50)
-          
-        for i, sn in enumerate(serp['sn']):
-            exp_sn = infected_1[i]
-#             print '({}, "{}", u"{}", u"{}", {}, {}),'.format(sn['p'], sn['u'], sn['t'].replace('"', '\\"'), sn['s'].replace('"', '\\"'), sn['m'], sn['i'])
-             
-            self.assertEquals(sn['p'], exp_sn[0])
-            self.assertEquals(sn['u'], exp_sn[1])
-            self.assertEquals(sn['t'], exp_sn[2])
-            self.assertEquals(sn['s'], exp_sn[3])
-            self.assertEquals(sn['m'], exp_sn[4])
-            self.assertEquals(sn['i'], exp_sn[5])
 
-
-#     def test_captcha_found(self):
-#         html = self.get_data('not_found_1.html')
-#         self.assertTrue(YandexParser(html).is_not_found())
-# 
-#     def test_blocked(self):
-#         pass
-# 
 serp_1_snippets = [
     (1, "http://www.okna.ru/", u"\"Kaleva\" - продажа и установка пластиковых окон", u"Информация о фирме и услугах: продажа и установка пластиковых окон и дверей, остекление балконов и лоджий. Фотографии и описания типов окон. Оконный калькулятор on-line. Цены. Адреса магазинов.", False, False),
     (2, "http://www.FabrikaOkon.ru/", u"\"Фабрика окон\" - изготовление пластиковых окон", u"Производство и установка плаcтиковых окон, остекление балконов и лоджий. Цены, калькулятор стоимости. Онлайн-заказ. Возможность покупки в рассрочку. Текущие акции и скидки.", False, False),
@@ -221,8 +195,8 @@ serp_1_snippets = [
     (5, "http://www.ZavodskieOkna.ru/", u"\"Заводские Окна\" - пластиковые окна", u"Производство и установка окон ПВХ из профилей KBE, Rehau, Trocal; остекление балконов и лоджий системами Slidors и Provedal. Цены. Калькулятор расчета стоимости заказа. Онлайн-запись на замер.", False, False),
     (7, "http://www.EuroOkna.ru/", u"Пластиковые окна ПВХ: ...от производителя № 1 в Москве....", u"Готовые пластиковые окна полностью соответствуют международным стандартам и отлично подходят под местные климатические условия.", False, False),
     (8, "http://www.ecookna.ru/", u"\"Экоокна\" - пластиковые окна и двери", u"Производство пластиковых окон и дверей, остекление балконов и лоджий, изготовление зимних садов и др. Онлайн-расчет стоимости окна. Информация о скидках. Адреса офисов продаж.", False, False),
-    (9, "http://sobesednik.ru/proisshestviya/20150623-malchik-vypal-iz-okna-v-voskresenske-iz-za-moskitnoy-setki", u"Мальчик выпал из окна в Воскресенске из-за москитной...", u"3 часа назадsobesednik.ru›proisshestviya/20150623…vypal…okna…Сохранённая копияПожаловатьсяШестилетний мальчик выпал из окна третьего этажа жилого дома в подмосковном Воскресенске. Ребёнок лежит в реанимации.", False, False),
-    (10, "http://maps.yandex.ru/?source=wizbiz-new&text=%D0%BE%D0%BA%D0%BD%D0%B0&sll=37.7818%2C55.6694&maxspn=0.833332%2C0.530138&sspn=0.833332%2C0.530138&sctx=BgAAAAEDowG8BRLkQkCh%2BDHmrtVLQIy61t6nquo%2FOL2L9%2BP24D8CAAAAAQIBAAAAAAAAAAEM6%2BZDiEbZ59UAAAABAACAPw%3D%3D", u"Окна в Москве и области", u"123456789На большую картуКарта загружается   Точное местоположение определить не удалось.", True, False),
+    (9, "http://sobesednik.ru/proisshestviya/20150623-malchik-vypal-iz-okna-v-voskresenske-iz-za-moskitnoy-setki", u"Мальчик выпал из окна в Воскресенске из-за москитной...", u"Шестилетний мальчик выпал из окна третьего этажа жилого дома в подмосковном Воскресенске. Ребёнок лежит в реанимации.", False, False),
+    (10, "http://maps.yandex.ru/?source=wizbiz-new&text=%D0%BE%D0%BA%D0%BD%D0%B0&sll=37.7818%2C55.6694&maxspn=0.833332%2C0.530138&sspn=0.833332%2C0.530138&sctx=BgAAAAEDowG8BRLkQkCh%2BDHmrtVLQIy61t6nquo%2FOL2L9%2BP24D8CAAAAAQIBAAAAAAAAAAEM6%2BZDiEbZ59UAAAABAACAPw%3D%3D", u"Окна в Москве и области", '', True, False),
     (11, "http://www.OknaRosta.ru/", u"\"Окна Роста\" - продажа пластиковых окон", u"Пластиковые окна, алюминиевые конструкции, деревянные окна. Описание продукции. Конструктор окон и расчет стоимости онлайн. Список дилеров. Контакты.", False, False),
     (12, "http://www.Okna-Lider.com/", u"\"Окна лидер\" - пластиковые окна и двери", u"Производство пластиковых окон, входных дверей, металлических решеток на окна, остекление балконов, устройство натяжных потолков. Цены. Условия доставки, оплаты и сроки изготовления. Контакты.", False, False),
     (13, "http://www.Plastok.ru/", u"\"Пласток\" - пластиковые окна и двери", u"Производство и продажа окон, балконных дверей, комплектующих к ним, а также поставки жалюзей и штор, кондиционеров и др. Цены. Адреса мест продаж.", False, False),
@@ -268,7 +242,7 @@ serp_1_snippets = [
 ]
 
 serp_2_snippets = [
-    (1, "http://MosMobi.ru/hummer-h5", u"Hummer H5 Ударопрочный и стильный смартфон... - Москва", u"9 000 руб.MosMobi.ru›Hummer H5Сохранённая копияПоказать ещё с сайтаПожаловатьсяHummer H5 как раз из такой серии. Это новый смартфон, который отлично защищен от повреждений, различных воздействий и излишней влаги.Доставка: Москва от 300 руб.", False, False),
+    (1, "http://MosMobi.ru/hummer-h5", u"Hummer H5 Ударопрочный и стильный смартфон... - Москва", u"Hummer H5 как раз из такой серии. Это новый смартфон, который отлично защищен от повреждений, различных воздействий и излишней влаги.", False, False),
     (2, "http://mtk-telefon.ru/kommunikatory-i-smartfony/zashchishchennye-smartfony/hummer-h5-ip67.html", u"Hummer H5 mtk 6572 - Москва", u"7425 руб. Представляем Вам новинку - защищенный смартфон Hummer H5 со степенью защиты IP68. Кроме его наглядных качеств, телефон имеет неплохую начинку: двух ядерный процессор, хороший экран с размером 4 дюйма...", False, False),
     (3, "http://chinese-cafe.ru/shop/509/desc/hummer-h5", u"Купить Hummer H5, Hummer H5 отзывы, обзор Hummer...", u"Технические характеристики Hummer H5: Новый функциональный пыле-влага-защищённый Android смартфон Hummer H5.", False, False),
     (4, "http://defmob.com/katalog/phones/hummer-h5.html", u"Защищенный водонепроницаемый телефон Hummer...", u"Cмартфон Hummer H5 - это полноценно защищённый телефон, построенный на двухъядерной базе с достаточным объёмом оперативной памяти.", False, False),
@@ -283,12 +257,12 @@ serp_2_snippets = [
     (15, "http://forum.china-iphone.ru/hummer-h5-4g-512-480-800-t33656.html", u"HUMMER H5 4G/512 480*800 • 1 • Forum.China-iPhone.Ru", u"15 апреля 2014 в порядке, я имел полное восстановление HUMMER H5, спасибо специалистов. Posted after 26 minutes 28 seconds: Пожалуйста, поддержите CWM HUMMER H5, СПАСИБО эксперты.Всего 548 сообщений ", False, False),
     (16, "http://www.kit-iphone.ru/shop/shop.product_details/19/flypage.tpl/317.html", u"Hummer H5", u"Hummer H5 – старший брат популярного «неубиваемого» Hummer H11+. ... Сейчас – лучше бы купил два Хаммера, чем Хаммер и ЛендРовер.", False, False),
     (17, "http://kpkmag.ru/goods/Hummer-H5-IP67-MTK6572-2", u"Купить смартфон Hummer H5 IP67 MTK6572 /Цена. Отзывы....", u"Описание Hummer H5 IP67 MTK6572: Hummer H5 - продолжение известной линии пыле-влага-защитных бюджетных смартфонов от Hummer.", False, False),
-    (18, "http://catphone.ru/products/11144635", u"Защищенный смартфон Hummer H5", u"8 999 руб.catphone.ru›Защищенные телефоны›Hummer H5Сохранённая копияПоказать ещё с сайтаПожаловатьсяЗащищенный смартфон Hummer H5. ... Подскажите пожалуйста: Хаммер Н5, и Хаммер Н55 - это разные аппараты, или, всё же это один и тот же??Доставка: Москва от 200 руб.", False, False),
+    (18, "http://catphone.ru/products/11144635", u"Защищенный смартфон Hummer H5", u"Защищенный смартфон Hummer H5. ... Подскажите пожалуйста: Хаммер Н5, и Хаммер Н55 - это разные аппараты, или, всё же это один и тот же??", False, False),
     (19, "http://rugged.com.ua/review/hummer-h5", u"Обзор защищенного смартфона Hummer H5 – RUGGED.", u"Обзор защищенного смартфона Hummer H5. Информация от компании RUGGED. Цены, описание, характеристики, тесты товаров.", False, False),
     (20, "http://moskva.aport.ru/hummer_h5/mod752869", u"Hummer H5: цены в Москве. Купить Хаммер H5 в Москве", u"Hummer H5: цены от 9 390руб. до 9 390руб. В наличии у 1 магазина. Купить Хаммер H5 в Москве. Характеристики, описание, фото.", False, False),
     (21, "http://ru.aliexpress.com/popular/phones-hummer.html", u"телефоны hummer – Купить телефоны hummer недорого...", u"Оригинал Hummer H5 водонепроницаемый телефон смартфон андроид 4.4 IP68 телефон 3 г GPS емкостный экран WCDMA водонепроницаемый а...", False, False),
     (22, "http://tankofon.ru/index.php?route=product/product&product_id=74", u"купить Hummer H5 | Танкофон", u"Производитель: Hummer Модель: Hummer H5 Наличие: Есть в наличии Отзывов написано: 3 Написать.", False, False),
-    (23, "http://sonim-tech.ru/goods.php?id=342", u"Защищенный телефон Защищенный телефон Hummer H5", u"9 900 руб.sonim-tech.ru›goods.php?id=342Сохранённая копияПоказать ещё с сайтаПожаловатьсяПри том, что стоимость нового Hummer H5 осталась практически на уровне предыдущих моделей, разработчики усилили параметры защищенности нового смартфона.Доставка: Москва от 380 руб.", False, False),
+    (23, "http://sonim-tech.ru/goods.php?id=342", u"Защищенный телефон Защищенный телефон Hummer H5", u"При том, что стоимость нового Hummer H5 осталась практически на уровне предыдущих моделей, разработчики усилили параметры защищенности нового смартфона.", False, False),
     (24, "http://magmid.ru/tabletpc/waterproof-dustproof-antishock/Uphone-s930.html", u"Противоударный телефон Hummer H5 на Android; купить...", u"Защищенный противударный, пыленепроницаемый, водонепроницаемый смартфон-телефон Hummer H5 цена на неубиваемый телефон купить в интернет магазине в...", False, False),
     (25, "http://dostavkada.ru/product_10906.html", u"...Hummer h5 (Хамер H5, H55) с доставкой по москве.", u"Hummer H55 (H5) - телефон, который зарекомендовал себя с лучшей стороны. ... Многие родители, купив телефон Хаммер H55 (H5), для своего ребенка, через...", False, False),
     (26, "http://phonempire.ru/goods/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-Hummer-H5", u"Мобильный телефон Hummer H5, купить Мобильный...", u"Hummer H5 как раз из такой серии. Это новый смартфон, который отлично защищен от повреждений, различных воздействий и излишней влаги.", False, False),
@@ -310,7 +284,7 @@ serp_2_snippets = [
     (42, "http://www.minmin.ru/index/good/1473", u"Hummer H5 - Защищённый смартфон", u"Hummer H5– старший брат популярного «неубиваемого» Hummer H11+. Тот же ударопрочный, водонепроницаемый корпус, та же мощная батарея…", False, False),
     (43, "http://www.pleer.ru/_180022_hummer_h5.html", u"Hummer H5 - купить сотовый телефон Хаммер по лучшей...", u"Hummer H5 - это уникальный по общим составляющим смартфон. С одной стороны - это классический бюджетный смартфон на операционной системе Android, однако, снабженный очень неплохими для своей цены характеристиками и, к тому же...", False, False),
     (44, "http://russian.alibaba.com/goods/hummer-h5-phone.html", u"Hummer H5 Телефон, Поиск лучших товаров Hummer...", u"Посик Высшего качества Hummer H5 Телефон, Hummer H5 Телефон Компаний, Hummer H5 Телефон Производителей на Alibaba.com.", False, False),
-    (45, "http://mobilhits.ru/products/hummer-h5-", u"Hummer H5", u"9 500 руб.mobilhits.ru›products/hummer-h5-Сохранённая копияПоказать ещё с сайтаПожаловатьсяЗащищенный телефон Hummer H5 - устройство из будущего. ... Он очень похож на своего теску - внедорожник Хаммер, поэтому имеет фото авто на задней...Доставка: Москва, бесплатно", False, False),
+    (45, "http://mobilhits.ru/products/hummer-h5-", u"Hummer H5", u"Защищенный телефон Hummer H5 - устройство из будущего. ... Он очень похож на своего теску - внедорожник Хаммер, поэтому имеет фото авто на задней...", False, False),
     (46, "http://irecommend.ru/content/smartfon-bronenosets", u"Мобильный телефон Hummer H5 - «Смартфон броненосец»...", u"Сегодня делюсь с вами своим новым приобретением - смартфоном Хаммер Н5. ... написать модератору. CrockXP рекомендует Мобильный телефон Hummer H5.", False, False),
     (47, "http://hummerclubrus.ru/forums/showthread.php?p=916109", u"Hummer H5 тестил кто? | Форум", u"23 декабря 2014 xenon4ek надеюсь выдержит, хотя у меня ни квадрика, ни снегохода нет, покупал Н5 для Хомяка)))Всего более 50 сообщений ", False, False),
     (48, "http://electronics.wikimart.ru/communication/cell/model/64702598/mobilnyjj_telefon_hummer_h5_plus/", u"Мобильный телефон Hummer Hummer H5 Plus | Викимарт", u"Мобильный телефон Hummer Hummer H5 Plus. Характеристики Описание. 9489 Р. ... Описание. Защищенный смартфон Hummer H5 со степенью защиты IP68.", False, False),
@@ -321,20 +295,20 @@ serp_2_snippets = [
 ]
 
 serp_3_snippets = [
-    (1, "http://www.dvor.chita.ru/files/prays_pechatniy_dvor_na_6.02.2015.xls", u"dvor.chita.ru/files/prays_pechatniy_dvor_na_6.02.2015.xls", u"Посмотреть", False, False),
-    (2, "http://www.misuraemme.it/upload/files/001/scheda_tecnica/en_sistemacrossing.pdf", u"CROSSING", u"Посмотреть", False, False),
+    (1, "http://www.dvor.chita.ru/files/prays_pechatniy_dvor_na_6.02.2015.xls", u"dvor.chita.ru/files/prays_pechatniy_dvor_na_6.02.2015.xls", u"Пьедестал-тумба Plain Pedestal, для Canon iR ADV 42../C22.. ... 2432. C11CA11001A2. Принтер Epson Stylus Pro 9900 SpectroProofer UV.", False, False),
+    (2, "http://www.misuraemme.it/upload/files/001/scheda_tecnica/en_sistemacrossing.pdf", u"CROSSING", u"Wooden flap door Down Mat lacquer Glossy lacquer Wood Glass flap door Down Profile “0” Glass group A ADV42 ADV52 ADL42 ADL52 H.397mm...", False, False),
     (3, "http://www.cs.rochester.edu/u/myros/classes/cs247/class-project/6318-most-frequent-lexemes.lisp", u"cs.rochester.edu/u/myros/classes/cs247/class-project/6318...", u"...Adv) (4839 1245 brigade n) (1552 6190 bright a) (2432 3498 brilliant a) ... Pron) (4382 1450 thereafter adv) (2917 2660 thereby adv) (435 23218 therefore adv)...", False, False),
-    (4, "http://www.bidsync.com/DPXViewer/Contract_Letter.Attach_Catalog_rev_2009-0407.pdf?ac=view&contid=3708&docid=1028421", u"California Office Supplies Catalog, dated 04/07/2009", u"Посмотреть", False, False),
+    (4, "http://www.bidsync.com/DPXViewer/Contract_Letter.Attach_Catalog_rev_2009-0407.pdf?ac=view&contid=3708&docid=1028421", u"California Office Supplies Catalog, dated 04/07/2009", u'8X97/8,blk plnr,wirebd,w/M,47/8X8,blk storage,unt,OFC/adv,24",walnut desk,corner,OFC/adv,42",walnut dskpd,flwrs,mthly,22X17,dkbl dskpd,qn... 4 июля 2009', False, False),
     (5, "http://greaterworcestermagazine.com/?page_id=383", u"F Yellow Pages » Worcester County Massachusetts - Greater...", u"Financial Planning Consultants American Express Financial Adv 42 Brook St Whitinsville ... Funeral Directors Tancrell-Jackman Funeral Home 35 Snowling Rd Uxbridge 01569-2432...", False, False),
-    (6, "http://www.trpdd.com/countyspending/pontotoc/2012ledger.pdf", u"CPONTOTOC - ID: 000022 - Form: GREENBAR", u"Посмотреть", False, False),
+    (6, "http://www.trpdd.com/countyspending/pontotoc/2012ledger.pdf", u"CPONTOTOC - ID: 000022 - Form: GREENBAR", u"5,137.97 pontotoc county tax collector> surrendered tags 42.00 pontotoc county tax collector> 2011 reg adv...", False, False),
     (7, "http://cve.mitre.org/data/refs/refmap/source-BUGTRAQ.html", u"CVE - CVE Reference Map for Source BUGTRAQ", u"Common Vulnerabilities and Exposures (CVE®) is a dictionary of common names (i.e., CVE Identifiers) for publicly known information security vulnerabilities. CVE's common identifiers...", False, False),
     (8, "http://www.autismnet.ru/puremedix.com/pricelist/", u"Price list ― PUREMEDIX | US $42,25", u"Metagenics, ADVACLEAR® 126 CAPS. US $80,75. ADV42. Metagenics, ADVACLEAR® 42 VCAPS.", False, False),
-    (9, "http://www.ecr.indianrailways.gov.in/ecr/billstatus/1415014605359_getjobid24.pdf", u"Installation for : hjp/dnr/see/spj section : 160...", u"Посмотреть", False, False),
+    (9, "http://www.ecr.indianrailways.gov.in/ecr/billstatus/1415014605359_getjobid24.pdf", u"Installation for : hjp/dnr/see/spj section : 160...", u"...Telephone bill 404 telephone bill 288 telephone bill 1281 tpbill 760 telephone bill 220 telephone bill 2432 a o cash bsnl patna acno...", False, False),
     (10, "http://www.docstoc.com/docs/120692255/gsl_senses_dickins", u"gsl_senses_dickins by fanzhongqing", u"...[X] decided adj 637 637 2% 12 2426 decide [X] decidedly adv 56 56 100% 56 2427 decide ... will/won't/would willingly adv 42e 42 100% 42 11653 [X]. will/won't/would unwilling adj 68e 68...", False, False),
-    (11, "http://www.decoracabinets.com/cabinet-resources/~/media/Decora/Documents/Decora_Spec_March2013.ashx", u"What’s New", u"Посмотреть", False, False),
-    (12, "http://str-sintez.ru/data/str-sintez/files/str-sintez.xls", u"str-sintez.ru/data/str-sintez/files/str-sintez.xls", u"Посмотреть", False, False),
+    (11, "http://www.decoracabinets.com/cabinet-resources/~/media/Decora/Documents/Decora_Spec_March2013.ashx", u"What’s New", u"ADV24 (4 drawers) ADV30 (5 drawers) ADV36 (6 drawers) ADV42 (7 drawers) 1.6 1.9 2.3 2.7 Notes below apply to all products in section above: • Standard Matching Interior and...", False, False),
+    (12, "http://str-sintez.ru/data/str-sintez/files/str-sintez.xls", u"str-sintez.ru/data/str-sintez/files/str-sintez.xls", u"2431. Картриджи лазерные цветные. 2432. CE310A. ... Устройство кассетной подачи AF1, для Canon iR ADV 42../C22..", False, False),
     (13, "http://files.baumanec.net/botva/8%20semestr/Dinamika/2%20%E4%E7.xmcd", u"files.baumanec.net/botva/8 semestr/Dinamika/2 дз.xmcd", u"7788uKhtx9aDv42X3n38WK1WR4bePL97787o0ItyZTIIy8RAMF9MVl7WiWffgFH5UR0S6mwm...", False, False),
-    (14, "http://www.downanddirtyobstaclerace.com/wp-content/uploads/MIA-5K_AgeGroup.pdf", u"Cobra Kai Cobra Kai", u"Посмотреть", False, False),
+    (14, "http://www.downanddirtyobstaclerace.com/wp-content/uploads/MIA-5K_AgeGroup.pdf", u"Cobra Kai Cobra Kai", u"...Adv 42 Deerfield Beach FL 42 Miami FL Bootcamp DIRTY DIVAS 40 Miami FL 40 Aventura FL 44 Miami FL Team Or-G 44 Lake Worth FL 40 Miami FL INVEX 43 Pembroke Pines FL 42...", False, False),
     (15, "http://www.attachmentnewengland.com/FamilyAdventureCamp.mht", u"attachmentnewengland.com/FamilyAdventureCamp.mht", u"...KG0AdV42j+etWEGw3WZPugOt0FuFCpE6RCSqovLVIlstpz8KOYEqA9k9BpuOTJS5aUu3bfqNSm8h.", False, False),
 ]
 
@@ -354,7 +328,7 @@ serp_4_snippets = [
     (13, "http://vk.com/id185193554", u"Мастер Тур | ВКонтакте", u"Мастер Тур. Эгейское побережье турции!!! ДИДИМ ОТЕЛЬ GARDEN OF SUN HOTEL 5* ВСЁ ВКЛЮЧЕНО ВЫЛЕТ 8 ИЮНЯ НА 8 ДНЕЙ/7 НОЧЕЙ 41 000 рублей на двоих с учётом топливного сбора.", False, False),
     (14, "http://pegast.ru/samo5/cl_wizard", u"Мастер туров Pegasys - Pegas Touristik", u"Заявка, оформленная через мастер туров, не является черновиком и после сохранения сразу направляется на рассмотрение поставщикам услуг.", False, False),
     (15, "http://www.StudFiles.ru/preview/400060/", u"Программный комплекс Мастер Тур", u"Особенность и уникальность ПК \"Мастер-Тур\" - это гибкость в настройках, которая позволяет работать как многопрофильным туроператорам по разным направлениям, так и операторам работающих с индивидуальными туристами...", False, False),
-    (16, "https://www.facebook.com/btmasterturru", u"Мастер Тур | Facebook", u"всем привет мы уже готовимся к новому сезону сегодня пришли с печати наши брошуры скоро на нашем сайт появяться новые программы и даты туров25.06.2015", False, False),
+    (16, "https://www.facebook.com/btmasterturru", u"Мастер Тур | Facebook", u"всем привет мы уже готовимся к новому сезону сегодня пришли с печати наши брошуры скоро на нашем сайт появяться новые программы и даты туров", False, False),
     (17, "http://rubrikator.org/russia/yekaterinburg/master-tur", u"Мастер Тур — Екатеринбург, Сакко и Ванцетти...", u"Мастер Тур. Туристическая фирма. ТЕЛЕФОН. ... В других городах: Мастер-тур в Перми, Мастер-Тур в Нижнем Новгороде, Мастер-тур в Ярославле.", False, False),
     (18, "http://turbiz.turistua.com/firm/master-tur.htm", u"Мастер-тур - Турфирмы и турагенства // Каталог...", u"ООО \"Мастер-тур\" - надежный туроператор, который находится на туристическом рынке более 14 лет. Мы предлагаем туры в различные страны мира (Австрия, Испания, Кипр, Греция, Франция, Чехия, Польша, Словакия, Черногория, Египет, Турция, Тунис...", False, False),
     (19, "http://ryazan.turizmik.ru/firm/master-tur-1094207/", u"Мастер тур - туристические агентства - Рязань, Костычева, 2", u"Мастер тур, туристическое агентство. Рейтинг. Категория.", False, False),
@@ -384,7 +358,7 @@ serp_4_snippets = [
     (43, "http://www.zabron.ru/turfirms/msk/master-tur.html", u"Турфирма Мастер-Тур Москва. Отзывы о турфирме...", u"Мастер-Тур. Мы можем предложить Вам туры на любой вкус. Семейный отдых на море или отдых на песчаных пляжах, лечебные туры или поездки на горнолыжные курорты, оздоровительный и развлекательный отдых в Подмосковье .", False, False),
     (44, "http://naydi-magazin.ru/catalog/sport_ohota_turizm/mastertur", u"Мастер-Тур : Спорт, охота, туризм : Магазины", u"В пакете предложений туристической компании “Мастер-Тур”- экскурсионные и горнолыжные туры, отдых на море, озерах, термальных источниках, морские путешествия, обучающие поездки и бизнес-туры...", False, False),
     (45, "http://www.smtur.ru/", u"...ТУР Турагентство Шоу Мастер Тур в Орле.Турфирма...", u"Туристическая фирма Шоу Мастер Тур в Орле Туры в Орле , Горчие туры в Орле, туристические агентства города, туризм в Орле? Куда поехать Зимой. О туристических компаниях Орла.", False, False),
-    (46, "http://www.youtube.com/watch?v=F6ZQf3oDxGc", u"Оформление клиентов Мастер-Тур - YouTube", u"Смотреть4:26youtube.comСохранённая копияПоказать ещё с сайтаПожаловатьсяTravel, master-tour. 02 апреля 2008·3 тыс. просмотров", False, False),
+    (46, "http://www.youtube.com/watch?v=F6ZQf3oDxGc", u"Оформление клиентов Мастер-Тур - YouTube", u"Travel, master-tour. ", False, False),
     (47, "http://rumb.ru/travel_agency/37.html", u"Турфирма Мастер-Тур, Санкт Петербург. Туры из Санкт...", u"RUMB.RU – предложение туров от фирмы . А также, огромный выбор туров в любые страны от турфирм Санкт Петербурга. ГОРЯЩИЕ ТУРЫ. Подробная информация по странам и отелям. Поиск попутчиков, пары в тур.", False, False),
     (48, "http://yar.spravker.ru/turfirmy/master-tur.htm", u"Мастер тур в Ярославле", u"Мастер тур. Контактная информация: Адрес", False, False),
     (49, "http://tiptu.ru/ta/master-tur.html", u"Турагентство Мастер-Тур", u"Мастер-Тур. тел (812)335-55-96. www mtspb.ru.", False, False),

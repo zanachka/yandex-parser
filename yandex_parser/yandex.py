@@ -68,20 +68,13 @@ class YandexParser(object):
                 #реклама
                 continue
 
+            h2 = sn.find('.//h2')
+            if not h2:
+                raise Exception(u'parse error')
 
-            sn_div = sn.find('div')
-            h2 = None
-            while True:
-                h2 = sn_div.find('h2')
-                if h2 is not None:
-                    break
-                else:
-                    div = sn_div.find('div')
-                    if div is None: 
-                        raise Exception('parse error')
-                    
-                    sn_div = div 
-            
+            if 'serp-item__title' not in h2.attrib['class']:
+                raise Exception(u'parse error')
+
             link = h2.find('a')
             url = link.attrib['href']
 
@@ -121,13 +114,12 @@ class YandexParser(object):
             if 't' in self.snippet_fileds:
                 snippet['t'] = unicode(link.text_content())
             if 's' in self.snippet_fileds:
-                children = sn_div.getchildren()
-                if len(children) == 2:
-                    decr_div = children[1] 
-                else:
-                    decr_div = children[2] 
-                snippet['s'] = unicode(decr_div.text_content())
-            
+                decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
+                           or sn.xpath('.//div[contains(@class,"serp-item__data")]') \
+                           or sn.xpath('.//div[contains(@class,"social-snippet2__text")]')
+                snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
+                snippet['s'] = snippet['s'] or ''
+
             snippets.append(snippet)
 
         return snippets
