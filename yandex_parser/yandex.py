@@ -108,17 +108,23 @@ class YandexParser(object):
                 'm': is_map, 
                 't': None,  # title snippet
                 's': None,  # body snippet
-                'i': infected
+                'i': infected,
+                'savedCopy': None
             }
 
             if 't' in self.snippet_fileds:
                 snippet['t'] = unicode(link.text_content())
+
             if 's' in self.snippet_fileds:
                 decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
                            or sn.xpath('.//div[contains(@class,"serp-item__data")]') \
                            or sn.xpath('.//div[contains(@class,"social-snippet2__text")]')
                 snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
                 snippet['s'] = snippet['s'] or ''
+
+            div_saved_copy_link = sn.xpath('.//div[contains(@class,"popup2")]')
+            if div_saved_copy_link:
+                snippet['savedCopy'] = div_saved_copy_link[0].find('a').attrib['href']
 
             snippets.append(snippet)
 
