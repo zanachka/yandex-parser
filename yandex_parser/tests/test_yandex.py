@@ -187,6 +187,17 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['pc'], 290000000)
         self.assertEquals(len(serp['sn']), 50)
 
+    def test2(self):
+        html = self.get_data('2015-07-31.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertEquals(serp['pc'], 367)
+        self.assertEquals(len(serp['sn']), 10)
+        self.assertEquals(serp['sn'][0]['d'], 'colobridge.net')
+
+
 serp_1_snippets = [
     (1, "http://www.okna.ru/", u"\"Kaleva\" - продажа и установка пластиковых окон", u"Информация о фирме и услугах: продажа и установка пластиковых окон и дверей, остекление балконов и лоджий. Фотографии и описания типов окон. Оконный калькулятор on-line. Цены. Адреса магазинов.", False, False),
     (2, "http://www.FabrikaOkon.ru/", u"\"Фабрика окон\" - изготовление пластиковых окон", u"Производство и установка плаcтиковых окон, остекление балконов и лоджий. Цены, калькулятор стоимости. Онлайн-заказ. Возможность покупки в рассрочку. Текущие акции и скидки.", False, False),

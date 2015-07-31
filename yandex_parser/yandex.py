@@ -100,6 +100,9 @@ class YandexParser(object):
             except UnicodeError as e:
                 raise e
 
+            if ':' in domain:
+                domain = re.sub(ur':\d+$', '', domain)
+
             snippet = {
                 'd': domain,
                 'domain': domain,
