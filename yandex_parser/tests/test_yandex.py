@@ -11,8 +11,8 @@ class YandexParserTestCase(YandexParserTests):
     def test_captcha_1(self):
         html = self.get_data('captcha_1.html')
         parser = YandexParser(html)
+
         captcha_data = parser.get_captcha_data()
-           
         exp = {
             'url': u'http://yandex.ru/captchaimg?aHR0cDovL3MuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT1kM1I3SDhDRGlTT3RlVzNvYk9zcFo4bk1lc0NOUjhXQw,,_0/1435077202/853e18711cde74266e45da1315dacee2_2bf39001bd241d1c6539b7db6a0464ad', 
             'form_action': '/checkcaptcha',
@@ -21,6 +21,7 @@ class YandexParserTestCase(YandexParserTests):
                 'retpath': 'http://yandex.ru/yandsearch?p=0&text=%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D1%80%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D0%B1%D0%B0%D0%BD%D0%BA%D0%B8&site=&numdoc=50&lr=213_cefc8bbe530fbaf69685556720f14a26'
             }
         }
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(captcha_data, exp)
    
        
@@ -63,36 +64,50 @@ class YandexParserTestCase(YandexParserTests):
     def test_region_code_1(self):
         html = self.get_data('region_code_1.html')
         parser = YandexParser(html)
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(parser.get_region_code(), 213)
    
     def test_pagination_exists_1(self):
         html = self.get_data('serp_1.html')
         parser = YandexParser(html)
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertTrue(parser.pagination_exists())
    
     def test_pagination_exists_2(self):
         html = self.get_data('serp_3.html')
         parser = YandexParser(html)
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertFalse(parser.pagination_exists())
    
     def test_pagecount_1(self):
         html = self.get_data('serp_1.html')
         parser = YandexParser(html)
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(parser.get_pagecount(), 124000000)
    
     def test_pagecount_2(self):
         html = self.get_data('serp_2.html')
         parser = YandexParser(html)
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(parser.get_pagecount(), 354000)
    
     def test_pagecount_3(self):
         html = self.get_data('serp_3.html')
         parser = YandexParser(html)
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(parser.get_pagecount(), 22)
    
     def test_not_found(self):
         html = self.get_data('not_found_1.html')
         parser = YandexParser(html)
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertTrue(parser.is_not_found())
        
     def test_serp_1(self):
@@ -100,9 +115,9 @@ class YandexParserTestCase(YandexParserTests):
              
         parser = YandexParser(html)
         serp = parser.get_serp()
-             
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertFalse(parser.is_not_found())
-             
         self.assertEquals(serp['pc'], 124000000)
         self.assertEquals(len(serp['sn']), 51)
             
@@ -121,9 +136,9 @@ class YandexParserTestCase(YandexParserTests):
              
         parser = YandexParser(html)
         serp = parser.get_serp()
-             
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertFalse(parser.is_not_found())
-             
         self.assertEquals(serp['pc'], 354000)
         self.assertEquals(len(serp['sn']), 50)
             
@@ -142,9 +157,9 @@ class YandexParserTestCase(YandexParserTests):
              
         parser = YandexParser(html)
         serp = parser.get_serp()
-             
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertFalse(parser.is_not_found())
-             
         self.assertEquals(serp['pc'], 22)
         self.assertEquals(len(serp['sn']), 15)
             
@@ -163,9 +178,9 @@ class YandexParserTestCase(YandexParserTests):
            
         parser = YandexParser(html)
         serp = parser.get_serp()
-           
+
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertFalse(parser.is_not_found())
-           
         self.assertEquals(serp['pc'], 159000)
         self.assertEquals(len(serp['sn']), 50)
           
@@ -184,6 +199,7 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
         serp = parser.get_serp()
 
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(serp['pc'], 290000000)
         self.assertEquals(len(serp['sn']), 50)
 
@@ -193,9 +209,26 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
         serp = parser.get_serp()
 
+        self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(serp['pc'], 367)
         self.assertEquals(len(serp['sn']), 10)
         self.assertEquals(serp['sn'][0]['d'], 'colobridge.net')
+
+    def test3(self):
+        html = self.get_data('2015-08-03.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 13000)
+        self.assertEquals(len(serp['sn']), 10)
+        self.assertEquals(serp['sn'][0]['d'], 'parket.me')
+
+    def test4(self):
+        html = self.get_data('bad-content.html')
+
+        self.assertFalse(YandexParser.is_yandex(html))
 
 
 serp_1_snippets = [

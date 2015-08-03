@@ -24,7 +24,10 @@ class YandexParser(object):
     def get_serp(self):
         if self.is_not_found():
             return {'pc': 0, 'sn': []}
-        
+
+        if not YandexParser.is_yandex(self.content):
+            raise Exception(u'content is not yandex')
+
         pagecount = self.get_pagecount()
         snippets = self.get_snippets()
         
@@ -35,6 +38,10 @@ class YandexParser(object):
 
     def pagination_exists(self):
         return '<span class="pager__group">' in self.content
+
+    @classmethod
+    def is_yandex(cls, content):
+        return '<a class="logo__link" href="//www.yandex.ru' in content
 
     def get_pagecount(self):
         if self.is_not_found():
