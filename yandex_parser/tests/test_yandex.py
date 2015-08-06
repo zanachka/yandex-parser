@@ -227,8 +227,29 @@ class YandexParserTestCase(YandexParserTests):
 
     def test4(self):
         html = self.get_data('bad-content.html')
-
         self.assertFalse(YandexParser.is_yandex(html))
+
+    def test5(self):
+        html = self.get_data('2015-08-06.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 58000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'ru.wikipedia.org')
+
+    def test6(self):
+        html = self.get_data('2015-08-06-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 142000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'mosokna.ru')
 
 
 serp_1_snippets = [
