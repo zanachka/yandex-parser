@@ -12,7 +12,7 @@ class YandexParser(object):
     params_regexr = re.U | re.M | re.DOTALL | re.I
 
     patterns = {
-        'pagecount': re.compile(u'.*?found"\:"&mdash;&nbsp;(.*?)отв', params_regexr),
+        'pagecount': re.compile(u'found"\:"&mdash;&nbsp;(.*?)отв', params_regexr),
         'infected': re.compile(u'/search/infected\?url=(.*?)&', params_regexr),
         'captcha': re.compile(u'<img class="image form__captcha".*?src=\"([^\"]+)\"', params_regexr),
     }
@@ -47,7 +47,16 @@ class YandexParser(object):
         if self.is_not_found():
             return 0
 
-        match = self.patterns['pagecount'].match(self.content)
+        patterns = (
+            self.patterns['pagecount'],
+            re.compile(ur'"found":"[^\\]\\n([^"]*?)отв', self.params_regexr)
+        )
+
+        for pattern in patterns:
+            match = pattern.search(self.content)
+            if match:
+                break
+
         if not match:
             return
 

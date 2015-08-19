@@ -251,6 +251,17 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(len(serp['sn']), 50)
         self.assertEquals(serp['sn'][0]['d'], 'mosokna.ru')
 
+    def test7(self):
+        html = self.get_data('2015-08-19.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 278000000)
+        self.assertEquals(len(serp['sn']), 30)
+        self.assertEquals(serp['sn'][0]['d'], 'mebelaero.ru')
+
 
 serp_1_snippets = [
     (1, "http://www.okna.ru/", u"\"Kaleva\" - продажа и установка пластиковых окон", u"Информация о фирме и услугах: продажа и установка пластиковых окон и дверей, остекление балконов и лоджий. Фотографии и описания типов окон. Оконный калькулятор on-line. Цены. Адреса магазинов.", False, False),
