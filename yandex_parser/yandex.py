@@ -74,7 +74,7 @@ class YandexParser(object):
     def get_snippets(self):
         dom = PyQuery(self.content)
 
-        serp = dom('.serp-list').find('.serp-item')
+        serp = dom('.serp-list').find('.serp-item_plain_yes')
 
         snippets = []
         position = 0
