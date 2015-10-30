@@ -6,6 +6,7 @@ from pyquery import PyQuery
 import lxml.html
 from yandex_parser.exceptions import EmptySerp
 from yandex_parser.utils import to_unicode, get_full_domain_without_scheme
+from lxml import etree
 
 
 class YandexParser(object):
@@ -94,6 +95,16 @@ class YandexParser(object):
             link = h2.find('a')
             url = link.attrib['href']
 
+            #Яндекс жжет. Берем домен из гринурла
+            if url == 'http://':
+                html = etree.tostring(sn)
+                pattern = re.compile(ur'<div class="serp-item__greenurl.*?<a class="link serp-url__link".*?>(.*?)</a>', re.I | re.M | re.S)
+                res = pattern.search(html)
+                if res:
+                    domain = re.sub(ur'<[^>]+>', '', res.group(1), flags=re.I | re.M | re.S)
+                    domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
+                    url = 'http://{}'.format(domain)
+
             is_map = False
             if 'serp-item_plain_yes' not in sn.attrib['class']:
                 is_map = url.startswith('http://maps.yandex.ru')
@@ -140,7 +151,6 @@ class YandexParser(object):
                            or sn.xpath('.//div[contains(@class,"social-snippet2__text")]')
                 snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
                 snippet['s'] = snippet['s'] or ''
-
             div_saved_copy_link = sn.xpath('.//div[contains(@class,"popup2")]')
             if div_saved_copy_link:
                 attrib = div_saved_copy_link[0].find('a').attrib

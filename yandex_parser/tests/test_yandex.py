@@ -273,6 +273,49 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(len(serp['sn']), 50)
         self.assertEquals(serp['sn'][0]['d'], 'ndv77.ru')
 
+    def test9(self):
+        html = self.get_data('2015-10-30.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 229000)
+        self.assertEquals(len(serp['sn']), 48)
+        self.assertEquals(serp['sn'][0]['d'], 'hotels.1001tur.ru')
+        self.assertEquals(serp['sn'][47]['d'], 'ibooked.ru')
+        self.assertEquals(serp['sn'][47]['u'], 'http://ibooked.ru')
+
+    def test10(self):
+        html = self.get_data('2015-10-30.1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 353000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'samara.megafon.ru')
+        self.assertEquals(serp['sn'][7]['d'], 'procontent.ru')
+        self.assertEquals(serp['sn'][7]['u'], 'http://procontent.ru')
+
+    def test11(self):
+        html = self.get_data('2015-10-30.2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 73000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'spravkaru.info')
+        self.assertEquals(serp['sn'][35]['d'], 'altapress.ru')
+        self.assertEquals(serp['sn'][35]['u'], 'http://altapress.ru')
+
+    def _print_sn(self, serp):
+        for sn in serp['sn']:
+            print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']
+
 
 serp_1_snippets = [
     (1, "http://www.okna.ru/", u"\"Kaleva\" - продажа и установка пластиковых окон", u"Информация о фирме и услугах: продажа и установка пластиковых окон и дверей, остекление балконов и лоджий. Фотографии и описания типов окон. Оконный калькулятор on-line. Цены. Адреса магазинов.", False, False),
