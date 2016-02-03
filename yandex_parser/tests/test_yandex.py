@@ -311,6 +311,7 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][0]['d'], 'spravkaru.info')
         self.assertEquals(serp['sn'][35]['d'], 'altapress.ru')
         self.assertEquals(serp['sn'][35]['u'], 'http://altapress.ru')
+        
 
     def _print_sn(self, serp):
         for sn in serp['sn']:

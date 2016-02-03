@@ -42,7 +42,7 @@ class YandexParser(object):
 
     @classmethod
     def is_yandex(cls, content):
-        return '<a class="logo__link" href="//www.yandex.ru' in content
+        return '<a class="logo__link" href="//www.yandex.' in content
 
     def get_pagecount(self):
         if self.is_not_found():
