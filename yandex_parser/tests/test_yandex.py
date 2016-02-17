@@ -109,10 +109,10 @@ class YandexParserTestCase(YandexParserTests):
 
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertTrue(parser.is_not_found())
-       
+
     def test_serp_1(self):
         html = self.get_data('serp_1.html')
-             
+
         parser = YandexParser(html)
         serp = parser.get_serp()
 
@@ -120,7 +120,7 @@ class YandexParserTestCase(YandexParserTests):
         self.assertFalse(parser.is_not_found())
         self.assertEquals(serp['pc'], 124000000)
         self.assertEquals(len(serp['sn']), 50)
-            
+
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_1_snippets[i]
             # print i, '\n', sn['s'], '\n', exp_sn[3]
@@ -130,10 +130,10 @@ class YandexParserTestCase(YandexParserTests):
             self.assertEquals(sn['s'], exp_sn[3])
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
-   
+
     def test_serp_2(self):
         html = self.get_data('serp_2.html')
-             
+
         parser = YandexParser(html)
         serp = parser.get_serp()
 
@@ -141,7 +141,7 @@ class YandexParserTestCase(YandexParserTests):
         self.assertFalse(parser.is_not_found())
         self.assertEquals(serp['pc'], 354000)
         self.assertEquals(len(serp['sn']), 50)
-            
+
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_2_snippets[i]
 
@@ -151,10 +151,10 @@ class YandexParserTestCase(YandexParserTests):
             self.assertEquals(sn['s'], exp_sn[3])
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
-   
+
     def test_serp_3(self):
         html = self.get_data('serp_3.html')
-             
+
         parser = YandexParser(html)
         serp = parser.get_serp()
 
@@ -162,7 +162,7 @@ class YandexParserTestCase(YandexParserTests):
         self.assertFalse(parser.is_not_found())
         self.assertEquals(serp['pc'], 22)
         self.assertEquals(len(serp['sn']), 15)
-            
+
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_3_snippets[i]
 
@@ -172,10 +172,10 @@ class YandexParserTestCase(YandexParserTests):
             self.assertEquals(sn['s'], exp_sn[3])
             self.assertEquals(sn['m'], exp_sn[4])
             self.assertEquals(sn['i'], exp_sn[5])
- 
+
     def test_serp_4(self):
         html = self.get_data('serp_4.html')
-           
+
         parser = YandexParser(html)
         serp = parser.get_serp()
 
@@ -183,7 +183,7 @@ class YandexParserTestCase(YandexParserTests):
         self.assertFalse(parser.is_not_found())
         self.assertEquals(serp['pc'], 159000)
         self.assertEquals(len(serp['sn']), 50)
-          
+
         for i, sn in enumerate(serp['sn']):
             exp_sn = serp_4_snippets[i]
             self.assertEquals(sn['p'], exp_sn[0])
@@ -346,6 +346,18 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(len(serp['sn']), 20)
         self.assertEquals(serp['sn'][0]['d'], 'irr.ru')
         self.assertEquals(serp['sn'][19]['d'], 'avito.ru')
+
+    def test16(self):
+        html = self.get_data('v1-2016-02-17-4.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 527000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'watches.ru')
+        self.assertEquals(serp['sn'][49]['d'], 'omax-msk.ru')
 
     def _print_sn(self, serp):
         for sn in serp['sn']:
@@ -526,7 +538,7 @@ serp_4_snippets = [
     (47, "http://rumb.ru/travel_agency/37.html", u"Турфирма Мастер-Тур, Санкт Петербург. Туры из Санкт...", u"RUMB.RU – предложение туров от фирмы . А также, огромный выбор туров в любые страны от турфирм Санкт Петербурга. ГОРЯЩИЕ ТУРЫ. Подробная информация по странам и отелям. Поиск попутчиков, пары в тур.", False, False),
     (48, "http://yar.spravker.ru/turfirmy/master-tur.htm", u"Мастер тур в Ярославле", u"Мастер тур. Контактная информация: Адрес", False, False),
     (49, "http://tiptu.ru/ta/master-tur.html", u"Турагентство Мастер-Тур", u"Мастер-Тур. тел (812)335-55-96. www mtspb.ru.", False, False),
-    (50, "http://www.littleone.ru/catalog/travel/travel/1300004171", u"МАСТЕР-ТУР (Центральный район) - отзывы", u"МАСТЕР-ТУР (Центральный район) - отзывы. Район: Центральный Телефон: (812) 764-01-97 Адрес: Кузнечный переулок, д. 4 Веб-сайт: www.mtspb.ru.", False, False),               
+    (50, "http://www.littleone.ru/catalog/travel/travel/1300004171", u"МАСТЕР-ТУР (Центральный район) - отзывы", u"МАСТЕР-ТУР (Центральный район) - отзывы. Район: Центральный Телефон: (812) 764-01-97 Адрес: Кузнечный переулок, д. 4 Веб-сайт: www.mtspb.ru.", False, False),
 ]
 
 infected_1 = [
