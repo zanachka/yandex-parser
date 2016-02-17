@@ -273,19 +273,6 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(len(serp['sn']), 50)
         self.assertEquals(serp['sn'][0]['d'], 'ndv77.ru')
 
-    def test9(self):
-        html = self.get_data('2015-10-30.html')
-
-        parser = YandexParser(html)
-        serp = parser.get_serp()
-
-        self.assertTrue(YandexParser.is_yandex(html))
-        self.assertEquals(serp['pc'], 229000)
-        self.assertEquals(len(serp['sn']), 48)
-        self.assertEquals(serp['sn'][0]['d'], 'hotels.1001tur.ru')
-        self.assertEquals(serp['sn'][47]['d'], 'ibooked.ru')
-        self.assertEquals(serp['sn'][47]['u'], 'http://ibooked.ru')
-
     def test10(self):
         html = self.get_data('2015-10-30.1.html')
 
@@ -311,7 +298,54 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][0]['d'], 'spravkaru.info')
         self.assertEquals(serp['sn'][35]['d'], 'altapress.ru')
         self.assertEquals(serp['sn'][35]['u'], 'http://altapress.ru')
-        
+
+    def test12(self):
+        html = self.get_data('v1-2016-02-17.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 228000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'qpstol.ru')
+        self.assertEquals(serp['sn'][49]['d'], 'moskva.tiu.ru')
+
+    def test13(self):
+        html = self.get_data('v1-2016-02-17-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 195000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'roomer.ru')
+        self.assertEquals(serp['sn'][49]['d'], 'mybabytoys.ru')
+
+    def test14(self):
+        html = self.get_data('v1-2016-02-17-2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 593000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'youtube.com')
+        self.assertEquals(serp['sn'][49]['d'], 'modmine.net')
+
+    def test15(self):
+        html = self.get_data('v1-2016-02-17-3.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 3000000)
+        self.assertEquals(len(serp['sn']), 20)
+        self.assertEquals(serp['sn'][0]['d'], 'irr.ru')
+        self.assertEquals(serp['sn'][19]['d'], 'avito.ru')
 
     def _print_sn(self, serp):
         for sn in serp['sn']:

@@ -73,14 +73,13 @@ class YandexParser(object):
         return u'По вашему запросу ничего не нашлось' in self.content
 
     def get_snippets(self):
-        dom = PyQuery(self.content)
 
-        serp = dom('.serp-list').find('.serp-item_plain_yes')
+        dom = PyQuery(self.content)
+        serp = dom('.serp-list').find('.serp-item')
 
         snippets = []
         position = 0
         for sn in serp:
-            
             if 'serp-adv' in sn.attrib['class']:
                 #реклама
                 continue
@@ -105,13 +104,13 @@ class YandexParser(object):
                     domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
                     url = 'http://{}'.format(domain)
 
-            is_map = False
-            if 'serp-item_plain_yes' not in sn.attrib['class']:
-                is_map = url.startswith('http://maps.yandex.ru')
-                if not is_map:
-                    #картинки, видео и прочее, позицию сохраняем
-                    position += 1
-                    continue
+            is_map = url.startswith('http://maps.yandex.ru')
+            # if 'serp-item_plain_yes' not in sn.attrib['class']:
+            #
+            #     if not is_map:
+            #         #картинки, видео и прочее, позицию сохраняем
+            #         position += 1
+            #         continue
             
             position += 1
 
@@ -160,8 +159,25 @@ class YandexParser(object):
                     snippet['savedCopy'] = None
 
             snippets.append(snippet)
+        result = snippets
 
-        return snippets
+        pagecount = self.get_pagecount()
+        len_snippets = len(snippets)
+        if pagecount > 50 and len_snippets % 10 != 0:
+            cut_snippets = []
+            # в этом случае убираем поддомены яндекса из серпа, так чтобы получилось число кратное 10
+            need_delete = len_snippets - len_snippets / 10  * 10
+            p = 0
+            for sn in snippets:
+                if need_delete and re.search(ur'^(?:.+\.|)yandex\.ru$', sn['d'], re.I):
+                    need_delete -= 1
+                    continue
+                p += 1
+                sn['p'] = p
+                cut_snippets.append(sn)
+            result = cut_snippets
+
+        return result
     
     def get_region_code(self, default=None):
         dom = PyQuery(self.content)
