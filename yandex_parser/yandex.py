@@ -80,12 +80,8 @@ class YandexParser(object):
         snippets = []
         position = 0
         for sn in serp:
-            if 'serp-adv' in sn.attrib['class'] or 'serp-item_keyboard-shortcuts-ignore_yes' in sn.attrib['class']:
+            if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class']:
                 #реклама
-                continue
-
-            if 'serp-item_expanded_no' in sn.attrib['class']:
-                # поэт
                 continue
 
             h2 = sn.find('.//h2')
