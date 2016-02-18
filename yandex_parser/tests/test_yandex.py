@@ -292,6 +292,8 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
         serp = parser.get_serp()
 
+
+
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(serp['pc'], 73000)
         self.assertEquals(len(serp['sn']), 50)
@@ -358,6 +360,18 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(len(serp['sn']), 50)
         self.assertEquals(serp['sn'][0]['d'], 'watches.ru')
         self.assertEquals(serp['sn'][49]['d'], 'omax-msk.ru')
+
+    def test17(self):
+        html = self.get_data('v1-2016-02-18.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 1000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'stihi-rus.ru')
+        self.assertEquals(serp['sn'][49]['d'], '4ernovik.ru')
 
     def _print_sn(self, serp):
         for sn in serp['sn']:

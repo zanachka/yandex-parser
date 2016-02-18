@@ -84,6 +84,10 @@ class YandexParser(object):
                 #реклама
                 continue
 
+            if 'serp-item_expanded_no' in sn.attrib['class']:
+                # поэт
+                continue
+
             h2 = sn.find('.//h2')
             if not h2:
                 raise Exception(u'parse error')
