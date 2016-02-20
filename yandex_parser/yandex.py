@@ -4,7 +4,7 @@ import urllib
 
 from pyquery import PyQuery
 import lxml.html
-from yandex_parser.exceptions import EmptySerp
+from yandex_parser.exceptions import EmptySerp, YandexParserError
 from yandex_parser.utils import to_unicode, get_full_domain_without_scheme
 from lxml import etree
 
@@ -27,7 +27,7 @@ class YandexParser(object):
             return {'pc': 0, 'sn': []}
 
         if not YandexParser.is_yandex(self.content):
-            raise Exception(u'content is not yandex')
+            raise YandexParserError(u'content is not yandex')
 
         pagecount = self.get_pagecount()
         snippets = self.get_snippets()
@@ -75,7 +75,7 @@ class YandexParser(object):
     def get_snippets(self):
 
         dom = PyQuery(self.content)
-        serp = dom('.serp-list').find('.serp-item')
+        serp = dom('.serp-list').children('.serp-item')
 
         snippets = []
         position = 0
@@ -86,10 +86,10 @@ class YandexParser(object):
 
             h2 = sn.find('.//h2')
             if not h2:
-                raise Exception(u'parse error')
+                raise YandexParserError(u'parse error')
 
             if 'serp-item__title' not in h2.attrib['class']:
-                raise Exception(u'parse error')
+                raise YandexParserError(u'parse error')
 
             link = h2.find('a')
             url = link.attrib['href']
@@ -105,13 +105,6 @@ class YandexParser(object):
                     url = 'http://{}'.format(domain)
 
             is_map = url.startswith('http://maps.yandex.ru')
-            # if 'serp-item_plain_yes' not in sn.attrib['class']:
-            #
-            #     if not is_map:
-            #         #картинки, видео и прочее, позицию сохраняем
-            #         position += 1
-            #         continue
-            
             position += 1
 
             infected = False

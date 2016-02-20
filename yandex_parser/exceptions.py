@@ -2,3 +2,8 @@
 
 class EmptySerp(Exception):
     pass
+
+
+class YandexParserError(Exception):
+    pass
+
