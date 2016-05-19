@@ -210,6 +210,20 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][0]['d'], 'youtube.com')
         self.assertEquals(serp['sn'][49]['d'], 'truba.com')
 
+    def test20(self):
+        html = self.get_data('2016-05-19.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 377000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'mebelaero.ru')
+        self.assertEquals(serp['sn'][0]['s'], u'Стол PICASSO. 07.04.2016 Компания «AERO» является поставщиком продукции в самый большой в Европе и Москве Porsche-центр.')
+        self.assertEquals(serp['sn'][49]['d'], 'stolnadom.ru')
+        self.assertEquals(serp['sn'][49]['s'], u'Столы. Мебельный интернет-магазин Стол на Дом .RU - магазин стильной мебели. ... Интернет-магазин мебели - простой способ купить столы в Москве и в России.')
+
     def _print_sn(self, serp):
         for sn in serp['sn']:
             print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']
