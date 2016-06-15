@@ -50,7 +50,8 @@ class YandexParser(object):
 
         patterns = (
             self.patterns['pagecount'],
-            re.compile(ur'"found":"[^\\]\\n([^"]*?)отв', self.params_regexr)
+            re.compile(ur'"found":"[^\\]\\n([^"]*?)отв', self.params_regexr),
+            re.compile(ur'<div class="serp-adv__found">Наш[^ ]+\s+(.*?)рез', self.params_regexr)
         )
 
         for pattern in patterns:

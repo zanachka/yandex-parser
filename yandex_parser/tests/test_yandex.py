@@ -224,6 +224,47 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['d'], 'stolnadom.ru')
         self.assertEquals(serp['sn'][49]['s'], u'Столы. Мебельный интернет-магазин Стол на Дом .RU - магазин стильной мебели. ... Интернет-магазин мебели - простой способ купить столы в Москве и в России.')
 
+    def test21(self):
+        html = self.get_data('2016-06-14-one-res.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 1)
+        self.assertEquals(len(serp['sn']), 1)
+        self.assertEquals(serp['sn'][0]['d'], 'mogilev.pulscen.by')
+        self.assertEquals(serp['sn'][0]['s'], u'Информация о предложениях в рубрике Столешницы для кухни для Могилева. ... Столешницы для кухни в Могилеве. 30 товаров и услуг от 2 поставщиков.')
+
+    def test22(self):
+        html = self.get_data('2016-06-14-thousands.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 50000)
+        self.assertEquals(len(serp['sn']), 30)
+        self.assertEquals(serp['sn'][0]['d'], 'mogilev.deal.by')
+        self.assertEquals(serp['sn'][0]['s'], u'Широкий выбор поставщиков, у которых можно купить столешницы и комплектующие в Могилеве по лучшей цене. ... Столешницы для кухни Quartzforms.')
+        self.assertEquals(serp['sn'][29]['d'], 'mirdereva.ru')
+        self.assertEquals(serp['sn'][29]['s'], u'Столешницы для кухни из дерева. от 1082 р/м2.')
+
+    def test23(self):
+        html = self.get_data('2016-06-14-millions.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 13000000)
+        self.assertEquals(len(serp['sn']), 30)
+        self.assertEquals(serp['sn'][0]['d'], 'otdelka-trade.ru')
+        self.assertEquals(serp['sn'][0]['s'], u'Столешница в продаже 28 вида товаров. Доставка по Москве и регионам. Звоните!')
+        self.assertEquals(serp['sn'][29]['d'], 'mdvm.ru')
+        self.assertEquals(serp['sn'][29]['s'], u'Говоря столешница, многие подразумевают кухонные столешницы, но столешницы из ДСП и МДФ используют не только как столешницы для кухни...')
+
+
     def _print_sn(self, serp):
         for sn in serp['sn']:
             print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']
