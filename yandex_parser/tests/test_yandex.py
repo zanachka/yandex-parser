@@ -264,6 +264,21 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][29]['d'], 'mdvm.ru')
         self.assertEquals(serp['sn'][29]['s'], u'Говоря столешница, многие подразумевают кухонные столешницы, но столешницы из ДСП и МДФ используют не только как столешницы для кухни...')
 
+    def test24(self):
+        html = self.get_data('2016-06-16.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 612000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'exmob.net')
+        self.assertEquals(serp['sn'][0]['s'], u'На первом месте самый удобный из них, а именно с помощью SMS. Отправляете сообщение с текстом «СТОП 5051» на аналогичный номер 5051.')
+        self.assertEquals(serp['sn'][49]['d'], 'depositfiles.com')
+        self.assertEquals(serp['sn'][49]['s'], u'...номерам», введя короткий номер или идентификатор услуги в строке поиска ... SMS-сообщение с текстом «СТОП » на номер 5051 (смс бесплатно в домашнем регионе)')
+
+
 
     def _print_sn(self, serp):
         for sn in serp['sn']:

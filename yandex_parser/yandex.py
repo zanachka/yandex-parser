@@ -92,8 +92,13 @@ class YandexParser(object):
             if 'serp-item__title' not in h2.attrib['class']:
                 raise YandexParserError(u'parse error')
 
-            link = h2.find('a')
-            url = link.attrib['href']
+            infected = 'template-infected' in sn.attrib['class']
+            if infected:
+                link = h2
+                url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
+            else:
+                link = h2.find('a')
+                url = link.attrib['href']
 
             #Яндекс жжет. Берем домен из гринурла
             if url == 'http://':
@@ -108,7 +113,6 @@ class YandexParser(object):
             is_map = url.startswith('http://maps.yandex.ru')
             position += 1
 
-            infected = False
             if 'infected' in url:
                 match_url_infected = self.patterns['infected'].match(url)
                 if match_url_infected:
