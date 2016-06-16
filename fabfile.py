@@ -1,4 +1,4 @@
-from fabric.api import local, task, quiet
+from fabric.api import local, task, quiet, shell_env
 
 
 @task
@@ -13,5 +13,7 @@ def release():
         local('git commit -am "new version {0}"'.format(new_version))
         local('git tag -a v{0} -m \'new version {0}\''.format(new_version))
         local('git push origin master --tags')
-    local("python setup.py register")
-    local("python setup.py sdist upload -r pypi")
+
+    with shell_env(HTTPS='on'):
+        local("python setup.py register")
+        local("python setup.py sdist upload -r pypi")
