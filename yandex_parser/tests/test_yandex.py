@@ -278,7 +278,19 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['d'], 'depositfiles.com')
         self.assertEquals(serp['sn'][49]['s'], u'...номерам», введя короткий номер или идентификатор услуги в строке поиска ... SMS-сообщение с текстом «СТОП » на номер 5051 (смс бесплатно в домашнем регионе)')
 
+    def test25(self):
+        html = self.get_data('2016-06-16-1.html')
 
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 168000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'diamed.ru')
+        self.assertEquals(serp['sn'][0]['s'], u'О клинике. Клиника «Диамед» у метро Щелковская открыла свои двери для пациентов в мае 2001 года.')
+        self.assertEquals(serp['sn'][49]['d'], 'clinics.webtst.ru')
+        self.assertEquals(serp['sn'][49]['s'], u'«Диамед» - это сеть клиник, удобно расположенных в районах Москвы. ... В медицинском центре «Диамед» на Щелковской работают опытные...')
 
     def _print_sn(self, serp):
         for sn in serp['sn']:
