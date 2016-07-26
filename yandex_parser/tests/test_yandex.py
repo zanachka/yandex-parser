@@ -292,6 +292,17 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['d'], 'clinics.webtst.ru')
         self.assertEquals(serp['sn'][49]['s'], u'«Диамед» - это сеть клиник, удобно расположенных в районах Москвы. ... В медицинском центре «Диамед» на Щелковской работают опытные...')
 
+    def test26(self):
+        html = self.get_data('2016-07-26.html')
+
+        parser = YandexParser(html)
+        serp1 = parser.get_serp()
+
+        cleaned_html = parser.get_clean_html()
+        parser = YandexParser(cleaned_html)
+        serp2 = parser.get_serp()
+        self.assertDictEqual(serp1, serp2)
+
     def _print_sn(self, serp):
         for sn in serp['sn']:
             print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']

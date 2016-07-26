@@ -44,6 +44,9 @@ class YandexParser(object):
     def is_yandex(cls, content):
         return '<a class="logo__link" href="//www.yandex.' in content
 
+    def get_clean_html(self):
+        return YandexSerpCleaner.clean(self.content)
+
     def get_pagecount(self):
         if self.is_not_found():
             return 0
@@ -202,3 +205,39 @@ class YandexParser(object):
             'form_data': form_data,
         }
 
+
+class YandexSerpCleaner(object):
+    flags = re.U | re.I | re.M | re.S
+
+    _patterns = (
+        ur'<script.*?<\/script>',
+        ur'<style.*?<\/style>',
+        ur'onmousedown=".*?"',
+        ur'onclick=".*?"',
+        ur'target="_blank"',
+        ur'title=".*?"',
+        ur'ondblclick=".*?"',
+        ur'style=".*?"',
+        ur'<noscript>.*?<\/noscript>',
+        ur'<link.*?/>',
+        ur'><!--.*?-->',
+        ur'<i\s+><\/i>',
+        ur'data-bem=".*?"',
+        ur'\r|\n',
+        ur' {2,}',
+    )
+    patterns = []
+    for p in _patterns:
+        patterns.append(re.compile(p, flags=re.U | re.I | re.M | re.S))
+    patterns = tuple(patterns)
+
+    no_space = re.compile(ur'\s+', flags=flags)
+
+    @classmethod
+    def clean(cls, content):
+        content = content
+        for p in cls.patterns:
+            content = p.sub('', content)
+
+        content = cls.no_space.sub(' ', content)
+        return content
