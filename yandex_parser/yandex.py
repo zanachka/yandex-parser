@@ -220,7 +220,7 @@ class YandexSerpCleaner(object):
         ur'style=".*?"',
         ur'<noscript>.*?<\/noscript>',
         ur'<link.*?/>',
-        ur'><!--.*?-->',
+        ur'<!--.*?-->',
         ur'<i\s+><\/i>',
         ur'data-bem=".*?"',
         ur'\r|\n',
