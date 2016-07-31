@@ -303,6 +303,21 @@ class YandexParserTestCase(YandexParserTests):
         serp2 = parser.get_serp()
         self.assertDictEqual(serp1, serp2)
 
+    def test27(self):
+        html = self.get_data('2016-07-31.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 29000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'videopartner.kinopoisk.ru')
+        self.assertEquals(serp['sn'][0]['t'], u'КонтрольКиноПоиск')
+        self.assertEquals(serp['sn'][0]['s'], u'')
+        self.assertEquals(serp['sn'][49]['d'], '8serials.ucoz.ru')
+        self.assertEquals(serp['sn'][49]['s'], u'Чтобы смотреть Контроль (2004) онлайн бесплатно - регистрация не нужна и смс отправлять не надо, у нас все БЕСПЛАТНО. Для просмотра бесплатных фильмов, мультфильмов, сериалов...')
+
     def _print_sn(self, serp):
         for sn in serp['sn']:
             print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']

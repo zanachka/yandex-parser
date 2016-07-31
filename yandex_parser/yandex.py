@@ -85,16 +85,22 @@ class YandexParser(object):
         position = 0
         for sn in serp:
             if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
-                or 'serp-item_keyboard-shortcuts-ignore_yes' in sn.attrib['class'] or 'template-object-badge' in sn.attrib['class'] :
+                or 'serp-item_keyboard-shortcuts-ignore_yes' in sn.attrib['class'] or 'template-object-badge' in sn.attrib['class']:
                 #реклама
                 continue
 
-            h2 = sn.find('.//h2')
-            if not h2:
-                raise YandexParserError(u'parse error')
+            is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
 
-            if 'serp-item__title' not in h2.attrib['class']:
-                raise YandexParserError(u'parse error')
+            # видео сниппет
+            if is_video_snippet:
+                h2 = sn.find('.//div/div')
+            else:
+                h2 = sn.find('.//h2')
+                if not h2:
+                    raise YandexParserError(u'parse error')
+
+                if 'serp-item__title' not in h2.attrib['class']:
+                    raise YandexParserError(u'parse error')
 
             infected = 'template-infected' in sn.attrib['class']
             if infected:
@@ -135,8 +141,8 @@ class YandexParser(object):
                 'd': domain,
                 'domain': domain,
                 'p': position,
-                'u': url, 
-                'm': is_map, 
+                'u': url,
+                'm': is_map,
                 't': None,  # title snippet
                 's': None,  # body snippet
                 'i': infected,
@@ -144,7 +150,10 @@ class YandexParser(object):
             }
 
             if 't' in self.snippet_fileds:
-                snippet['t'] = unicode(link.text_content())
+                if is_video_snippet:
+                    snippet['t'] = unicode(sn.find('.//*[@class="video2__title"]').text_content())
+                else:
+                    snippet['t'] = unicode(link.text_content())
 
             if 's' in self.snippet_fileds:
                 decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
