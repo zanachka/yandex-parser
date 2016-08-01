@@ -318,6 +318,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['d'], '8serials.ucoz.ru')
         self.assertEquals(serp['sn'][49]['s'], u'Чтобы смотреть Контроль (2004) онлайн бесплатно - регистрация не нужна и смс отправлять не надо, у нас все БЕСПЛАТНО. Для просмотра бесплатных фильмов, мультфильмов, сериалов...')
 
+    def test28(self):
+        html = self.get_data('2016-08-01.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 2000000)
+        self.assertEquals(len(serp['sn']), 30)
+        self.assertEquals(serp['sn'][0]['d'], 'otvet.mail.ru')
+        self.assertEquals(serp['sn'][0]['t'], u'Ответы@Mail.Ru: Посоветуйте профессионального фотографа в Кемерово. И желательно что бы можно...')
+        self.assertEquals(serp['sn'][0]['s'], u'Пользователь натуська задал вопрос в категории Обработка и печать фото и получил на него 1 ответ...')
+
+        self.assertEquals(serp['sn'][2]['d'], 'xn----gtbm8afgk0g.xn--p1ai')
+        self.assertEquals(serp['sn'][2]['fl'], 1)
+        self.assertEquals(serp['sn'][2]['t'], u'Студия F"')
+
+        self.assertEquals(serp['sn'][29]['d'], 'kindtoys.ru')
+        self.assertEquals(serp['sn'][29]['s'], u'Свадебный фотограф кемерово. 21:42:01 - Диана:Каталог свадебных фирм в Кемерово в рубрике Фотографы.')
+
     def _print_sn(self, serp):
         for sn in serp['sn']:
             print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']

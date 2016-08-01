@@ -146,7 +146,8 @@ class YandexParser(object):
                 't': None,  # title snippet
                 's': None,  # body snippet
                 'i': infected,
-                'savedCopy': None
+                'savedCopy': None,
+                'fl': self._get_fl(sn)
             }
 
             if 't' in self.snippet_fileds:
@@ -190,7 +191,15 @@ class YandexParser(object):
             result = cut_snippets
 
         return result
-    
+
+    def _get_fl(self, sn):
+        els = sn.xpath('.//span[contains(@class,"serp-meta__item")]')
+        if not els:
+            return 0
+        span_text = els[0].text_content() or ''
+        return int(span_text.lower() == u'Ссылки на страницу содержат:'.lower())
+
+
     def get_region_code(self, default=None):
         dom = PyQuery(self.content)
         inputs = dom.find('input[name=rstr]')
