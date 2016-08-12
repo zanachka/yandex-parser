@@ -343,9 +343,22 @@ class YandexParserTestCase(YandexParserTests):
     def test29(self):
         html = self.get_data('2016-08-12.html')
 
-        with self.assertRaises(YandexParserError) as w:
-            parser = YandexParser(html)
-            serp = parser.get_serp()
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 5000000)
+        self.assertEquals(len(serp['sn']), 50)
+        self.assertEquals(serp['sn'][0]['d'], 'kinopoisk.megogo.net')
+        self.assertEquals(serp['sn'][0]['t'], u'НянькиКиноПоиск')
+        self.assertEquals(serp['sn'][0]['s'], u'')
+
+        self.assertEquals(serp['sn'][1]['d'], 'kinogo.co')
+        self.assertEquals(serp['sn'][1]['fl'], 0)
+        self.assertEquals(serp['sn'][1]['t'], u'Няньки (1995) смотреть онлайн бесплатно')
+
+        self.assertEquals(serp['sn'][49]['d'], 'filmix.net')
+        self.assertEquals(serp['sn'][49]['s'], u'Трейлеры, семейный, комедия. Режиссер: Ашот Кещян. В ролях: Николай Наумов, Арарат Кещян, Аглая Шиловская и др. Главная героиня – жесткая и хваткая бизнес-леди по имени Валентина, которая является владелицей успешной туристической компании.')
 
     def _print_sn(self, serp):
         for sn in serp['sn']:

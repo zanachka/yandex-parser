@@ -94,7 +94,7 @@ class YandexParser(object):
 
                 # видео сниппет
                 if is_video_snippet:
-                    h2 = sn.find('.//div/div')
+                    h2 = sn.xpath('.//div[contains(@class,"video2 ")]')[0]
                 else:
                     h2 = sn.find('.//h2')
                     if not h2:
