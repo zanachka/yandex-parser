@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
+
+from yandex_parser.exceptions import YandexParserError
 from yandex_parser.tests import YandexParserTests
 from yandex_parser.yandex import YandexParser
 from yandex_parser.yandex_bar import YandexBarParser
@@ -337,6 +339,13 @@ class YandexParserTestCase(YandexParserTests):
 
         self.assertEquals(serp['sn'][29]['d'], 'kindtoys.ru')
         self.assertEquals(serp['sn'][29]['s'], u'Свадебный фотограф кемерово. 21:42:01 - Диана:Каталог свадебных фирм в Кемерово в рубрике Фотографы.')
+
+    def test29(self):
+        html = self.get_data('2016-08-12.html')
+
+        with self.assertRaises(YandexParserError) as w:
+            parser = YandexParser(html)
+            serp = parser.get_serp()
 
     def _print_sn(self, serp):
         for sn in serp['sn']:

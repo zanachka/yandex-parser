@@ -78,117 +78,120 @@ class YandexParser(object):
 
     def get_snippets(self):
 
-        dom = PyQuery(self.content)
-        serp = dom('.serp-list').children('.serp-item')
+        try:
+            dom = PyQuery(self.content)
+            serp = dom('.serp-list').children('.serp-item')
 
-        snippets = []
-        position = 0
-        for sn in serp:
-            if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
-                or 'serp-item_keyboard-shortcuts-ignore_yes' in sn.attrib['class'] or 'template-object-badge' in sn.attrib['class']:
-                #реклама
-                continue
-
-            is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
-
-            # видео сниппет
-            if is_video_snippet:
-                h2 = sn.find('.//div/div')
-            else:
-                h2 = sn.find('.//h2')
-                if not h2:
-                    raise YandexParserError(u'parse error')
-
-                if 'serp-item__title' not in h2.attrib['class']:
-                    raise YandexParserError(u'parse error')
-
-            infected = 'template-infected' in sn.attrib['class']
-            if infected:
-                link = h2
-                url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
-            else:
-                link = h2.find('a')
-                url = link.attrib['href']
-
-            #Яндекс жжет. Берем домен из гринурла
-            if url == 'http://':
-                html = etree.tostring(sn)
-                pattern = re.compile(ur'<div class="serp-item__greenurl.*?<a class="link serp-url__link".*?>(.*?)</a>', re.I | re.M | re.S)
-                res = pattern.search(html)
-                if res:
-                    domain = re.sub(ur'<[^>]+>', '', res.group(1), flags=re.I | re.M | re.S)
-                    domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
-                    url = 'http://{}'.format(domain)
-
-            is_map = url.startswith('http://maps.yandex.ru')
-            position += 1
-
-            if 'infected' in url:
-                match_url_infected = self.patterns['infected'].match(url)
-                if match_url_infected:
-                    url = urllib.unquote(match_url_infected.group(1))
-                    infected = True
-
-            try:
-                domain = get_full_domain_without_scheme(url)
-            except UnicodeError as e:
-                raise e
-
-            if ':' in domain:
-                domain = re.sub(ur':\d+$', '', domain)
-
-            snippet = {
-                'd': domain,
-                'domain': domain,
-                'p': position,
-                'u': url,
-                'm': is_map,
-                't': None,  # title snippet
-                's': None,  # body snippet
-                'i': infected,
-                'savedCopy': None,
-                'fl': self._get_fl(sn)
-            }
-
-            if 't' in self.snippet_fileds:
-                if is_video_snippet:
-                    snippet['t'] = unicode(sn.find('.//*[@class="video2__title"]').text_content())
-                else:
-                    snippet['t'] = unicode(link.text_content())
-
-            if 's' in self.snippet_fileds:
-                decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
-                            or sn.xpath('.//div[contains(@class,"serp-item__data")]') \
-                            or sn.xpath('.//div[contains(@class,"social-snippet2__text")]') \
-                            or sn.xpath('.//div[contains(@class,"organic__text")]')
-                snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
-                snippet['s'] = snippet['s'] or ''
-            div_saved_copy_link = sn.xpath('.//div[contains(@class,"popup2")]')
-            if div_saved_copy_link:
-                attrib = div_saved_copy_link[0].find('a').attrib
-                if 'href' in attrib:
-                    snippet['savedCopy'] = div_saved_copy_link[0].find('a').attrib['href']
-                else:
-                    snippet['savedCopy'] = None
-
-            snippets.append(snippet)
-        result = snippets
-
-        pagecount = self.get_pagecount()
-        len_snippets = len(snippets)
-        if pagecount > 50 and len_snippets % 10 != 0:
-            cut_snippets = []
-            # в этом случае убираем поддомены яндекса из серпа, так чтобы получилось число кратное 10
-            need_delete = len_snippets - len_snippets / 10  * 10
-            p = 0
-            for sn in snippets:
-                if need_delete and re.search(ur'^(?:.+\.|)yandex\.ru$', sn['d'], re.I):
-                    need_delete -= 1
+            snippets = []
+            position = 0
+            for sn in serp:
+                if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
+                    or 'serp-item_keyboard-shortcuts-ignore_yes' in sn.attrib['class'] or 'template-object-badge' in sn.attrib['class']:
+                    #реклама
                     continue
-                p += 1
-                sn['p'] = p
-                cut_snippets.append(sn)
-            result = cut_snippets
+
+                is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
+
+                # видео сниппет
+                if is_video_snippet:
+                    h2 = sn.find('.//div/div')
+                else:
+                    h2 = sn.find('.//h2')
+                    if not h2:
+                        raise YandexParserError(u'parse error')
+
+                    if 'serp-item__title' not in h2.attrib['class']:
+                        raise YandexParserError(u'parse error')
+
+                infected = 'template-infected' in sn.attrib['class']
+                if infected:
+                    link = h2
+                    url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
+                else:
+                    link = h2.find('a')
+                    url = link.attrib['href']
+
+                #Яндекс жжет. Берем домен из гринурла
+                if url == 'http://':
+                    html = etree.tostring(sn)
+                    pattern = re.compile(ur'<div class="serp-item__greenurl.*?<a class="link serp-url__link".*?>(.*?)</a>', re.I | re.M | re.S)
+                    res = pattern.search(html)
+                    if res:
+                        domain = re.sub(ur'<[^>]+>', '', res.group(1), flags=re.I | re.M | re.S)
+                        domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
+                        url = 'http://{}'.format(domain)
+
+                is_map = url.startswith('http://maps.yandex.ru')
+                position += 1
+
+                if 'infected' in url:
+                    match_url_infected = self.patterns['infected'].match(url)
+                    if match_url_infected:
+                        url = urllib.unquote(match_url_infected.group(1))
+                        infected = True
+
+                try:
+                    domain = get_full_domain_without_scheme(url)
+                except UnicodeError as e:
+                    raise e
+
+                if ':' in domain:
+                    domain = re.sub(ur':\d+$', '', domain)
+
+                snippet = {
+                    'd': domain,
+                    'domain': domain,
+                    'p': position,
+                    'u': url,
+                    'm': is_map,
+                    't': None,  # title snippet
+                    's': None,  # body snippet
+                    'i': infected,
+                    'savedCopy': None,
+                    'fl': self._get_fl(sn)
+                }
+
+                if 't' in self.snippet_fileds:
+                    if is_video_snippet:
+                        snippet['t'] = unicode(sn.find('.//*[@class="video2__title"]').text_content())
+                    else:
+                        snippet['t'] = unicode(link.text_content())
+
+                if 's' in self.snippet_fileds:
+                    decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
+                                or sn.xpath('.//div[contains(@class,"serp-item__data")]') \
+                                or sn.xpath('.//div[contains(@class,"social-snippet2__text")]') \
+                                or sn.xpath('.//div[contains(@class,"organic__text")]')
+                    snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
+                    snippet['s'] = snippet['s'] or ''
+                div_saved_copy_link = sn.xpath('.//div[contains(@class,"popup2")]')
+                if div_saved_copy_link:
+                    attrib = div_saved_copy_link[0].find('a').attrib
+                    if 'href' in attrib:
+                        snippet['savedCopy'] = div_saved_copy_link[0].find('a').attrib['href']
+                    else:
+                        snippet['savedCopy'] = None
+
+                snippets.append(snippet)
+            result = snippets
+
+            pagecount = self.get_pagecount()
+            len_snippets = len(snippets)
+            if pagecount > 50 and len_snippets % 10 != 0:
+                cut_snippets = []
+                # в этом случае убираем поддомены яндекса из серпа, так чтобы получилось число кратное 10
+                need_delete = len_snippets - len_snippets / 10  * 10
+                p = 0
+                for sn in snippets:
+                    if need_delete and re.search(ur'^(?:.+\.|)yandex\.ru$', sn['d'], re.I):
+                        need_delete -= 1
+                        continue
+                    p += 1
+                    sn['p'] = p
+                    cut_snippets.append(sn)
+                result = cut_snippets
+        except Exception as e:
+            raise YandexParserError(str(e))
 
         return result
 
