@@ -170,9 +170,9 @@ class YandexParser(object):
                     snippet['s'] = snippet['s'] or ''
                 div_saved_copy_link = sn.xpath('.//div[contains(@class,"popup2")]')
                 if div_saved_copy_link:
-                    attrib = div_saved_copy_link[0].find('a').attrib
-                    if 'href' in attrib:
-                        snippet['savedCopy'] = div_saved_copy_link[0].find('a').attrib['href']
+                    attrib = div_saved_copy_link[0].find('a')
+                    if attrib and 'href' in attrib.attrib:
+                        snippet['savedCopy'] = attrib.attrib['href']
                     else:
                         snippet['savedCopy'] = None
 
