@@ -360,6 +360,24 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['d'], 'filmix.net')
         self.assertEquals(serp['sn'][49]['s'], u'Трейлеры, семейный, комедия. Режиссер: Ашот Кещян. В ролях: Николай Наумов, Арарат Кещян, Аглая Шиловская и др. Главная героиня – жесткая и хваткая бизнес-леди по имени Валентина, которая является владелицей успешной туристической компании.')
 
+    def test30(self):
+        html = self.get_data('2016-08-15.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 9000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'ttfr.ru')
+        self.assertEquals(serp['sn'][0]['t'], u'Федерация настольного тенниса России')
+        self.assertEquals(serp['sn'][0]['s'], u'Календарь и результаты соревнований. Рейтинги теннисистов. Описание структуры федерации. Список официальных документов. Новости настольного тенниса. Контакты.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'ttplayspb.com')
+        self.assertEquals(serp['sn'][49]['t'], u'ttplayspb - forum ttplayspb')
+        self.assertEquals(serp['sn'][49]['s'], u'Admin » 06 авг 2016, 15:56 » в форуме World table tennis. ... ЛЮБИТЕЛЬСКИЙ настольный теннис в г.Санкт-Петербург.')
+
     def _print_sn(self, serp):
         for sn in serp['sn']:
             print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']

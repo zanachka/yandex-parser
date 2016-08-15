@@ -90,6 +90,10 @@ class YandexParser(object):
                     #реклама
                     continue
 
+                # игнорим "расписание, результаты и трансляции на Яндексе"
+                if 't-sport-' in sn.attrib['class']:
+                    continue
+
                 is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
 
                 # видео сниппет
