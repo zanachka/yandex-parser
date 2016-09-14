@@ -94,6 +94,10 @@ class YandexParser(object):
                 if 't-sport-' in sn.attrib['class']:
                     continue
 
+                # игнорим предложения на маркете
+                if 't-market-offers' in sn.attrib['class']:
+                    continue
+
                 is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
 
                 # видео сниппет
@@ -104,7 +108,7 @@ class YandexParser(object):
                     if not h2:
                         raise YandexParserError(u'parse error')
 
-                    if 'serp-item__title' not in h2.attrib['class']:
+                    if 'serp-item__title' not in h2.attrib['class'] and 'organic__title-wrapper' not in h2.attrib['class']:
                         raise YandexParserError(u'parse error')
 
                 infected = 'template-infected' in sn.attrib['class']
