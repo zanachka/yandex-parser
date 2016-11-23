@@ -437,6 +437,87 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Стиральные машины Bosch встраиваемые - цены')
         self.assertEquals(serp['sn'][49]['s'], u'Встраиваемые стиральные машины часто устанавливаются на кухню или в ванную комнату. Они позволяют сохранить единый дизайн интерьера...')
 
+    def test34(self):
+        html = self.get_data('context-2016-11-23.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
+        self.assertEquals(serp['sn'][0]['t'], u'Квартиры от 1,8 млн.руб. Спешите! / barkli-md.ru')
+        self.assertEquals(serp['sn'][0]['vu'], u'barkli-md.ru/КупитьКвартиру')
+        self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/1in6qAYC42440000gO10ZhftLOC5KfK1cm9kGxS198YtUZ7c1edtcy6hkafdiGoTeEyk5PgpdSkK1AQB28gw1xWA1zouRVFO2BsrbZmW1gekfQ0ka0cyh8991eq1tG7Ua2JqaRNHnLW9b_1zAPhsKCHP1fE53Pa5GeoZ3oW9jgmtlmArgF9J0g2bHIeHhwCFA0cpe31T1BIeybC2sQL5AX7Qe31T19IQsWwdbhSBgB10MNC7fB000006hlDn0edKpz0E1h43igGG00AveEyk5Rlj09z9MbYYui7__________m_2yj8q-WXzX1iAn075Zm_J0ku1s_zyDGeTlu1b0T-53V84vP3oA-s3A7WW?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%83')
+
+        self.assertEquals(serp['sn'][1]['t'], u'Купите апартаменты в ЗАО – Акция!')
+        self.assertEquals(serp['sn'][1]['vu'], u'lp.matchpointhouse.ru/Match-Point')
+        self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/1in6q6Xtz8a40000gO10ZhftLOC5KfK1cm9kGxS193A8l4lxOGI9-nVb1lvG0B02c8qKdQTyB1MQfSwF1AP5YhiouAW6tBwyQNO8lRvYQ-K5gYwbeP5A2RokmVS8ZG7T0TwG9FIHjT75M0cNy7qfclPGn5a6auKDcGL2ZAthkWIsh4Ph0RMet3C1eAsaUWclhUkw1BEeyMW2jAZSCm7PhM2I4jgelRW4b98f4AUHc1UejaJoN0Eai00000Qkyt42YTJFq0u6iGEof1000hcdV2mLk-q0dqbQMABYmV__________3yBoqZJw27s46mh5Zm_J0ku1s_zyDGeTlu1b0T-53V84vP3oA-s3A7WW?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%83')
+
+        self.assertEquals(serp['sn'][2]['t'], u'ЖК Остоженка 11. Застройщик – Индивидуальный проект')
+        self.assertEquals(serp['sn'][2]['vu'], u'ostozenka11.ru')
+        self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/1in6q1GsVT440000gO10ZhftLOC5KfK1cm9kGxS193E8jRalGWA9_xs6WYwZSj0AdQ5u1nQQggjL2AOZYh44OCGAtBX9f_KBlR-b9Fi7gYwbeG-F2uq1tG7Ua2JqaRNHnLW9b_1zAPhsKCHP1fE53Pa5GeojxrmEjgmKJmIrgD2c0w2eLc0PhwtlN0wpg9np1hIeqAO3sQ0JbndQe8U11fIRHGwdbNq7gA0LtI6ai00000Qkyt42YTJFq0u6iGEof1000hcXU0SMk-q0dqbQMABYmV__________3yBoqZJw27s46mh5Zm_J0ku1s_zyDGeTlu1b0T-53V84vP3oA-s3A7yU?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%83')
+
+        self.assertEquals(serp['sn'][3]['t'], u'Новостройки в Москве и области / pik.ru')
+        self.assertEquals(serp['sn'][3]['vu'], u'pik.ru/Группа-Компаний-ПИК')
+        self.assertEquals(serp['sn'][3]['u'], 'http://yabs.yandex.ru/count/1in6q2y0JL040000gO10ZhftLOC5KfK2cm5kGxS2BG68iUGfqmQ9g43LV9YD59sc-ouLfeO8Yh74nEK7tBOAnvq9lRr_U9a6gYwbh78N2hoa5WKAZG7T0TwG9FJqiaN801cHjT75M0cNy7qfclPGn5a6auKDcGL2ZA1Vz0Qsg1mM0hMWeyG1eALOyWsle5_q1hEWjui3jA2Zn07PfQ502DgW71a2b9yviwUNNGUei41PSmUai00000Qkyt42YTJFq0u6iG6of1400hcc-ouLk-q0dqbQMABYmV__________3yBoqZJw27s46mh5Zm_J0jIJoepk0Tl_V3KA7R-0PG7VXGtbaF8hxOCeVny0?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%83')
+
+        self.assertEquals(serp['sn'][4]['t'], u'Купите квартиру в 12 км от МКАД! / pirogovo-riviera.ru')
+        self.assertEquals(serp['sn'][4]['vu'], u'pirogovo-riviera.ru/купить квартиру')
+        self.assertEquals(serp['sn'][4]['u'], 'http://yabs.yandex.ru/count/1in6q4pJLPm40000gO10ZhftLOC5KfK2cm5kGxS2BG4oYBCUot45YQKhctoTg-kE4gPMYhQDBACAtBI1-xeBlR6y8TS7gYwbgVPv2xogVc4BZG7T0TwG9FJqjZsDqXoHjT75M0cNy7qfclPGn5a6auKDcGL2ZAZZbWgsf4Gj0xMeDR42eA3oO0olgEEM2hEWgYK3jAWriGBPeF9W3DgWgYK3b9TstwUQd0Eei41PSmUai00000Qkyt42YTJFq0u6iG6of1400hchwuuIk-q0dqbQMABYmV__________3yBoqZJw27s46mh40SMF3zC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3A7eV?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%83')
+
+        self.assertEquals(serp['sn'][5]['t'], u'Купить квартиру в Красногорске – От 2,7 млн. рублей!')
+        self.assertEquals(serp['sn'][5]['vu'], u'urbangroup.ru/Красногорск-квартиры')
+        self.assertEquals(serp['sn'][5]['u'], 'http://yabs.yandex.ru/count/1in6qAwFyMa40000gO10ZhftLOC5KfK2cm5kGxS2BG4pYAKTBVA9lOWgZWMThPEc2QOEYhT-2-G9tB40lYeBlRZ6CeG7gYwbhnO52xoX8yS4ZG7T0TwG9FIHjT75M0cNy7qfclPGn5a6auKDcGL2ZAlArmcseF3p0hMWe802eAl9K0glgyhN2REWOvy2jA2WW0BPbHBmsf09FPINRzgdcWe4gB10MNC7fB000006hlDn0edKpz0E1h41igGH00AvhPEc2Rlj09z9MbYYui7__________m_2yj8q-WXzX1iAnOyFqmBKdyYbxW7R_tmr2Xs_W6K1tuKDvP3oA-s3A7mU?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%83')
+
+        self.assertEquals(serp['sn'][6]['t'], u'Выкуп квартир в Москве! – Максимально дорого и быстро!')
+        self.assertEquals(serp['sn'][6]['vu'], u'elite-tn.ru')
+        self.assertEquals(serp['sn'][6]['u'], 'http://yabs.yandex.ru/count/1in6q3SxX_040000gO10ZhftLOC5KfK2cm5kGxS2BG4qYBFNC281YQX0rNoOH9sXFaa4fX6AiWHILGRSiYCL9WYzjLqQjGMgBgManz88lAA3f0YD0Tq1tf0azFIocqX45f6rqSLO2PVmVIcQzb34MGQJXGsP1KACgu9D2RQWU5q2jQ1uNGAWfKLd2w-hWaq9iw0mvWAqe7XT0jcbHMSBsg0mvWAKacFHfv9e1AYcEST-fB000006hlDn0edKpz0E1h41igGH00AveJv91Blj09z9MbYYui7__________m_2yj8q-WXzX1iAn075Z0_J0ku1s_zyDGeTlu1b0T-53Us3A7yU?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%83')
+
+    def test35(self):
+        html = self.get_data('context-2016-11-23-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
+        self.assertEquals(serp['sn'][0]['t'], u'Столешницы из ДСП купить / лавуччи.рф')
+        self.assertEquals(serp['sn'][0]['vu'], u'лавуччи.рф')
+        self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/3B7F6lnBK3m40000gO10ZhYMLuC5KfK1cm9kGxS198Yti9zH18cZbaK3c0UTfXWp5QP4YhCB1gO3tBqtR_i4lRNGNAm3gYwbf-cD1hobSri6ZG7T0TwG9FIHlK_lp0kNy3Z14_PGn5a6auKDcGL2ZAkUr06sa9QCjP0aTw2Zi3C2hwkUr06pc4-Fj90aTzcZi3C2sfXFZvIHYXUdbkabgA5H20wai00000Qk-hw0BQT0KWy6iG6of3000hcc63CLk-q0dqbQMABYmV__________3yBm6M5GecpNrmN5ZW_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoXy7G00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB%D0%B5%D1%88%D0%BD%D0%B8%D1%86%D1%83')
+
+        self.assertEquals(serp['sn'][1]['t'], u'Купить деревянную столешницу – со скидкой 18%')
+        self.assertEquals(serp['sn'][1]['vu'], u'dilektwood.ru/столешницы')
+        self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/3B7F6gwpsaS40000gO10ZhYMLuC5KfK1cm9kGxS193A8jbDLC069iqofiWIOZHITgcn34AOIYhUdDNC7tBtgYq89lR0I9606gYwbg0JH2Roexcu3ZG7T0TwG9FIHlK_lp0kNy3Z14_PGn5a6auKDcGL2ZACTYWAsd0Z3jPX8fQ2hRi4IhwCTYWApeBJ41BIOIANPgsx14jgWjCG4b95S5wUGLIUei41PSmUai00000Qk-hw0BQT0KWy6iG6of1000hcgR4CGk-q0dqbQMABYmV__________3yBm6M5GecpNrmN40SMF3zC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3A7mU?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB%D0%B5%D1%88%D0%BD%D0%B8%D1%86%D1%83')
+
+        self.assertEquals(serp['sn'][2]['t'], u'Купить столешницу. Качество! – Искусственный камень!')
+        self.assertEquals(serp['sn'][2]['vu'], u'akrilion.ru')
+        self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/3B7F6h81oEC40000gO10ZhYMLuC5KfK1cm9kGxS193E8lhOKe0M9jW56CGMOZHITeDrQ5QPPYhvw89W9tBsPwUa9lRWZfyO6gYwbffFT2hoW9H8AZG7T0TwG9FJqj7iDL1cHlK_lp0kNy3Z14_PGn5a6auKDcGL2ZAtC60Asb0gXjPXvYA2WB402hwtC60Apa7oIj9XvYDcWB402sf1yafILLXYdaXubgBxzgyW5fB000006hlg-W2sdG58F1h41igGG00AveDrQ5Rlj09z9MbYYui7__________m_2y1bXKA9irzS5n075Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoXu7m00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB%D0%B5%D1%88%D0%BD%D0%B8%D1%86%D1%83')
+
+        self.assertEquals(serp['sn'][3]['t'], u'Купить деревянную столешницу – со скидкой 18%')
+        self.assertEquals(serp['sn'][3]['vu'], u'lesnoywood.ru/столешницы')
+        self.assertEquals(serp['sn'][3]['u'], 'http://yabs.yandex.ru/count/3B7F6ife0Ru40000gO10ZhYMLuC5KfK2cm5kGxS2BG68lk4fW069iqofiWIOZHITgChW4QONYh4IcEi9tBEilwyAlRyvypm7gYwbehMv2hoj9743ZG7T0TwG9FIHlK_lp0kNy3Z14_PGn5a6auKDcGL2ZA3ZBWAscAgdjP0NZg2hRi4Ihw3ZBWApeBJ41BIG5uxPgsx14jgWjCG4b9UeuwUQo1EeiE7xNG6ai00000Qk-hw0BQT0KWy6iG6of1400hceok0Hk-q0dqbQMABYmV__________3yBm6M5GecpNrmN5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoXw7W00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB%D0%B5%D1%88%D0%BD%D0%B8%D1%86%D1%83')
+
+        self.assertEquals(serp['sn'][4]['t'], u'Кварцевые столешницы! – Большой выбор цветов')
+        self.assertEquals(serp['sn'][4]['vu'], u'synstone.ru/кварцевые-столешницы')
+        self.assertEquals(serp['sn'][4]['u'], 'http://yabs.yandex.ru/count/3B7F6WckWtK40000gO10ZhYMLuC5KfK2cm5kGxS2BG4oYASVBkA9y4F4EVMuUB8Cc8qKdQph1XEQedugzwODYhBxnUS8tBARapSAlRARIlK6gYwbhW5w2hodkciAZG7T0TwG9FIHlK_lp0kNy3Z14_PGn5a6auKDcGL2ZAj3WWIsg4TQ0RMWTIK1eAXeM0MlgqE21BEevbi1jA1r9G7Pg6XO1Tgevbi1b9j3iAUQ1mQeiVvPrGIai00000Qk-hw0BQT0KWy6iGEof1400hciwmOJk-q0dqbQMABYmV__________3yBm6M5GecpNrmN5Zm_J0ku1s_zyDGeTlu1b0T-53V84vP3oA-s3A7WW?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB%D0%B5%D1%88%D0%BD%D0%B8%D1%86%D1%83')
+
+        self.assertEquals(serp['sn'][5]['t'], u'Гранитные столешницы / albiongranit.ru')
+        self.assertEquals(serp['sn'][5]['vu'], u'albiongranit.ru/Гранитные-столешницы')
+        self.assertEquals(serp['sn'][5]['u'], 'http://yabs.yandex.ru/count/3B7F6frnX0K40000gO10ZhYMLuC5KfK2cm5kGxS2BG4pYAb8jz29yAaX9cjCJFmEc8qKdQ35hH6QkU0ak0Ic38gud_E41zor0yTI2Rsvdvfg1gekfQTT80ED0Tq1teW-aRrFxymBb_0umHFsKCHP1fE53Pa5Geobt6a3jgWe1W6ra2lUeA1ol0ElfTnf0xEGAlEqa2lUsQjG80JQe8uC0PIHcwMddXa9g9be_QIm00001gxwle0jfq1I3mQn0xAa4G02kQ35hH6xxG2VILfOekB1__________yFml0POL2YRDVN1SG1nOyFqmBk0Tl_V3KA7R-0PG7VXGto4UMGyYljWoXu7m00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB%D0%B5%D1%88%D0%BD%D0%B8%D1%86%D1%83')
+
+        self.assertEquals(serp['sn'][6]['t'], u'Купить столешницу – Искусственный камень')
+        self.assertEquals(serp['sn'][6]['vu'], u'stolkit.ru/столешницы')
+        self.assertEquals(serp['sn'][6]['u'], 'http://yabs.yandex.ru/count/3B7F6ZVKFwG40000gO10ZhYMLuC5KfK2cm5kGxS2BG4qYBoE4T04YQVjRNsOZHITeqOJ4wPCYhj55N8AtBUcJgeBlRmG2Sy7gYwbgjTQ2xoisbaBZG7T0TwG9FJqlH1Rl1oHlK_lp0kNy3Z14_PGn5a6auKDcGL2ZADCNmEsfFq20RMOUzkWfKd00w-ZJ5y3iv0azBIOUzlPfKd00zgG9FIKadtffvb32QYeYIQPfB000006hlg-W2sdG58F1h41igGH00AveqOJ4xlj09z9MbYYui7__________m_2y1bXKA9irzS5n075Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoXu7m00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB%D0%B5%D1%88%D0%BD%D0%B8%D1%86%D1%83')
+
+    def _print_context_sn(self, serp):
+        for sn in serp['sn']:
+            print
+            print sn['u']
+            print sn['t']
+            print sn['vu']
+
     def _print_sn(self, serp):
         for sn in serp['sn']:
             print sn['p'], sn['d'], sn['u'], sn['t'], sn['s']

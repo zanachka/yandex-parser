@@ -22,6 +22,32 @@ class YandexParser(object):
         self.content = to_unicode(content)
         self.snippet_fileds = snippet_fileds
 
+    def get_context_snippet_title(self, content):
+        res = re.search(ur'<h2[^>]*?>\s*<a[^>]*?href="([^"]+?)"[^>]*?>\s*(.*?)\s*</a>', content, re.I | re.M | re.S)
+        if not res:
+            raise YandexParserError(u'Не удалось распарсить тайтл в сниппете: {0}'.format(content))
+        return {'u': res.group(1), 't': YandexParser.strip_tags(res.group(2))}
+
+    def get_context_visible_url(self, content):
+        res = re.search(ur'<div\s*class="path\s*organic__path"><a[^>]*?href="[^"]+?"[^>]*?>\s*(.*?)\s*</a>\s*</div>', content, re.I | re.M | re.S)
+        if not res:
+            return
+        return YandexParser.strip_tags(res.group(1))
+
+    def get_context_serp(self):
+        snippets = re.findall(
+            ur'(<li\s*class="serp-item\s+serp-adv-item".*?</div>\s*</div>\s*</li>)',
+            self.content,
+            re.I | re.M | re.S
+        )
+        sn = []
+        for snippet in snippets:
+            item = self.get_context_snippet_title(snippet)
+            item['vu'] = self.get_context_visible_url(snippet)
+            sn.append(item)
+
+        return {'pc': len(sn), 'sn': sn}
+
     def get_serp(self):
         if self.is_not_found():
             return {'pc': 0, 'sn': []}
@@ -233,6 +259,10 @@ class YandexParser(object):
             'form_action': form.action,
             'form_data': form_data,
         }
+
+    @classmethod
+    def strip_tags(self, html):
+        return re.sub(ur' {2,}', ' ', re.sub(ur'<[^>]*?>', '', html.replace('&nbsp;', ' '))).strip()
 
 
 class YandexSerpCleaner(object):
