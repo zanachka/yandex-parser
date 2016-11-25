@@ -36,7 +36,7 @@ class YandexParser(object):
 
     def get_context_serp(self):
         snippets = re.findall(
-            ur'(<li\s*class="serp-item\s+serp-adv-item".*?</div>\s*</div>\s*</li>)',
+            ur'(<(?:li|div)\s*class="serp-item\s+serp-adv-item".*?</div>\s*</div>\s*</(?:li|div)>)',
             self.content,
             re.I | re.M | re.S
         )
