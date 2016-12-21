@@ -195,7 +195,8 @@ class YandexParser(object):
                     decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
                                 or sn.xpath('.//div[contains(@class,"serp-item__data")]') \
                                 or sn.xpath('.//div[contains(@class,"social-snippet2__text")]') \
-                                or sn.xpath('.//div[contains(@class,"organic__text")]')
+                                or sn.xpath('.//div[contains(@class,"organic__text")]') \
+                                or sn.xpath('.//div[contains(@class,"extended-text__short")]') # для мобильной выдачи
                     snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
                     snippet['s'] = snippet['s'] or ''
                 div_saved_copy_link = sn.xpath('.//div[contains(@class,"popup2")]')

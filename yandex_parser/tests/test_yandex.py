@@ -564,6 +564,36 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][10]['vu'], u'mebelmarket.su')
         self.assertEquals(serp['sn'][10]['u'], 'http://yabs.yandex.ru/count/5MIiUDlNGSq40000gO10ZhhdVeC5KfK2cmLkGxS2BG4v0OYqusv10ecsiQEK0fW7dQudfmgc8ugn4hTZ0jomywbk0xsqXOQb0gekfQvi5WMD0Tq1tf0az96-EPsn3PVWLyV1yI-HhfE13AA53Pa5GeoLcWcscE42jP1n0g2LcWclbPe9iv1n0hIGSGBPbPe9sf1n0fIS-WgddUe7gAEUXXEam00007mDhlB2W639yx4O1h41igmm30AvhYUd2hlj09z9MbYYui7__________m_2yKtdqnRp0uW8qmBk0Tl_V3KA7R-0PG7VWGpbaF8hxOCeVnm0?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
 
+    def test37(self):
+        html = self.get_data('2016-12-21.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'spec.drom.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://spec.drom.ru/moskva/bus/')
+        self.assertEquals(serp['sn'][0]['t'], u'Продажа автобусов в Москве. Цены. Купить автобус...')
+        self.assertEquals(serp['sn'][0]['s'], u'Дром Спецтехника и грузовики: объявления о продаже и покупке Купить автобус б/у или новый. ... Автобус Higer KLQ 6928 Q 35 мест 2013 год Москва, 6 700 куб. см., 35 мест. Читать еще')
+
+        self.assertEquals(serp['sn'][1]['d'], 'm.irr.ru')
+        self.assertEquals(serp['sn'][1]['u'], 'http://m.irr.ru/cars/commercial/buses/')
+        self.assertEquals(serp['sn'][1]['t'], u'Автобусы в Москве и области продажа, цены | купить автобус...')
+        self.assertEquals(serp['sn'][1]['s'], u'ИЗ РУК В РУКИ - Коммерческий транспорт в Москве и области. Купить автобус б/у или новый - частные объявления и предложения дилеров. Читать еще')
+
+        self.assertEquals(serp['sn'][2]['d'], 'farpost.ru')
+        self.assertEquals(serp['sn'][2]['u'], 'http://www.farpost.ru/moskva/auto/spectech/bus/')
+        self.assertEquals(serp['sn'][2]['t'], u'Купить АВТОБУС в Москве. Новый или БУ автобус. Цены. Фото.')
+        self.assertEquals(serp['sn'][2]['s'], u'Купить автобус в Москве. Продажа автобусов в Москве с фото. Аукционные, новые и б.у. Производство: Корея, Япония, Китай, Россия и др. Читать еще')
+
+        self.assertEquals(serp['sn'][49]['d'], 'moskva.regmarkets.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://moskva.regmarkets.ru/igrushechnye-avtobusy-11419/')
+        self.assertEquals(serp['sn'][49]['t'], u'Игрушечные автобусы модели, паз, лиаз купить в Москве.')
+        self.assertEquals(serp['sn'][49]['s'], u'Чтобы узнать, как купить модель игрушечного автобуса паз, с открывающимися дверями в Москве по доступной цене, воспользуйтесь нашим сервисом. Читать еще')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
