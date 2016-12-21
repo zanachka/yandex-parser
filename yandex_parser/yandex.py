@@ -114,11 +114,7 @@ class YandexParser(object):
                 if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
                     or 'serp-item_keyboard-shortcuts-ignore_yes' in sn.attrib['class'] \
                     or 'template-object-badge' in sn.attrib['class']\
-                    or (
-                        'template-composite ' in sn.attrib['class']
-                        and 't-construct-adapter__extended-snippet' not in sn.attrib['class']
-                        and 't-construct-adapter__free-video' not in sn.attrib['class']
-                    ):
+                    or 't-construct-adapter__companies' in sn.attrib['class']:
                     #реклама
                     continue
 

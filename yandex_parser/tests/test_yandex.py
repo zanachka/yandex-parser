@@ -634,6 +634,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Каталог')
         self.assertEquals(serp['sn'][49]['s'], u'Каталог. «Современная коллекция/Модерн» (17) «Городская классика» (18) «Классика» (20). Если классика – вне моды, то модерн всегда на самом ее пике. ... Отправить отзыв директору. Ваше имя*. Телефон*. Читать еще')
 
+    def test40(self):
+        html = self.get_data('2016-12-21-3.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'm.avito.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://m.avito.ru/samarskaya_oblast/telefony/iphone?p=3')
+        self.assertEquals(serp['sn'][0]['t'], u'Купить iPhone 7, 6S, 6, 5SE, 5S, 5, 4S, 4 в Самарской области...')
+        self.assertEquals(serp['sn'][0]['s'], u'Бесплатные объявления о продаже мобильных телефонов iPhone 7, Айфон 6, iPhone 6S, 5SE, iPhone 5S, 5C, Айфон 5, 4S 4 в Самарской области. ... Самара. Вчера, 21:59. Айфон 4s 8Гб. Читать еще')
+
+        self.assertEquals(serp['sn'][49]['d'], 'electronics.wikimart.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://electronics.wikimart.ru/communication/cell/tag/iphone4/')
+        self.assertEquals(serp['sn'][49]['t'], u'Купить iPhone 4 в Москве в интернет магазине. Айфон 4: цены...')
+        self.assertEquals(serp['sn'][49]['s'], u'7 моделей Apple iPhone 4 от 5335 руб. в наличии! Покупайте Apple iPhone 4 ✈✈✈ с доставкой на Викимарт. ... Apple iPhone 4 отличаются дорогими высококачественными материалами, большим количеством приложений и функций. Читать еще')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
