@@ -614,6 +614,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Ноутбуки Acer в Челябинске - Портал выгодных покупок BLIZKO.ru')
         self.assertEquals(serp['sn'][49]['s'], u'Вам нужно купить в Челябинске ноутбук марки Acer? Данную задачу будет легко решить с помощью раздела «Ноутбуки». ... Каталог актуальных акций и распродаж. Читать еще')
 
+    def test39(self):
+        html = self.get_data('2016-12-21-2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'svyaznoy.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.svyaznoy.ru/catalog/phone/224')
+        self.assertEquals(serp['sn'][0]['t'], u'Мобильные телефоны - купить сотовый телефон в кредит, цены...')
+        self.assertEquals(serp['sn'][0]['s'], u'Интернет магазин Связной предлагает ознакомиться с каталогом мобильных телефонов, в котором представлены модели с ценами от 1 390 до 76 890 рублей. Читать еще')
+
+        self.assertEquals(serp['sn'][49]['d'], 'lorena-kuhni.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://lorena-kuhni.ru/catalog/')
+        self.assertEquals(serp['sn'][49]['t'], u'Каталог')
+        self.assertEquals(serp['sn'][49]['s'], u'Каталог. «Современная коллекция/Модерн» (17) «Городская классика» (18) «Классика» (20). Если классика – вне моды, то модерн всегда на самом ее пике. ... Отправить отзыв директору. Ваше имя*. Телефон*. Читать еще')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
