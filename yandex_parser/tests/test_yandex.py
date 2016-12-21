@@ -594,6 +594,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Игрушечные автобусы модели, паз, лиаз купить в Москве.')
         self.assertEquals(serp['sn'][49]['s'], u'Чтобы узнать, как купить модель игрушечного автобуса паз, с открывающимися дверями в Москве по доступной цене, воспользуйтесь нашим сервисом. Читать еще')
 
+    def test38(self):
+        html = self.get_data('2016-12-21-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'eldorado.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.eldorado.ru/promo/Notebook_SUPER_Sale/')
+        self.assertEquals(serp['sn'][0]['t'], u'Тотальная распродажа ноутбуков')
+        self.assertEquals(serp['sn'][0]['s'], u'Ноутбуки для бизнесаМаксимальные возможности и свобода передвижений для вас и вашего бизнеса. Вам не обязательно все время находиться на рабочем месте. Читать еще')
+
+        self.assertEquals(serp['sn'][49]['d'], 'chel.blizko.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://chel.blizko.ru/predl/computer/computer/notebook/noutbuki')
+        self.assertEquals(serp['sn'][49]['t'], u'Ноутбуки Acer в Челябинске - Портал выгодных покупок BLIZKO.ru')
+        self.assertEquals(serp['sn'][49]['s'], u'Вам нужно купить в Челябинске ноутбук марки Acer? Данную задачу будет легко решить с помощью раздела «Ноутбуки». ... Каталог актуальных акций и распродаж. Читать еще')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

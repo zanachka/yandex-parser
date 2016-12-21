@@ -124,6 +124,10 @@ class YandexParser(object):
                 if 't-market-offers' in sn.attrib['class']:
                     continue
 
+                # игонорим тизеры
+                if sn.xpath('.//div[contains(@class,"teaser ")]'):
+                    continue
+
                 is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
 
                 # видео сниппет
