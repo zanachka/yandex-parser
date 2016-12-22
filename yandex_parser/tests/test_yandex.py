@@ -654,6 +654,52 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Купить iPhone 4 в Москве в интернет магазине. Айфон 4: цены...')
         self.assertEquals(serp['sn'][49]['s'], u'7 моделей Apple iPhone 4 от 5335 руб. в наличии! Покупайте Apple iPhone 4 ✈✈✈ с доставкой на Викимарт. ... Apple iPhone 4 отличаются дорогими высококачественными материалами, большим количеством приложений и функций. Читать еще')
 
+    def test41(self):
+        html = self.get_data('2016-12-21-4.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'eldorado.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.eldorado.ru/cat/1667707/SONY/')
+        self.assertEquals(serp['sn'][0]['t'], u'MP3-плееры SONY – купить MP3-плеер Sony (Сони), цены, отзывы.')
+        self.assertEquals(serp['sn'][0]['s'], u'Продажа MP3-плееров SONY (Сони). ... В интернет-магазине ЭЛЬДОРАДО можно купить MP3-плеер Сони с гарантией и доставкой. Читать еще')
+
+        # Тут внимание - пустой заголовок сниппета
+        self.assertEquals(serp['sn'][40]['d'], 'sportlifeabout.ru')
+        self.assertEquals(serp['sn'][40]['u'], 'http://sportlifeabout.ru/1/useful-articles/74-obzor-pleera-sony-nw-w273')
+        self.assertEquals(serp['sn'][40]['t'], None)
+        self.assertEquals(serp['sn'][40]['s'], u'В отличие от большинства других плееров Сони, изобилующих различными опциями — одни из которых делают звук «кристально чистым»... Читать еще')
+
+        self.assertEquals(serp['sn'][49]['d'], 'vk.com')
+        self.assertEquals(serp['sn'][49]['u'], 'https://vk.com/topic-35092860_28777272')
+        self.assertEquals(serp['sn'][49]['t'], u'компьютер не "видит" плеер |  Sony NWZ-E463 / NWZ-E464...')
+        self.assertEquals(serp['sn'][49]['s'], u'Последнее время массово компьютеры перестают видеть плееры от сони, вся проблемА в прошивке у плеера... Читать еще')
+
+    def test42(self):
+        html = self.get_data('2016-12-22.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'e-katalog.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.e-katalog.ru/SAMSUNG-GALAXY-S2.htm')
+        self.assertEquals(serp['sn'][0]['t'], u'Samsung Galaxy S2 – купить мобильный телефон, сравнение цен...')
+        self.assertEquals(serp['sn'][0]['s'], u'Закрыть. Шапка. Samsung Galaxy S2. Диагональ дисплея:4.3. ... Быстро привык к оболочке Самсунга. Хорошая цена. Беспокоит Андроид - вопросы постоянных прошивок и прочий геммор, при поддержке Самса - это реализовано не совсем идеально. Читать еще')
+
+        self.assertEquals(serp['sn'][49]['d'], '1galaxy.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.1galaxy.ru/mobilnye-ustrojstva/')
+        self.assertEquals(serp['sn'][49]['t'], u'Мобильные устройства Samsung Galaxy')
+        self.assertEquals(serp['sn'][49]['s'], u'Новый флагман Samsung - Galaxy S7 Edge. Высокотехнологичный дизайн, покрытие 2,5 D Очень стильный и удобный смартфон с невероятно тонким корпусом. Samsung предлагает несколько цветов для вашего корпуса. Читать еще')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

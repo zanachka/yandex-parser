@@ -102,6 +102,77 @@ class YandexParser(object):
     def is_not_found(self):
         return u'По вашему запросу ничего не нашлось' in self.content
 
+    def _get_title_h2(self, sn, is_video_snippet):
+        if is_video_snippet:
+            return sn.xpath('.//div[contains(@class,"video2 ")]')[0]
+
+        return sn.find('.//h2')
+
+    def _get_url_from_mobile_greenurl(self, sn):
+        div = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]')
+        if not div:
+            raise YandexParserError(u'Тайтла нет, div greenurl - нет')
+
+        url = div[0].xpath('.//a')
+        if not url:
+            raise YandexParserError(u'Тайтла нет, greenurl - нет')
+        return url[0].attrib['href']
+
+    def _get_true_url(self, sn, url):
+        #Яндекс жжет. Берем домен из гринурла
+        infected = False
+
+        if url == 'http://':
+            html = etree.tostring(sn)
+            pattern = re.compile(ur'<div class="serp-item__greenurl.*?<a class="link serp-url__link".*?>(.*?)</a>', re.I | re.M | re.S)
+            res = pattern.search(html)
+            if res:
+                domain = re.sub(ur'<[^>]+>', '', res.group(1), flags=re.I | re.M | re.S)
+                domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
+                url = 'http://{}'.format(domain)
+
+        if 'infected' in url:
+            match_url_infected = self.patterns['infected'].match(url)
+            if match_url_infected:
+                url = urllib.unquote(match_url_infected.group(1))
+                infected = True
+
+        return url, infected
+
+    def _get_title(self, sn, infected):
+        is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
+
+        h2 = self._get_title_h2(sn, is_video_snippet)
+        if not h2:
+            return None, self._get_url_from_mobile_greenurl(sn)
+
+        if not is_video_snippet and 'serp-item__title' not in h2.attrib['class'] and 'organic__title-wrapper' not in h2.attrib['class']:
+            raise YandexParserError(u'parse error')
+
+        if infected:
+            link = h2
+            url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
+        else:
+            link = h2.find('a')
+            url = link.attrib['href']
+
+        if is_video_snippet:
+            title = unicode(sn.find('.//*[@class="video2__title"]').text_content())
+        else:
+            title = unicode(link.text_content())
+
+        return title, url
+
+    def _get_domain(self, url):
+        try:
+            domain = get_full_domain_without_scheme(url)
+        except UnicodeError as e:
+            raise e
+
+        if ':' in domain:
+            domain = re.sub(ur':\d+$', '', domain)
+        return domain
+
     def get_snippets(self):
 
         try:
@@ -118,6 +189,10 @@ class YandexParser(object):
                     #реклама
                     continue
 
+                # игнорим новости
+                if 't-construct-adapter__news' in sn.attrib['class']:
+                    continue
+
                 # игнорим "расписание, результаты и трансляции на Яндексе"
                 if 't-sport-' in sn.attrib['class']:
                     continue
@@ -130,60 +205,23 @@ class YandexParser(object):
                 if sn.xpath('.//div[contains(@class,"teaser ")]'):
                     continue
 
-                is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
-
-                # видео сниппет
-                if is_video_snippet:
-                    h2 = sn.xpath('.//div[contains(@class,"video2 ")]')[0]
-                else:
-                    h2 = sn.find('.//h2')
-                    if not h2:
-                        raise YandexParserError(u'parse error')
-
-                    if 'serp-item__title' not in h2.attrib['class'] and 'organic__title-wrapper' not in h2.attrib['class']:
-                        raise YandexParserError(u'parse error')
-
                 infected = 'template-infected' in sn.attrib['class']
-                if infected:
-                    link = h2
-                    url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
-                else:
-                    link = h2.find('a')
-                    url = link.attrib['href']
 
-                #Яндекс жжет. Берем домен из гринурла
-                if url == 'http://':
-                    html = etree.tostring(sn)
-                    pattern = re.compile(ur'<div class="serp-item__greenurl.*?<a class="link serp-url__link".*?>(.*?)</a>', re.I | re.M | re.S)
-                    res = pattern.search(html)
-                    if res:
-                        domain = re.sub(ur'<[^>]+>', '', res.group(1), flags=re.I | re.M | re.S)
-                        domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
-                        url = 'http://{}'.format(domain)
+                title, url = self._get_title(sn, infected)
 
-                is_map = url.startswith('http://maps.yandex.ru')
+                url, url_infected = self._get_true_url(sn, url)
+                infected |= url_infected
+
+                domain = self._get_domain(url)
+
                 position += 1
-
-                if 'infected' in url:
-                    match_url_infected = self.patterns['infected'].match(url)
-                    if match_url_infected:
-                        url = urllib.unquote(match_url_infected.group(1))
-                        infected = True
-
-                try:
-                    domain = get_full_domain_without_scheme(url)
-                except UnicodeError as e:
-                    raise e
-
-                if ':' in domain:
-                    domain = re.sub(ur':\d+$', '', domain)
 
                 snippet = {
                     'd': domain,
                     'domain': domain,
                     'p': position,
                     'u': url,
-                    'm': is_map,
+                    'm': url.startswith('http://maps.yandex.ru'),
                     't': None,  # title snippet
                     's': None,  # body snippet
                     'i': infected,
@@ -192,10 +230,7 @@ class YandexParser(object):
                 }
 
                 if 't' in self.snippet_fileds:
-                    if is_video_snippet:
-                        snippet['t'] = unicode(sn.find('.//*[@class="video2__title"]').text_content())
-                    else:
-                        snippet['t'] = unicode(link.text_content())
+                    snippet['t'] = title
 
                 if 's' in self.snippet_fileds:
                     decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
