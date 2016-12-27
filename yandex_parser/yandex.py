@@ -205,6 +205,10 @@ class YandexParser(object):
                 if sn.xpath('.//div[contains(@class,"teaser ")]'):
                     continue
 
+                # игнорим текущий счет спортивных соревнований
+                if 't-construct-adapter__sport-livescore' in sn.attrib['class']:
+                    continue
+
                 infected = 'template-infected' in sn.attrib['class']
 
                 title, url = self._get_title(sn, infected)

@@ -700,6 +700,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Мобильные устройства Samsung Galaxy')
         self.assertEquals(serp['sn'][49]['s'], u'Новый флагман Samsung - Galaxy S7 Edge. Высокотехнологичный дизайн, покрытие 2,5 D Очень стильный и удобный смартфон с невероятно тонким корпусом. Samsung предлагает несколько цветов для вашего корпуса. Читать еще')
 
+    def test43(self):
+        html = self.get_data('2016-12-27.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'bash-news.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://bash-news.ru/84437-forvard-salavata-yulaeva-kaprizov-hochet-letom-perebratsya-za-okean.html')
+        self.assertEquals(serp['sn'][0]['t'], u'Форвард «Салавата Юлаева» Капризов хочет летом...')
+        self.assertEquals(serp['sn'][0]['s'], u'Медиа: Фото: IIHF. Одной из главных звезд в составе сборной России на молодежном чемпионате мира, который стартует сегодня в канадском Торонто...')
+
+        self.assertEquals(serp['sn'][49]['d'], 'bp01.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.bp01.ru/public.php?public=3904')
+        self.assertEquals(serp['sn'][49]['t'], u'Ежемесячный журнал «Бельские Просторы»')
+        self.assertEquals(serp['sn'][49]['s'], u'Твой дядя Хайрулла Кульмухаметов, опрашивая старых людей ещё в 50-х годах, установил, что ваш род восходит к Салавату Юлаеву.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
