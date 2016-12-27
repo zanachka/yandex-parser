@@ -209,6 +209,10 @@ class YandexParser(object):
                 if 't-construct-adapter__sport-livescore' in sn.attrib['class']:
                     continue
 
+                # игнорим номера регионов
+                if 't-construct-adapter__auto-regions' in sn.attrib['class']:
+                    continue
+
                 infected = 'template-infected' in sn.attrib['class']
 
                 title, url = self._get_title(sn, infected)

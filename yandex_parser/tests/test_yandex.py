@@ -720,6 +720,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Ежемесячный журнал «Бельские Просторы»')
         self.assertEquals(serp['sn'][49]['s'], u'Твой дядя Хайрулла Кульмухаметов, опрашивая старых людей ещё в 50-х годах, установил, что ваш род восходит к Салавату Юлаеву.')
 
+    def test44(self):
+        html = self.get_data('2016-12-27-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 38000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'gazeta.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.gazeta.ru/auto/2013/09/02_a_5619521.shtml')
+        self.assertEquals(serp['sn'][0]['t'], u'Первые номера новой серии 777 в Москве выдали...')
+        self.assertEquals(serp['sn'][0]['s'], u'Внимание московских автомобилистов оказалось приковано к новым номерам с кодом региона 777, выдачу которых столичная ГИБДД начала на прошлой неделе.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'motustrans.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.MotusTrans.ru/regions/')
+        self.assertEquals(serp['sn'][49]['t'], u'Автомобильные коды регионов России. Номера регионов.')
+        self.assertEquals(serp['sn'][49]['s'], u'20 Код региона Чеченская Республика (старые номера). ... 49 Код региона Магаданская область. 177 Код региона г. Москва (также 77, 97, 99, 197, 777).')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
