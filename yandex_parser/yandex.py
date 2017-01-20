@@ -196,6 +196,7 @@ class YandexParser(object):
             for sn in serp:
                 if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
                     or 't-construct-adapter__long-fact' in sn.attrib['class'] \
+                    or 't-construct-adapter__suggest-fact' in sn.attrib['class'] \
                     or 'template-object-badge' in sn.attrib['class']\
                     or 't-construct-adapter__companies' in sn.attrib['class']:
                     #реклама

@@ -793,6 +793,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['t'], u'Купить смартфон Apple iPhone 7 – все модели, цены...')
         self.assertEquals(serp['sn'][9]['s'], u'Купить смартфон Apple iPhone 7 в интернет-магазине Цифрус по лучшей цене. ... Есть возможность купить смартфон Эпл Айфон 7 в кредит.')
 
+    def test47(self):
+        html = self.get_data('2017-01-20-2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 43000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'chtooznachaet.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://ChtoOznachaet.ru/vyrazhenie_zhi_est.html')
+        self.assertEquals(serp['sn'][0]['t'], u'Что означает выражение «жи есть»')
+        self.assertEquals(serp['sn'][0]['s'], u'В больших городах России часто можно услышать в разговоре слова, заимствованные из языков народов кавказской национальности. Если к англоязычным словам по типу «девайс» или «аутсорсинг» привыкают быстро...')
+
+        self.assertEquals(serp['sn'][49]['d'], 'privatelife.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.privatelife.ru/2005/cg05/n12/4.html')
+        self.assertEquals(serp['sn'][49]['t'], u'Сто косичек для бога Джа')
+        self.assertEquals(serp['sn'][49]['s'], u'...(умер в 1975 году), короновавшийся под именем Хайле Селассие I, что в переводе с эфиопского означает «власть ... У растафари, как и у всех верующих людей, есть свои заповеди, которые они всегда соблюдают согласно воле великого бога Джа')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
