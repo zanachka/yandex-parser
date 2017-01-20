@@ -740,6 +740,39 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Автомобильные коды регионов России. Номера регионов.')
         self.assertEquals(serp['sn'][49]['s'], u'20 Код региона Чеченская Республика (старые номера). ... 49 Код региона Магаданская область. 177 Код региона г. Москва (также 77, 97, 99, 197, 777).')
 
+
+    def test45(self):
+        html = self.get_data('2017-01-20.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 57000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'youtube.com')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.youtube.com/watch?v=nxgNQZ4kSzA')
+        self.assertEquals(serp['sn'][0]['t'], u'как сделать лего двигатель | мистер LEGO - YouTube')
+        self.assertEquals(serp['sn'][0]['s'], u'Всем привет! в этом видео я покажу вам как сделать лего двигатель.')
+
+        self.assertEquals(serp['sn'][21]['d'], 'chinimavto.ru')
+        self.assertEquals(serp['sn'][21]['u'], 'http://chinimavto.ru/show/VvNiyyEFIz4/kak_sdelat_mashinu_iz_lego_s_motorom.html')
+        self.assertEquals(serp['sn'][21]['t'], u'Как сделать машину из лего с мотором.')
+        self.assertEquals(serp['sn'][21]['s'], u'► Lego-самоделки #8. Лего машина на радиоуправлении. +Power Functions. ... PrototypeNo97. ► Первый в мире вечный двигатель из ЛЕГО!! Канал Пудры. ► Как сделать самую быструю машину из лего техник на пульте управления.')
+        self.assertTrue(serp['sn'][21]['i'])
+
+        self.assertEquals(serp['sn'][23]['d'], 'prigotovit.org')
+        self.assertEquals(serp['sn'][23]['u'], 'http://prigotovit.org/show/KR5oZWEVBRc/kak_sdelat_lego_motor.html')
+        self.assertEquals(serp['sn'][23]['t'], u'Как сделать лего мотор. Как приготовить?')
+        self.assertEquals(serp['sn'][23]['s'], u'Как сделать лего мотор. Похожие видео. ► How To Make A Custom 9V Lego Motor. Multidomar. ... мистер John. ► Вечный двигатель из Лего конструктора. Mr. kriper. ► как сделать двигатель из LEGO. Тюнинг_ ММ_TV.')
+        self.assertTrue(serp['sn'][23]['i'])
+
+        self.assertEquals(serp['sn'][49]['d'], 'stiralka2.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://stiralka2.ru/sxuZdCZGM2w/kak_sdelat_dvigatel_iz_lego.html')
+        self.assertEquals(serp['sn'][49]['t'], u'как сделать двигатель из LEGO. Стиральные машины')
+        self.assertEquals(serp['sn'][49]['s'], u'► как сделать лего двигатель | мистер LEGO. ... ► Лего Техник 42007 Кроссовый мотоцикл, обзор на русском языке (Lego Technic 42007 MOTO CROSS BIKE).')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

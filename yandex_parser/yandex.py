@@ -14,7 +14,7 @@ class YandexParser(object):
 
     patterns = {
         'pagecount': re.compile(u'found"\:"&mdash;&nbsp;(.*?)отв', params_regexr),
-        'infected': re.compile(u'/search/infected\?url=(.*?)&', params_regexr),
+        'infected': re.compile(u'/search/infected/?\?url=([^&]+)', params_regexr),
         'captcha': re.compile(u'<img class="image form__captcha".*?src=\"([^\"]+)\"', params_regexr),
     }
 
@@ -151,7 +151,8 @@ class YandexParser(object):
 
         if infected:
             link = h2
-            url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
+            # url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
+            url = self._get_infected_url(sn)
         else:
             link = h2.find('a')
             url = link.attrib['href']
@@ -162,6 +163,17 @@ class YandexParser(object):
             title = unicode(link.text_content())
 
         return title, url
+
+    def _get_infected_url(self, sn):
+        div = sn.find('.//*[@class="template-infected__unsafe"]')
+        if div:
+            return div.find('a').attrib['href']
+
+        h2 = sn.find('.//h2')
+        if h2:
+            return h2.find('a').attrib['href']
+
+        raise YandexParserError(u'Not found infected url')
 
     def _get_domain(self, url):
         try:
