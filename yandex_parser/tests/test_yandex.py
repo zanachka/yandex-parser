@@ -773,6 +773,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'как сделать двигатель из LEGO. Стиральные машины')
         self.assertEquals(serp['sn'][49]['s'], u'► как сделать лего двигатель | мистер LEGO. ... ► Лего Техник 42007 Кроссовый мотоцикл, обзор на русском языке (Lego Technic 42007 MOTO CROSS BIKE).')
 
+    def test46(self):
+        html = self.get_data('2017-01-20-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 83000000)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'svyaznoy.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.svyaznoy.ru/catalog/phone/225/apple/iphone-7')
+        self.assertEquals(serp['sn'][0]['t'], u'Смартфон Apple iPhone 7 цена, купить Айфон 7 в Москве...')
+        self.assertEquals(serp['sn'][0]['s'], u'В интернет магазине Связной телефоны Эпл Айфон 7 в наличии и сравнительно недорого: цены от 55 990 руб. Здесь Вы можете купить Apple iPhone 7 в Москве...')
+
+        self.assertEquals(serp['sn'][9]['d'], 'cifrus.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'http://www.cifrus.ru/catalog/smartfony/apple/iphone-7')
+        self.assertEquals(serp['sn'][9]['t'], u'Купить смартфон Apple iPhone 7 – все модели, цены...')
+        self.assertEquals(serp['sn'][9]['s'], u'Купить смартфон Apple iPhone 7 в интернет-магазине Цифрус по лучшей цене. ... Есть возможность купить смартфон Эпл Айфон 7 в кредит.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

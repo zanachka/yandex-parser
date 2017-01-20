@@ -195,7 +195,7 @@ class YandexParser(object):
             position = 0
             for sn in serp:
                 if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
-                    or 'serp-item_keyboard-shortcuts-ignore_yes' in sn.attrib['class'] \
+                    or 't-construct-adapter__long-fact' in sn.attrib['class'] \
                     or 'template-object-badge' in sn.attrib['class']\
                     or 't-construct-adapter__companies' in sn.attrib['class']:
                     #реклама
