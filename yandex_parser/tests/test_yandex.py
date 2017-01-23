@@ -813,6 +813,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Сто косичек для бога Джа')
         self.assertEquals(serp['sn'][49]['s'], u'...(умер в 1975 году), короновавшийся под именем Хайле Селассие I, что в переводе с эфиопского означает «власть ... У растафари, как и у всех верующих людей, есть свои заповеди, которые они всегда соблюдают согласно воле великого бога Джа')
 
+    def test48(self):
+        html = self.get_data('2017-01-23.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 58000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'samelectrik.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://samelectrik.ru/kakie-byvayut-kabelnye-mufty.html')
+        self.assertEquals(serp['sn'][0]['t'], u'Какие бывают кабельные муфты?')
+        self.assertEquals(serp['sn'][0]['s'], u'Классификация и назначение кабельных муфт. Узнайте, какие существуют соединители для проводов и для чего используется каждый отдельный вид.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'elox-prom.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.elox-prom.ru/production/kabelnye-mufty/soedinitelnye-mufty-str-kzp/')
+        self.assertEquals(serp['sn'][49]['t'], u'Соединительные кабельные термоусаживаемые муфты...')
+        self.assertEquals(serp['sn'][49]['s'], u'Муфта соединительная кабельная ELOX (СтР-КзП) - состав комплекта: 1.1. Электрический соединитель.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

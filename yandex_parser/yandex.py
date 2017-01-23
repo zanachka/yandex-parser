@@ -195,8 +195,6 @@ class YandexParser(object):
             position = 0
             for sn in serp:
                 if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
-                    or 't-construct-adapter__long-fact' in sn.attrib['class'] \
-                    or 't-construct-adapter__suggest-fact' in sn.attrib['class'] \
                     or 'template-object-badge' in sn.attrib['class']\
                     or 't-construct-adapter__companies' in sn.attrib['class']:
                     #реклама
@@ -224,6 +222,10 @@ class YandexParser(object):
 
                 # игнорим номера регионов
                 if 't-construct-adapter__auto-regions' in sn.attrib['class']:
+                    continue
+
+                # игнорим факты
+                if re.search(ur't-construct-adapter__.+-fact', sn.attrib['class'], re.I):
                     continue
 
                 infected = 'template-infected' in sn.attrib['class']
