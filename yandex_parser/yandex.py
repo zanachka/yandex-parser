@@ -228,6 +228,15 @@ class YandexParser(object):
                 if re.search(ur't-construct-adapter__.+-fact', sn.attrib['class'], re.I):
                     continue
 
+                # почтовые индексы
+                if 't-post-indexes' in sn.attrib['class']:
+                    continue
+
+                # игнорим конвертер единиц
+                div = sn.find('div')
+                if div and 'z-' in div.attrib['class']:
+                    continue
+
                 infected = 'template-infected' in sn.attrib['class']
 
                 title, url = self._get_title(sn, infected)

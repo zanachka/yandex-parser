@@ -833,6 +833,48 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Соединительные кабельные термоусаживаемые муфты...')
         self.assertEquals(serp['sn'][49]['s'], u'Муфта соединительная кабельная ELOX (СтР-КзП) - состав комплекта: 1.1. Электрический соединитель.')
 
+    def test49(self):
+        u"""игнорим почтовые индексы"""
+        html = self.get_data('2017-01-23-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 19000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'port3.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.PORT3.ru/info/KAGER/841428')
+        self.assertEquals(serp['sn'][0]['t'], u'84-1428 Пружина ходовой части KAGER - описание, фото...')
+        self.assertEquals(serp['sn'][0]['s'], u'Аналоги KAGER 841428')
+
+        self.assertEquals(serp['sn'][49]['d'], 'voloton.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://voloton.ru/price/HYUNDAI/841428D400')
+        self.assertEquals(serp['sn'][49]['t'], u'Купить HYUNDAI 841428D400, цены, доставка, наличие')
+        self.assertEquals(serp['sn'][49]['s'], u'Купить от компании HYUNDAI 841428D400. Во всех магазинах города Санкт-Петербург и Москва.')
+
+    def test50(self):
+        u"""игнорим конвертер единиц"""
+        html = self.get_data('2017-01-23-2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 34000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'inmaks.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://inmaks.ru/auxpage_tablica-santimetry-djujmy/')
+        self.assertEquals(serp['sn'][0]['t'], u'Tаблица (сантиметры дюймы) ― Инмакс')
+        self.assertEquals(serp['sn'][0]['s'], u'Мы решили составить еще одну таблицу сантиметры – дюймы. Один сантиметр, это 0,3937007874015748 дюйма, округляем и получаем, что в одном сантиметре – 0,4 дюйма.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'snowboarding.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.snowboarding.ru/content/view/35/0')
+        self.assertEquals(serp['sn'][49]['t'], u'Snowboarding.ru - Как определить размер ноги?')
+        self.assertEquals(serp['sn'][49]['s'], u'Как измерить свою ногу · Измерять можно и в сантиметрах, и в дюймах. Для перевода дюймов в сантиметры, просто умножь на 2,54; · Сядь, поставь ногу на лист бумаги; · Обведи карандашом свою стопу...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
