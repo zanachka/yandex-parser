@@ -523,46 +523,57 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][0]['t'], u'Купить стол для кухни недорого / malinki-mebel.ru')
         self.assertEquals(serp['sn'][0]['vu'], u'malinki-mebel.ru')
         self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/5MIiU7H2VxG40000gO10ZhhdVeC5KfK1cmDkGxS198Yb7nboYPchHPXddQdoxnMc1egr4ZiN2zo-xurB3BsvN4ze1wekfQjyvWgyhhpb2eq1tG7Ua2JqaRuvdR4Db-1Nny7nBv6kau4CeeKDcGL2Z9rYLxQKDngrc3SMe9MniA-TObUpaEmij9Wt5jcLiR3QaEmib9dj5AUPb1sehVikBAJ00000V0skyiA0OCdpiHW6iG6of10C0hcfykyLk-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z5Zm_J0ku1s_zyDGeTlu1b0T-13EMGyYljWoXv7G00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][0]['a'], 't')
 
         self.assertEquals(serp['sn'][1]['t'], u'HOFF.ru - Купите Стол 1990 руб. / hoff.ru')
         self.assertEquals(serp['sn'][1]['vu'], u'hoff.ru/куплю-стол-недорого')
         self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/5MIiUAi-t-C40000gO10ZhhdVeC5KfK1cmDkGxS193A8i3ZP0GM9jZywZGIOCPsk-CW8fa-Aj8WcrGVSjI3LaWczlw5SaWQgBgMaY0iAlANRkmcD0Tq1tf0azFIr7MZ1696-EPsn3PVWLyV1yI-HhfE13AA53Pa5GeoLxp6saFiEjP2o3A2OSfwlbUynivX8ABIGiWpPc7AUsfX8A9IGDnYdcRqrgB10MNC7fC00001y3Qxome1WoVEn60Qn0RAa40m2kQxuo0YxxG2VILfOekB1__________yFml5DvzCMymE82CMF3zC2xW7R_tmr2Xs_W6K1tu4CvP3oA-s3A7mU?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][1]['a'], 't')
 
         self.assertEquals(serp['sn'][2]['t'], u'Стол ЭЛИС 140 90-ОВШ Лидер мебель')
         self.assertEquals(serp['sn'][2]['vu'], u'az-stil.ru')
         self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/5MIiU6VvUA040000gO10ZhhdVeC5KfK2cmHkGxS2BG68hNXDCOdxvM_yvXeHH0-OPvsiTAe3cgcZdlwc0egstryF1Toz08p31hstWCZL1AekfQxBKGAyhld30eq1tG7Ua2JqaRuvdR4Db-1Nny7nBv6kau4CeeKDcGL2Z91XFxQO0nEra1qGeA2qMG6la64_iv3aLxIG7H3PeBHP0TgGv5UKdPwhfv1W1QYngELM0gJ00000V0skyiA0OCdpiHW6iGEoh14S0hciTAe3k-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z40SMF3zC2xW7R_tmr2Xs_W6K1tu4CyWJbaF8hxOCeV1y0?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][2]['a'], 'r')
 
         self.assertEquals(serp['sn'][3]['t'], u'Стол + стулья по шоколадной цене!')
         self.assertEquals(serp['sn'][3]['vu'], u'1fab.org/Акция-стол-и-стулья')
         self.assertEquals(serp['sn'][3]['u'], 'http://yabs.yandex.ru/count/5MIiU9imcga40000gO10ZhhdVeC5KfK2cmHkGxS2BG4oYBk0xZ43YRO-bn85c0UTe_t04gOoYhBb1DO2tBKl-mC4lR7X-kS2gYwbfVsD1Oq1tG7Ua2JqaRuvdR4Db-1Nny7nBv6kau4CeeKDcGL2Z9s78xQSg0grc0W9e9sJEg-TXoEpcEGEj9W82TcLTJtQaA0Fb9pqugUUXWgeeVqc1wJ00000V0skyiA0OCdpiHW6iG6oh14C0hcZ_S0Ik-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z40SMF3zC2xW7R_tmr2Xs_W6K1tu4CvP3oA-s3A7iT?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][3]['a'], 'r')
 
         self.assertEquals(serp['sn'][4]['t'], u'Обеденный стол от производителя!')
         self.assertEquals(serp['sn'][4]['vu'], u'stol26.ru//katalog/stoly/')
         self.assertEquals(serp['sn'][4]['u'], 'http://yabs.yandex.ru/count/5MIiUFfj5f040000gO10ZhhdVeC5KfK2cmHkGxS2BG4pYBda5S81YRRqiPO1c6UTfUAq4QORYhs8SO88tBfza-m9lRR0ECW6gYwbfls02RoaIb49ZG7T0TwG9FIHlZcTiGsNu5V7mV4laQwJWGoYXGsP1KACdGqljfmT3hMOzWkWc492hvqDBxEOs12qcFOBsPX2GjgOs12KdfNYfvq71gYl7ESjfC00001y3Qxome1WoVEn60Qn0RAiCGm2kQNYj16xxG2VILfOekB1__________yFml5DvzCMymE82DC2xW7R_tmr2Xs_W6K1tu4CvP3oA-s3A7iT?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][4]['a'], 'r')
 
         self.assertEquals(serp['sn'][5]['t'], u'Стол Melody, Futura скидка −20%')
         self.assertEquals(serp['sn'][5]['vu'], u'gardeck.ru')
         self.assertEquals(serp['sn'][5]['u'], 'http://yabs.yandex.ru/count/5MIiU0ZKh2O40000gO10ZhhdVeC5KfK2cmHkGxS2BG4qYA4Buw69zD-0fTpvSRyAc8WhdQrX6GMQlY1_4mEc2Ogzpxix0zop53MN1BsxD2Dg0wekfQZY8GQyfT182Oq1tG7Ua2JqaRuvdR4Db-1Nny7nBv6kau4CeeKDcGL2Z9YyDhQSQn2rcEeDe9jCGQ-Ol3Qpa9eGj9Zg3TcL1s3Qa6eOb9t6dQUHlGIejK5J7W6am00007mDhlB2W639yx4O1h43igmH30AvhM4P1Rlj09z9MbYYui7__________m_2yKtdqnRp0uW8n075Zm_J0ku1s_zyDGeTlu1b0T-13F82vP3oA-s3A7qV?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][5]['a'], 'r')
 
         self.assertEquals(serp['sn'][6]['t'], u'Столы купить')
         self.assertEquals(serp['sn'][6]['vu'], u'mebelandia.com/столы-купить')
         self.assertEquals(serp['sn'][6]['u'], 'http://yabs.yandex.ru/count/5MIiUEQfk2K40000gO10ZhhdVeC5KfK2cmLkGxS2BG4rYBk7lY45YQYFIfYOM9sfNVS3fb6AkhBtLGhSkfzcaGkzjL36m0UgBgMfbqWBlAhepmgD0Tq1tf0az96-EPsn3PVWLyV1yI-HhfE13AA53Pa5GeoJ5XQsbA06jPYT1Q2GpnolanOMiv1J1xIOdGNPaCySsf1J1vIJ4GwdaMiCgAaq9Akam00007mDhlB2W639yx4O1h41igmG30AvgLtt0xlj09z9MbYYui7__________m_2yKtdqnRp0uW8n075Zm_J0ku1s_zyDGeTlu1b0T-13EMGyYljWoX_7G00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][6]['a'], 'r')
 
         self.assertEquals(serp['sn'][7]['t'], u'Купить стол')
         self.assertEquals(serp['sn'][7]['vu'], u'youcom.spb.ru')
         self.assertEquals(serp['sn'][7]['u'], 'http://yabs.yandex.ru/count/5MIiUFRPEoG40000gO10ZhhdVeC5KfK2cmLkGxS2BG4sYB5--c41YR-rLK83c0UTeSKB0wOLYh2gJbO2tBv6Erq3lRAygfa2gYwbg3hZ1BolBDi9ZG7T0TwG9FIHlZcTiGsNu5V7mV4laQwJWGoYXGsP1KACbI0LjfXM1hMGNmMWaCyShvKW5REGKmUqa5y5sP3F7DgGKmUKc5i7fvCe2AYc-l9PfC00001y3Qxome1WoVEn60Qn0RAi40m2kQ752mExxG2VILfOekB1__________yFml5DvzCMymE82CMF3zC2xW7R_tmr2Xs_W6K1tu4CvP3oA-s3A7uT?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][7]['a'], 'r')
 
         self.assertEquals(serp['sn'][8]['t'], u'Купите стол в магазине Купистол.')
         self.assertEquals(serp['sn'][8]['vu'], u'qpstol.ru')
         self.assertEquals(serp['sn'][8]['u'], 'http://yabs.yandex.ru/count/5MIiU1dN0ye40000gO10ZhhdVeC5KfK2cmLkGxS2BG4tYBjqz8O6YRTafmq2c6UTfbGn0gPoYhOXl3i7tBRoinS9lRlKI4K6gYwbemfb2RoZys03ZG7T0TwG9FJqiwb6w1UHlZcTiGsNu5V7mV4laQwJWGoYXGsP1KACa4aHjfWl1RMGPGIWa4aHhv194REGPGIqa6K4sP194TgGPGIKceG5fvMp1gYmG5bp1wJ00000V0skyiA0OCdpiHW6iG6oh10C0hccL342k-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z5Zm_J0ku1s_zyDGeTlu1b0T-13EMGyYljWoXz7W00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][8]['a'], 'r')
 
         self.assertEquals(serp['sn'][9]['t'], u'Мебель ИКЕА цены')
         self.assertEquals(serp['sn'][9]['vu'], u'ikea-vsem.ru/Доставка-ИКЕА-Москва')
         self.assertEquals(serp['sn'][9]['u'], 'http://yabs.yandex.ru/count/5MIiU2JpHRq40000gO10ZhhdVeC5KfK2cmLkGxS2BG4u0OYtU9Nq1edwp5lTGmFlL0sOPvskO1uBcgBZQ3EcZmYAk6lKPGhSkl8Gd0kzjUIqnWUgBgMkXbCBZG7T0TwG9FIHlZcTiGsNu5V7mV4laQwJWGoYXGsP1KACarCGjfpb1BMO9WIWcpGJhvDJ4BEGuWIqc2O4sPiq4zgGuWIdc6e5gAst8UAam00007mDhlB2W639yx4O1h43igoG30Avhc0U2xlj09z9MbYYui7__________m_2yKtdqnRp0uW8nOyFqmBk0Tl_V3KA7R-0PG7VWGpo0kMGyYljWoXw7W00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][9]['a'], 'r')
 
         self.assertEquals(serp['sn'][10]['t'], u'Кухонные столы от 3500 рублей')
         self.assertEquals(serp['sn'][10]['vu'], u'mebelmarket.su')
         self.assertEquals(serp['sn'][10]['u'], 'http://yabs.yandex.ru/count/5MIiUDlNGSq40000gO10ZhhdVeC5KfK2cmLkGxS2BG4v0OYqusv10ecsiQEK0fW7dQudfmgc8ugn4hTZ0jomywbk0xsqXOQb0gekfQvi5WMD0Tq1tf0az96-EPsn3PVWLyV1yI-HhfE13AA53Pa5GeoLcWcscE42jP1n0g2LcWclbPe9iv1n0hIGSGBPbPe9sf1n0fIS-WgddUe7gAEUXXEam00007mDhlB2W639yx4O1h41igmm30AvhYUd2hlj09z9MbYYui7__________m_2yKtdqnRp0uW8qmBk0Tl_V3KA7R-0PG7VWGpbaF8hxOCeVnm0?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][10]['a'], 'r')
 
     def test37(self):
         html = self.get_data('2016-12-21.html')
@@ -887,18 +898,56 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][0]['t'], u'Купить столы для кухни и комнат! - Огромный выбор столов')
         self.assertEquals(serp['sn'][0]['vu'], u'lifemebel.ru/Купить-стол-на-кухню')
         self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/UkhWMQ_3fYy40000gO10ZhXnGei5XPpGBfK1cmDkGxS198Ywmn-W0ucooXZC1PXddQ8_B0IcEOgzUgD80zopke6g1BstXQHs0wekfQju50Iygud30eq1tG7Ua2JqzBkLPUqFaRe_00q5b_1zAPeMxUSU3PE53Pa5GeoODQIsb4CnjPY_AQ2ZTKS1hvWrfBEOG5EqcByfsQDrHm7Qc41Jb9o35AUTPpEei41PSmUai00000QkxQs0S5urvS6n0RAa40m2-UsjW71UDUN1kQ8_B0IxxG2VILfOekB1__________yFml5DvzCMymE82CMF3zC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3AFN9UmCBsAtsqeC3cIwOL7mX?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][0]['a'], 't')
 
         self.assertEquals(serp['sn'][1]['t'], u'HOFF.ru - Купите Стол 1690 руб. / hoff.ru')
         self.assertEquals(serp['sn'][1]['vu'], u'hoff.ru/купить-стол-недорого')
         self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/UkhWMIjPhzq40000gO10ZhXnGei5XPpGBfK1cmDkGxS193A8keNf8069juYl_0AOPvsk-CW8fX6Ak21PrGVSkHJJaWczke1RaWQgBgMhXmiAlANRkmcD0Tq1tf0az96wFm0D1PVmVIcQ5ktd7WsJXGsP1KACctoTjf0_BxMG2YYWbHBmhvjydREG2Jsqa0eesPKIyDgG2JsKb_OOfvc6DQYmG5bp1wIm00001gxjhO1mNZNbmR41igGG30BvxQs0S5urvS6vhlZ82Blj09z9MbYYui7__________m_2yKtdqnRp0uW8nOyFqmBk0Tl_V3KA7R-0PG7VXGtbaF8hxOCezSbx0mlOhVRIWmEPBfXKVI00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][1]['a'], 't')
 
         self.assertEquals(serp['sn'][2]['t'], u'Купите стол фабрики СТОЛПЛИТ')
         self.assertEquals(serp['sn'][2]['vu'], u'stolplit.ru/купить стол')
         self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/UkhWMRzAIi040000gO10ZhXnGei5XPpGBfK2cmHkGxS2BG68lHIF40E9g8_TW9XddPM25wOmYh57d9u9tBNw3FCAlQwqJhYgBgMhdqa2lAzFo0AD0Tq1tf0az96wFm0D1PVmVIcQ5ktd7WsJXGsP1KACc-fwjf3W9BMGG1-WbQMPhvlgUhEG42Uqa40VsPqzYzgOPYEKaNFZfvlJ3wYmG5bp1wIm00001gxjhO1mNZNbmR41igoH30BvxQs0S5urvS6vbO8Nk-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroNi32zYjzjA30vakc5Hv8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][2]['a'], 'r')
 
         self.assertEquals(serp['sn'][10]['t'], u'Купите дизайнерский стол WESTWING')
         self.assertEquals(serp['sn'][10]['vu'], u'westwing.ru/Уникальные-скидки')
         self.assertEquals(serp['sn'][10]['u'], 'http://yabs.yandex.ru/count/UkhWMLBcX5q40000gO10ZhXnGei5XPpGBfK2cmLkGxS2BG4v0OYom93m0ucX8rUgc6UTfh2m2QO-YhilREiCtBtn5DWDlRrIbmS9gYwbhFac3RolMDq9ZG7T0TwG9FIHkZy03GMNy7qfcXRjvnuDauKDcGL2Z9KiBBQOG0sra3iBe9ZvCA-LB2opc7CCj90x2zcT6KRQcD8Hb9Fs2wUHNmkei41PSmUai00000QkxQs0S5urvS6n0RAyC0m2GFdjhO1mNZNbmRcciB09k-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroNi32zYjzjA30vakc5H_8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+        self.assertEquals(serp['sn'][10]['a'], 'r')
+
+    def test52(self):
+        html = self.get_data('context-2017-02-27-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 5)
+
+        self.assertEquals(serp['sn'][0]['t'], u'Купите участок на Луне! Недорого! - Официальная продажа!')
+        self.assertEquals(serp['sn'][0]['vu'], u'star-kosmos.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/9rhZMIjJ9qu40000gO10Zh1_Gui5XPpGBfK1cm9kGxS198Ypi2d118c_QYuH0vX4dQhk91EcIugoUWus0zozmoMG1Bs-ws5b0wekfQzHoWIyhE6f0uq1tG7Ua2JqaRfY7Pe1b_1zAPeMxUSU3PE53Pa5GeoODYksdFOCjPZy2g2OYiolc3OhivW0DBIO_0hPc8hCsfW0D9IMdXodcSS_gB7J_mi4fB000006hkPm0cobTYN2iG6oj1000a3vvd02RALs9SAvgkua4xlj09z9MbYYui7__________m_2-fl6TV21syG1nOyFqmBk0Tl_V3KA7R-0PG7VXGtbaF8hxOCezTiPSETaS0BstKHLgJwOL7uW?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BB%D1%83%D0%BD%D1%83')
+        self.assertEquals(serp['sn'][0]['a'], 't')
+
+        self.assertEquals(serp['sn'][1]['t'], u'Хотите купить луну? - Распродажа участков на луне!')
+        self.assertEquals(serp['sn'][1]['vu'], u'moon-sale.com')
+        self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/9rhZMPTlnAe40000gO10Zh1_Gui5XPpGBfK1cm9kGxS193A8hssDW8c_YWyp19X4dQL3vmkc1ugevRXTtAQOK8AzgoDwWAekfQUnnm6D0Tq1tf0az96wOXsQ0PVmVIcQ5ktd7WsJXGsP1KACa4aHjfWl1RMGPGIWa4aHhv194REGPGIqa6K4sP194TgGPGIKaiOQfvgPBQYbg-CSfB000006hkPm0cobTYN2iG6oj1000a3vvd02RALs9SAvfKFd2xlj09z9MbYYui7__________m_2-fl6TV21syG1qmBk0Tl_V3KA7R-0PG7VXGtbaF8hxOCezTiPSETaS0BstKHLgJwOL7eV?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BB%D1%83%D0%BD%D1%83')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+
+        self.assertEquals(serp['sn'][2]['t'], u'DFC Luna / alterprice.ru')
+        self.assertEquals(serp['sn'][2]['vu'], u'alterprice.ru')
+        self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/9rhZMOm2ANm40000gO10Zh1_Gui5XPpGBfK2cm5kGxS2BG68hDEEy8ccOdK4c5-TgLP25QOEYhGrdKiDtBpxoIyElRd1R389gYwbh1DY3RoaiNqAZG7T0TwG9FIHkc8TcW6Ny7qfcXRjvnuDauKDcGL2Z9FD1BQSS06rc3W1e9262w-JpGIpaEu2j9Wu0TcGXWlQaEu2b9G3rQUVYWEegLiB3QIm00001gxcS09ifNObmh41ihGn0090-UPm0cobTYN2kQbMGXMxxG2VILfOekB1__________yFmlgRndNmWTl40TC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3AFNR6N3dP702zjr4LQa-c5Hv8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BB%D1%83%D0%BD%D1%83')
+        self.assertEquals(serp['sn'][2]['a'], 'b')
+
+        self.assertEquals(serp['sn'][3]['t'], u'Молокоотсос электрический Luna! / akusherstvo.ru')
+        self.assertEquals(serp['sn'][3]['vu'], u'akusherstvo.ru')
+        self.assertEquals(serp['sn'][3]['u'], 'http://yabs.yandex.ru/count/9rhZMKZxHfG40000gO10Zh1_Gui5XPpGBfK2cm5kGxS2BG4oYAlk0FA9fus_O9Y2ivsLcHYc3egtiB4z1ToyhZBn1hsyHxxp1AekfQXq_WUyexEV18q1tG7Ua2JqaRfY7Pe1b_1zAPeMxUSU3PE53Pa5GeoOf0Ysd9S2jPWo0g2Ja0glcAG8ivYl0hIOCWBPav0AsfYl0fIIiygddOi1gBcJLaW7fB000006hkPm0cobTYN2iG6oj1400a3vvd02RALs9SAvbPaOk-q0dqbQMABYmV__________3yBwcyPry87Rn0740SMF3zC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3AFNR6N3dP702zjr4LQa-c5H_8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BB%D1%83%D0%BD%D1%83')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+
+        self.assertEquals(serp['sn'][4]['t'], u'Купить выгодно и удобно в OZON.ru / ozon.ru')
+        self.assertEquals(serp['sn'][4]['vu'], u'ozon.ru/Купить')
+        self.assertEquals(serp['sn'][4]['u'], 'http://yabs.yandex.ru/count/9rhZMGOTKDi40000gO10Zh1_Gui5XPpGBfK2cm5kGxS2BG4pYB1E6041YRVz4Vi5c5-TWZEc3ug-hEBV2DosWOKg2hsxuMlj1gekfQJmT0gyfS821eq1tG7Ua2JqaRfY7Pe1b_1zAPeMxUSU3O-xbHwO1v-uWze62fE53Pa5GeoGmmMscBe1jP1t0Q2GpnolaCC5iv1J1xIGTm7PaCySsf1J1vIPnfgda582gB10MNC7fB000006hkPm0cobTYN2iG6oj1400a3vvd02RALs9SAvWZExxG2VILfOekB1__________yFmlgRndNmWTl40SMF3zC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3AFNR6N3dP702zjr4LQa-c5Hu8W00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BB%D1%83%D0%BD%D1%83')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
@@ -906,6 +955,7 @@ class YandexParserTestCase(YandexParserTests):
             print sn['u']
             print sn['t']
             print sn['vu']
+            print sn['a']
 
     def _print_sn(self, serp):
         for sn in serp['sn']:

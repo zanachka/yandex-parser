@@ -34,17 +34,41 @@ class YandexParser(object):
             return
         return YandexParser.strip_tags(res.group(1))
 
+    def _get_context_snippet_area(self, snippet, old_snippet):
+        cid = int(snippet[1])
+        top_or_bot = u'label_color_yellow organic__label' in snippet[0]
+        if not top_or_bot:
+            self.t_block_end = True
+            return 'r'
+
+        if cid == 0:
+            return 't'
+
+        if not self.t_block_end and cid - int(old_snippet[1]) == 1:
+            self.t_block_end = True
+            return 't'
+
+        return 'b'
+
+
     def get_context_serp(self):
         snippets = re.findall(
-            ur'(<(?:li|div)\s*class="serp-item\s+serp-adv-item".*?<div class="organic__content-wrapper">.*?</div>\s*</div>\s*</(?:li|div)>)',
+            ur'(<(?:li|div)\s*class="serp-item\s+serp-adv-item"(?:[^>]+?data-cid="(\d+)")?.*?<div class="organic__content-wrapper">.*?</div>\s*</div>\s*</(?:li|div)>)',
             self.content,
             re.I | re.M | re.S
         )
         sn = []
+        old_snippet = None
+        self.t_block_end = False
         for snippet in snippets:
-            item = self.get_context_snippet_title(snippet)
-            item['vu'] = self.get_context_visible_url(snippet)
+            snippet_html = snippet[0]
+            item = self.get_context_snippet_title(snippet_html)
+
+            item['vu'] = self.get_context_visible_url(snippet_html)
+            item['vu'] = self.get_context_visible_url(snippet_html)
+            item['a'] = self._get_context_snippet_area(snippet, old_snippet)
             sn.append(item)
+            old_snippet = snippet
 
         return {'pc': len(sn), 'sn': sn}
 
