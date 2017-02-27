@@ -949,6 +949,15 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][4]['u'], 'http://yabs.yandex.ru/count/9rhZMGOTKDi40000gO10Zh1_Gui5XPpGBfK2cm5kGxS2BG4pYB1E6041YRVz4Vi5c5-TWZEc3ug-hEBV2DosWOKg2hsxuMlj1gekfQJmT0gyfS821eq1tG7Ua2JqaRfY7Pe1b_1zAPeMxUSU3O-xbHwO1v-uWze62fE53Pa5GeoGmmMscBe1jP1t0Q2GpnolaCC5iv1J1xIGTm7PaCySsf1J1vIPnfgda582gB10MNC7fB000006hkPm0cobTYN2iG6oj1400a3vvd02RALs9SAvWZExxG2VILfOekB1__________yFmlgRndNmWTl40SMF3zC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3AFNR6N3dP702zjr4LQa-c5Hu8W00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%BB%D1%83%D0%BD%D1%83')
         self.assertEquals(serp['sn'][4]['a'], 'b')
 
+    def test53(self):
+        html = self.get_data('context-2017-02-27-2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

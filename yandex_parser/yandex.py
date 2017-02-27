@@ -45,9 +45,9 @@ class YandexParser(object):
             return 't'
 
         if not self.t_block_end and cid - int(old_snippet[1]) == 1:
-            self.t_block_end = True
             return 't'
 
+        self.t_block_end = True
         return 'b'
 
 
