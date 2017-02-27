@@ -875,6 +875,31 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Snowboarding.ru - Как определить размер ноги?')
         self.assertEquals(serp['sn'][49]['s'], u'Как измерить свою ногу · Измерять можно и в сантиметрах, и в дюймах. Для перевода дюймов в сантиметры, просто умножь на 2,54; · Сядь, поставь ногу на лист бумаги; · Обведи карандашом свою стопу...')
 
+    def test51(self):
+        html = self.get_data('context-2017-02-27.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 11)
+
+        self.assertEquals(serp['sn'][0]['t'], u'Купить столы для кухни и комнат! - Огромный выбор столов')
+        self.assertEquals(serp['sn'][0]['vu'], u'lifemebel.ru/Купить-стол-на-кухню')
+        self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/UkhWMQ_3fYy40000gO10ZhXnGei5XPpGBfK1cmDkGxS198Ywmn-W0ucooXZC1PXddQ8_B0IcEOgzUgD80zopke6g1BstXQHs0wekfQju50Iygud30eq1tG7Ua2JqzBkLPUqFaRe_00q5b_1zAPeMxUSU3PE53Pa5GeoODQIsb4CnjPY_AQ2ZTKS1hvWrfBEOG5EqcByfsQDrHm7Qc41Jb9o35AUTPpEei41PSmUai00000QkxQs0S5urvS6n0RAa40m2-UsjW71UDUN1kQ8_B0IxxG2VILfOekB1__________yFml5DvzCMymE82CMF3zC2xW7R_tmr2Xs_W6K1tuKDvP3oA-s3AFN9UmCBsAtsqeC3cIwOL7mX?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+
+        self.assertEquals(serp['sn'][1]['t'], u'HOFF.ru - Купите Стол 1690 руб. / hoff.ru')
+        self.assertEquals(serp['sn'][1]['vu'], u'hoff.ru/купить-стол-недорого')
+        self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/UkhWMIjPhzq40000gO10ZhXnGei5XPpGBfK1cmDkGxS193A8keNf8069juYl_0AOPvsk-CW8fX6Ak21PrGVSkHJJaWczke1RaWQgBgMhXmiAlANRkmcD0Tq1tf0az96wFm0D1PVmVIcQ5ktd7WsJXGsP1KACctoTjf0_BxMG2YYWbHBmhvjydREG2Jsqa0eesPKIyDgG2JsKb_OOfvc6DQYmG5bp1wIm00001gxjhO1mNZNbmR41igGG30BvxQs0S5urvS6vhlZ82Blj09z9MbYYui7__________m_2yKtdqnRp0uW8nOyFqmBk0Tl_V3KA7R-0PG7VXGtbaF8hxOCezSbx0mlOhVRIWmEPBfXKVI00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+
+        self.assertEquals(serp['sn'][2]['t'], u'Купите стол фабрики СТОЛПЛИТ')
+        self.assertEquals(serp['sn'][2]['vu'], u'stolplit.ru/купить стол')
+        self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/UkhWMRzAIi040000gO10ZhXnGei5XPpGBfK2cmHkGxS2BG68lHIF40E9g8_TW9XddPM25wOmYh57d9u9tBNw3FCAlQwqJhYgBgMhdqa2lAzFo0AD0Tq1tf0az96wFm0D1PVmVIcQ5ktd7WsJXGsP1KACc-fwjf3W9BMGG1-WbQMPhvlgUhEG42Uqa40VsPqzYzgOPYEKaNFZfvlJ3wYmG5bp1wIm00001gxjhO1mNZNbmR41igoH30BvxQs0S5urvS6vbO8Nk-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroNi32zYjzjA30vakc5Hv8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+
+        self.assertEquals(serp['sn'][10]['t'], u'Купите дизайнерский стол WESTWING')
+        self.assertEquals(serp['sn'][10]['vu'], u'westwing.ru/Уникальные-скидки')
+        self.assertEquals(serp['sn'][10]['u'], 'http://yabs.yandex.ru/count/UkhWMLBcX5q40000gO10ZhXnGei5XPpGBfK2cmLkGxS2BG4v0OYom93m0ucX8rUgc6UTfh2m2QO-YhilREiCtBtn5DWDlRrIbmS9gYwbhFac3RolMDq9ZG7T0TwG9FIHkZy03GMNy7qfcXRjvnuDauKDcGL2Z9KiBBQOG0sra3iBe9ZvCA-LB2opc7CCj90x2zcT6KRQcD8Hb9Fs2wUHNmkei41PSmUai00000QkxQs0S5urvS6n0RAyC0m2GFdjhO1mNZNbmRcciB09k-q0dqbQMABYmV__________3yBnJUVJ5lC3Y0Z5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroNi32zYjzjA30vakc5H_8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
