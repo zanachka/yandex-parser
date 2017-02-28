@@ -28,49 +28,62 @@ class YandexParser(object):
             raise YandexParserError(u'Не удалось распарсить тайтл в сниппете: {0}'.format(content))
         return {'u': res.group(1), 't': YandexParser.strip_tags(res.group(2))}
 
-    def get_context_visible_url(self, content):
-        res = re.search(ur'<div\s*class="path\s*organic__path"><a[^>]*?href="[^"]+?"[^>]*?>\s*(.*?)\s*</a>\s*</div>', content, re.I | re.M | re.S)
-        if not res:
-            return
-        return YandexParser.strip_tags(res.group(1))
+    def get_context_visible_url(self, sn):
+        els = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div/a')
+        if not els:
+            return ''
+        return unicode(els[0].text_content())
 
-    def _get_context_snippet_area(self, snippet, old_snippet):
-        cid = int(snippet[1])
-        top_or_bot = u'label_color_yellow organic__label' in snippet[0]
+    def _get_context_snippet_area(self, sn, is_top):
+        top_or_bot = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]')
         if not top_or_bot:
-            self.t_block_end = True
             return 'r'
 
-        if cid == 0:
+        if is_top:
             return 't'
 
-        if not self.t_block_end and cid - int(old_snippet[1]) == 1:
-            return 't'
-
-        self.t_block_end = True
         return 'b'
 
 
     def get_context_serp(self):
-        snippets = re.findall(
-            ur'(<(?:li|div)\s*class="serp-item\s+serp-adv-item"(?:[^>]+?data-cid="(\d+)")?.*?<div class="organic__content-wrapper">.*?</div>\s*</div>\s*</(?:li|div)>)',
-            self.content,
-            re.I | re.M | re.S
-        )
-        sn = []
-        old_snippet = None
-        self.t_block_end = False
-        for snippet in snippets:
-            snippet_html = snippet[0]
-            item = self.get_context_snippet_title(snippet_html)
+        result = []
+        is_top = True
+        old_class = None
 
-            item['vu'] = self.get_context_visible_url(snippet_html)
-            item['vu'] = self.get_context_visible_url(snippet_html)
-            item['a'] = self._get_context_snippet_area(snippet, old_snippet)
-            sn.append(item)
-            old_snippet = snippet
+        dom = PyQuery(self.content)
+        serp = dom('.serp-item')
+        for sn in serp:
+            is_ignore_block = self._ignore_block(sn)
+            is_context_snippet = self._is_context_snippet(sn)
 
-        return {'pc': len(sn), 'sn': sn}
+            if not is_ignore_block:
+                is_top = False
+                continue
+
+            if not is_context_snippet:
+                continue
+
+            t_or_b = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]')
+            if t_or_b:
+                cur_class = filter(lambda x: re.match(ur'data-[\w\d]{4,}', x), sn.attrib)[0]
+                if old_class and cur_class != old_class:
+                    is_top = False
+                old_class = cur_class
+
+            if not t_or_b:
+                a = 'r'
+            elif is_top:
+                a = 't'
+            else:
+                a = 'b'
+
+            title, url = self._get_title(sn, False)
+            item = {'u': url, 't': title}
+            item['vu'] = self.get_context_visible_url(sn)
+            item['a'] = a
+            result.append(item)
+
+        return {'pc': len(result), 'sn': result}
 
     def get_serp(self):
         if self.is_not_found():
@@ -209,6 +222,58 @@ class YandexParser(object):
             domain = re.sub(ur':\d+$', '', domain)
         return domain
 
+    def _is_context_snippet(self, sn):
+        return 'serp-adv' in sn.attrib['class']
+
+    def _ignore_block(self, sn):
+        if self._is_context_snippet(sn):
+            return True
+
+        if 'z-' in sn.attrib['class'] \
+            or 'template-object-badge' in sn.attrib['class']\
+            or 't-construct-adapter__companies' in sn.attrib['class']:
+            #реклама
+            return True
+
+        # игнорим новости
+        if 't-construct-adapter__news' in sn.attrib['class']:
+            return True
+
+        # игнорим "расписание, результаты и трансляции на Яндексе"
+        if 't-sport-' in sn.attrib['class']:
+            return True
+
+        # игнорим предложения на маркете
+        if 't-market-offers' in sn.attrib['class']:
+            return True
+
+        # игонорим тизеры
+        if sn.xpath('.//div[contains(@class,"teaser ")]'):
+            return True
+
+        # игнорим текущий счет спортивных соревнований
+        if 't-construct-adapter__sport-livescore' in sn.attrib['class']:
+            return True
+
+        # игнорим номера регионов
+        if 't-construct-adapter__auto-regions' in sn.attrib['class']:
+            return True
+
+        # игнорим факты
+        if re.search(ur't-construct-adapter__.+-fact', sn.attrib['class'], re.I):
+            return True
+
+        # почтовые индексы
+        if 't-post-indexes' in sn.attrib['class']:
+            return True
+
+        # игнорим конвертер единиц
+        div = sn.find('div')
+        if div and 'z-' in div.attrib['class']:
+            return True
+
+        return False
+
     def get_snippets(self):
 
         try:
@@ -218,47 +283,7 @@ class YandexParser(object):
             snippets = []
             position = 0
             for sn in serp:
-                if 'serp-adv' in sn.attrib['class'] or 'z-' in sn.attrib['class'] \
-                    or 'template-object-badge' in sn.attrib['class']\
-                    or 't-construct-adapter__companies' in sn.attrib['class']:
-                    #реклама
-                    continue
-
-                # игнорим новости
-                if 't-construct-adapter__news' in sn.attrib['class']:
-                    continue
-
-                # игнорим "расписание, результаты и трансляции на Яндексе"
-                if 't-sport-' in sn.attrib['class']:
-                    continue
-
-                # игнорим предложения на маркете
-                if 't-market-offers' in sn.attrib['class']:
-                    continue
-
-                # игонорим тизеры
-                if sn.xpath('.//div[contains(@class,"teaser ")]'):
-                    continue
-
-                # игнорим текущий счет спортивных соревнований
-                if 't-construct-adapter__sport-livescore' in sn.attrib['class']:
-                    continue
-
-                # игнорим номера регионов
-                if 't-construct-adapter__auto-regions' in sn.attrib['class']:
-                    continue
-
-                # игнорим факты
-                if re.search(ur't-construct-adapter__.+-fact', sn.attrib['class'], re.I):
-                    continue
-
-                # почтовые индексы
-                if 't-post-indexes' in sn.attrib['class']:
-                    continue
-
-                # игнорим конвертер единиц
-                div = sn.find('div')
-                if div and 'z-' in div.attrib['class']:
+                if self._ignore_block(sn):
                     continue
 
                 infected = 'template-infected' in sn.attrib['class']

@@ -958,6 +958,95 @@ class YandexParserTestCase(YandexParserTests):
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(serp['pc'], 7)
 
+    def test54(self):
+        html = self.get_data('context-2017-02-28.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
+        self.assertEquals(serp['sn'][0]['t'], u'Стандартные пластиковые окна! – Скидка 20%!')
+        self.assertEquals(serp['sn'][0]['vu'], u'oknaforbis.ru/Пластиковые-Окна')
+        self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/Jy3pEMwPIHu40000ZhcYLOi5KfK1cm9kGxS198Yz8PtX0ecpyWhT19YD59sblyWEfYsAlpiCr0hSjdGs_GkziJaJ_mUgBgMjZfWBlAMjXGkD0Tq1tf0az96_JpkO3vVmVIcQ5ktd7WsJXGsYP9a5GeohNaK3jf0s-xMGvDIWg23E1A-hNaK3iwY-E06qaEJKsQWWpWJQgBuu0PIOInIdaHGqgBd13Ue3fC00002H0QxYSS9fqf1unh41igGG00Bvud72QTAGUCQvfR_83hlmiNz0VmaLkWV1__________yFmlE7lN0Dx9rw2SMF3zB__________m_J__________yFxW7RyF7OiuO95Re7tuKDvP3oA-s3AFNVnAHH9t42zjA7u6zJcLHy8m00?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
+        self.assertEquals(serp['sn'][0]['a'], 't')
+
+        self.assertEquals(serp['sn'][1]['t'], u'Стандартные окна ПВХ / shop.oknagorizont.ru')
+        self.assertEquals(serp['sn'][1]['vu'], u'shop.oknagorizont.ru')
+        self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/Jy3pELmzLaG40000ZhcYLOi5KfK1cm9kGxS193A8lDC0m0I9fYSeVvYD59sap-e1fakAfU99GDoX-fLKlQPvbLIgBgMlRvW1ZG7T0TwG9FJqjuIujGcHlqyxc0-Ny7qfcXRjvnuDauKDecIP1KACe2eo0xQGS_Mra0BGeAtwPWEle2eo0xEORzsqa0BGsQtwPWFQc6_Tb9Yn4wUPq32egzg2UAJ00000aG6kud72QTAGUCQn0RAa4002-U9nmcdIa7Z6kQJFwW6xyB5_G7y95Re7mV__________3yBpXxrm3UoTUWd5Zm_I__________yFq___________3-u1s_3nsBE62HMw1z-53UMGyYljWoZrtyIaKITn0lRIX-1lKvbKVo80?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+
+        self.assertEquals(serp['sn'][2]['t'], u'Пластиковые окна Железнодорожный / ecoplastika.ru')
+        self.assertEquals(serp['sn'][2]['vu'], u'ecoplastika.ru/Пластиковые-окна')
+        self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/Jy3pEVKEk5040000ZhcYLOi5KfK1cm9kGxS193E8lilZPWQ9ziqk1j6SPciBc8qKdQcebn6Qj58qMmAcQegiWAVvtBb2VM01lRNTE3a1gYwbhH8G0uq1tG7Ua2JqaRzFEvWFb_1zAPeMxUSU3PE53Q9acGL2ZAt1ImUsh5Cm0hMesje1eAZHaWUlhS5B1xEew-m1jAZQsW7Pg4Th2Tge2MK2b9TN0gUJ5nQefBU13gJ00000aG6kud72QTAGUCQn0xAa4002-U9nmcdIa7Z6kQcebn6xyB5_G7y95Re7mV__________3yBpXxrm3UoTUWd40SMF3zB__________m_J__________yFxW7RyF7OiuO95Re7tuKDyWxbaF8hxOCezT_4f54dSGBsqeVWRrEPL7ya?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+
+        self.assertEquals(serp['sn'][3]['t'], u'Пластиковые окна. Цена: 2190 руб. – Дешевле нет!')
+        self.assertEquals(serp['sn'][3]['vu'], u'nedorogieokna.ru/недорого-в-москве')
+        self.assertEquals(serp['sn'][3]['u'], 'http://yabs.yandex.ru/count/Jy3pEJfXJOq40000ZhcYLOi5KfK2cm5kGxS2BG68jcS-80A9j4UdtmAOZHITeMCs5QOXYhYBKSi4tBcxqeS6lRx97Ra3gYwbgyZl1BoWKjK2ZG7T0TwG9FIHlqyxc0-Ny7qfcXRjvnuDZx6ZlGa5dxucnYuCauKDecIP1KACg50g1RQiiOm1jQWkK06We6421g-eK2e5iw0TXm6qg2vG0Tch8fK8sg2OBWAKdQwifv7c1wY_S1hW1AJ00000aG6kud72QTAGUCQn0RAq4G02GFdYSS9fqf1unhcXOpOLk_2nVq1_2HMw1y7__________m_2yuUzS0tidNe9nOyFql__________3zF__________m_k0TlmyTYpXWaLkWVVXGtbaF8hxOCezT_4f54dSGBsqeVWRrEPL7qb?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+
+        self.assertEquals(serp['sn'][4]['t'], u'Пластиковые окна "Rehau" / zavod.dom-okon.su')
+        self.assertEquals(serp['sn'][4]['vu'], u'zavod.dom-okon.su/Окна-Домком-Москва')
+        self.assertEquals(serp['sn'][4]['u'], 'http://yabs.yandex.ru/count/Jy3pEQdII_S40000ZhcYLOi5KfK2cm5kGxS2BG4oYBlMZ904YQ9C46oTghuz3gP8Yhn9wbyDtB9bia4ElRWZFpm9gYwbh5ro3RoZv1m4ZG7T0TwG9FIHlqyxc0-Ny7qfcXRjvnuDZx6ZlGa5dxucnYuCauKDecIP1KACfKEM1hQWuVa1jQ2sh06We5vj1w-bGvO6iw1cum6qeBQi0TcWhxO3sf2pyPIVsAgdcsu5gB10MNC7fC00002H0QxYSS9fqf1unh41ihGH0090-U9nmcdIa7Z6kQg-FGwxyB5_G7y95Re7mV__________3yBpXxrm3UoTUWd5Zm_I__________yFq___________3-u1s_3nsBE62HMw1z-53UMGyYljWoZrtyIaKITn0lRIX-1lKvbKUIK0?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+
+        self.assertEquals(serp['sn'][5]['t'], u'Пластиковые окна. Цены 2015! – Скидка 50% +подарок!')
+        self.assertEquals(serp['sn'][5]['vu'], u'eurookna.ru')
+        self.assertEquals(serp['sn'][5]['u'], 'http://yabs.yandex.ru/count/Jy3pEIScVe840000ZhcYLOi5KfK2cm5kGxS2BG4pYBQgNS01YRCw0I83c8qKdP132wORYhl8Mcq9tBCScSOAlRULcxe3gYwbe3vz1hohlra4ZG7T0TwG9FIHlqyxc0-Ny7qfcXRjvnuDZx6ZlGa5dxucnYuCauKDecIP1KAChH271BQak5i1jQYj9W6WfTV61Q-j48S4iw3wTm6qgAqc0TcbryO5sg3wTm6KdqMyfvsh2QYmFN0S0gJ00000aG6kud72QTAGUCQn0RAq4G02GFdYSS9fqf1unhcGGmkxyB5_G7y95Re7mV__________3yBpXxrm3UoTUWd40SMF3zB__________m_J__________yFxW7RyF7OiuO95Re7tuKDvP3oA-s3AFNVnAHH9t42zjA7u6zJcLH-9G00?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+
+        self.assertEquals(serp['sn'][6]['t'], u'Окна ПВХ оп заводским ценам! / zavodskieokna.ru')
+        self.assertEquals(serp['sn'][6]['vu'], u'zavodskieokna.ru')
+        self.assertEquals(serp['sn'][6]['u'], 'http://yabs.yandex.ru/count/Jy3pERat9NO40000ZhcYLOi5KfK2cm5kGxS2BG4qYBv6Bp02YRJ9QwS3c8qKdQSZyGEc8egvdcg81Dor5ay_1hsqhSf-1AekfQR3OWUD0Tq1tf0az96_JpkO3vVmVIcQ5ktd7WsJXGsYP9a5GeoeQcO4jgpiKG6rg60U0Q2jkjS4hwXgPWIpg2yx0RIeO1u1sQswrmJQg2yx0PIMMkUdaHiAgA7PBcgam0000941hk9nmcdIa7Z6iG6of1400ldYSS9fqf1unhcd8_43k_2nVq1_2HMw1y7__________m_2yuUzS0tidNe9n075Zm_I__________yFq___________3-u1s_3nsBE62HMw1z-53UMGyYljWoZrtyIaKITn0lRIX-1lKvbKVIC0?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+
+
+    def test55(self):
+        html = self.get_data('context-2017-02-28-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
+        self.assertEquals(serp['sn'][0]['t'], u'Купить стол-трансформер в Москве! - От 2 600 р!')
+        self.assertEquals(serp['sn'][0]['vu'], u'lifemebel.ru/Столы-Трансформеры')
+        self.assertEquals(serp['sn'][0]['u'], 'http://yabs.yandex.ru/count/JuWipDY16VW40000ZhptLOi5XPpGBfK1cm9kGxS198YsjpKW0ecyAN6X0fXddQ8_B0Ic8OgwBaXt0jozYWwA0xs-2jIt0gekfQczJ0Mygud30eq1tG7Ua2JqzBloK6KDaRXM_m0Ab_0umHCMxUSU3PE53Pa5GeoT9LssdF4RjPYk5w2LrdoldILTiv2z7xIOhXVPbTPysf2z7vIP91UdcgDHgB10MNC7fB000006hksbG39uuup6iG6of1000ldjfK0oUEECnhcYFom4k-q0dqbQMABYmV__________3yB-HDt4xDEPsWR5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroIGprD6bzjJnYOHOcLH_8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
+        self.assertEquals(serp['sn'][0]['a'], 't')
+
+        self.assertEquals(serp['sn'][1]['t'], u'Стол трансформер купить в Москве! / dolce-mebel.ru')
+        self.assertEquals(serp['sn'][1]['vu'], u'dolce-mebel.ru/столы')
+        self.assertEquals(serp['sn'][1]['u'], 'http://yabs.yandex.ru/count/JuWip9BaA-W40000ZhptLOi5XPpGBfK1cm9kGxS193A8gSjay8czJLIW19XddQ7hwX6c3egnQ8Ki1zoyHsNl2BsuqWaj1gekfQmogmcygXoR2Oq1tG7Ua2JqaRXM_m0Ab_0umHCMxUSU3PE53Pa5GeoGRLQscEqPjP3v5Q2GRLQla6rMiv3v5RIG-HNPa6rMsf3v5PIJf0cdcwTOgB50MNC7fB000006hksbG39uuup6iG6oj1000a3vxQL0CdZZZCQveUlg4Rlj09z9MbYYui7__________m_2_aJTnEpJcTe6n075Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroIGprD6bzjJnYOHOcLHy8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+
+        self.assertEquals(serp['sn'][2]['t'], u'HOFF.ru - Купите Стол 1690 руб. / hoff.ru')
+        self.assertEquals(serp['sn'][2]['vu'], u'hoff.ru/столы-трансформеры')
+        self.assertEquals(serp['sn'][2]['u'], 'http://yabs.yandex.ru/count/JuWip5H6jju40000ZhptLOi5XPpGBfK1cm9kGxS193E8keNf8069ha9Q6vXddQxuo0Yc4Ogu8IRL1zo-4zEI2RsmW5kI1gekfQk72mgyfTkx2Oq1tG7Ua2JqaRXM_m0Ab_0umHCMxUSU3O-sJbYw0P-zcxzw29E53Pa5GeoJ5O-sdEmgjPXW9A2L4l2lanMFiv09FRIOO2JPbHBmsf09FPIGrWkdds4mgB10MNC7fB000006hksbG39uuup6iG6of1000ldjfK0oUEECnhck-CW8k-q0dqbQMABYmV__________3yB-HDt4xDEPsWR5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroIGprD6bzjJnYOHOcLHz8G00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+
+        self.assertEquals(serp['sn'][3]['t'], u'Стол трансформер для кухни купить - Производство мебели!')
+        self.assertEquals(serp['sn'][3]['vu'], u'3kon.ru/Заказать-со-скидкой')
+        self.assertEquals(serp['sn'][3]['u'], 'http://yabs.yandex.ru/count/JuWipFa5jJy40000ZhptLOi5XPpGBfK2cm5kGxS2BG68ilAki069zFxDMikLDsC5c6UTgmqj29grl8qM0QOQYhBmShS7tBaS4uC9lRHMOuW6gYwbe_Bt2Rohs949ZG7T0TwG9FIHk5R_00gNy3Z14nRjvnuDauKDcGL2Z9FnIRQOp1ArcCmIe90ySw-JyKcpa4mTj9ZC4jcGF7FQa4mTb9ZJowUKq1oeiK1PSmUai00000QkxQL0CdZZZCQn0xAq4G02GFdjfK0oUEECnhch3Iq8k-q0dqbQMABYmV__________3yB-HDt4xDEPsWR5Zm_J0ku1s_zyDGeTlu1b0T-53V8ExOCezSaaCzJHfVRKyOc4M9bKUo40?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+
+        self.assertEquals(serp['sn'][4]['t'], u'Купите стол-трансформер в Москве / kresla-otido.ru')
+        self.assertEquals(serp['sn'][4]['vu'], u'kresla-otido.ru/Столы-книжки')
+        self.assertEquals(serp['sn'][4]['u'], 'http://yabs.yandex.ru/count/JuWip2z06u440000ZhptLOi5XPpGBfK2cm5kGxS2BG4oYB-EI002YQSEXSwOPvsOunMc7ug_XGfa1jorAEur2BssaOo-1QekfQ7LtmYyhyRV28q1tG7Ua2JqaRXM_m0Ab_0umHCMxUSU3PE53Pa5GeoRnZMsa28GjP2i3Q2RqaolcyOriv284xIGh0tPcz9Csf284vILyUYdcRmdgBKl1sy3fB000006hksbG39uuup6iG6of1400ldjfK0oUEECnhcOunMxxG2VILfOekB1__________yFmlv4tSJiqvdQ1iG1nOyFqmBk0Tl_V3KA7R-0PG7VXGtbaF8hxOCezSaaCzJHfVRKyOc4M9bKUY00?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+
+        self.assertEquals(serp['sn'][5]['t'], u'Стол-трансформер Москва! - 87 моделей столов!')
+        self.assertEquals(serp['sn'][5]['vu'], u'interpremium.ru/Столы-трансформеры')
+        self.assertEquals(serp['sn'][5]['u'], 'http://yabs.yandex.ru/count/JuWip8JUT9u40000ZhptLOi5XPpGBfK2cm5kGxS2BG4pYBIZckW6YRgfEqO4c6UTgQ8R0QQC28g-b1ah1jopIs_y1xsvzmoQ1QekfQVrimYyfsYi1Oq1tG7Ua2JqzBlzP_KLaRXM_m0Ab_0umHCMxUSU3O-_Y7s90f-z7EbD3PE53Pa5GeoJvJAsd4GFjPZm3A2L-qYla-Koiv2E4hIOy0pPbVj8sf2E4fIUqysdc-4dgB50MNC7fB000006hksbG39uuup6iG6oj1400a3vxQL0CdZZZCQvgQ8R0Rlj09z9MbYYui7__________m_2_aJTnEpJcTe6nOyFqmBk0Tl_V3KA7R-0PG7VXGtbaF8hxOCezSaaCzJHfVRKyOc4M9bKVo80?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+
+        self.assertEquals(serp['sn'][6]['t'], u'Столы-трансформеры / mnogomeb.ru')
+        self.assertEquals(serp['sn'][6]['vu'], u'mnogomeb.ru')
+        self.assertEquals(serp['sn'][6]['u'], 'http://yabs.yandex.ru/count/JuWip3X6zn040000ZhptLOi5XPpGBfK2cm5kGxS2BG4qYBHe3c05YRPkjf42c6UThr560gPLYhw0Xq42tB34Fa43lRPDb8O2gYwbe-m71RoisNi4ZG7T0TwG9FIHk5R_00gNy3Z14nRjvnuDauKDcGL2Z9X_FBQK9XArc64Fe9lIJA-OVpopa8WJj9XX3zcRqapQa8WJb9_wwQUGLHseiF-GQGIai00000QkxQL0CdZZZCQn0RAq4G02GFdjfK0oUEECnhclKKO2k-q0dqbQMABYmV__________3yB-HDt4xDEPsWR5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroIGprD6bzjJnYOHOcLHy8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
