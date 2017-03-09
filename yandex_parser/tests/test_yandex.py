@@ -1047,6 +1047,27 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][6]['u'], 'http://yabs.yandex.ru/count/JuWip3X6zn040000ZhptLOi5XPpGBfK2cm5kGxS2BG4qYBHe3c05YRPkjf42c6UThr560gPLYhw0Xq42tB34Fa43lRPDb8O2gYwbe-m71RoisNi4ZG7T0TwG9FIHk5R_00gNy3Z14nRjvnuDauKDcGL2Z9X_FBQK9XArc64Fe9lIJA-OVpopa8WJj9XX3zcRqapQa8WJb9_wwQUGLHseiF-GQGIai00000QkxQL0CdZZZCQn0RAq4G02GFdjfK0oUEECnhclKKO2k-q0dqbQMABYmV__________3yB-HDt4xDEPsWR5Zm_J0ku1s_zyDGeTlu1b0T-53UMGyYljWoZroIGprD6bzjJnYOHOcLHy8000?q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D1%81%D1%82%D0%BE%D0%BB+%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B0+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80')
         self.assertEquals(serp['sn'][6]['a'], 'b')
 
+    def test56(self):
+        u"""игнорим конвертер единиц"""
+        html = self.get_data('2017-03-09.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 21000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'ru.wikipedia.org')
+        self.assertEquals(serp['sn'][0]['u'], 'https://ru.wikipedia.org/wiki/%D0%A3%D1%8D%D1%81%D0%BA%D0%B0')
+        self.assertEquals(serp['sn'][0]['t'], u'Уэска — Википедия')
+        self.assertEquals(serp['sn'][0]['s'], u'Уэ́ска (исп. Huesca, араг. Uesca, лат. Osca) — город в Испании, автономное сообщество Арагон, центр одноимённой провинции. Существовала ещё в доримскую эпоху. Статус города (с названием Оска) пожаловал в 30 г. н. э. император Август.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'spanish-info.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://spanish-info.ru/ueska/')
+        self.assertEquals(serp['sn'][49]['t'], u'Уэска')
+        self.assertEquals(serp['sn'][49]['s'], u'Провинция Уэска знаменита тем, что здесь находятся самые высокие пики арагонских Пиренеев. Туристы специально приезжают сюда...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

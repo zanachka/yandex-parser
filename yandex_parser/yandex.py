@@ -267,6 +267,14 @@ class YandexParser(object):
         if 't-post-indexes' in sn.attrib['class']:
             return True
 
+        # описание местности
+        if 't-construct-adapter__entity-card' in sn.attrib['class']:
+            return True
+
+        # Похожее описание местности
+        if 't-construct-adapter__entity-homonym' in sn.attrib['class']:
+            return True
+
         # игнорим конвертер единиц
         div = sn.find('div')
         if div and 'z-' in div.attrib['class']:
