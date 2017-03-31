@@ -63,7 +63,8 @@ class YandexParser(object):
             if not is_context_snippet:
                 continue
 
-            t_or_b = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]')
+            t_or_b = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]') \
+                or sn.cssselect('li.serp-adv-item div.organic__subtitle')
             if t_or_b:
                 cur_class = filter(lambda x: re.match(ur'data-[\w\d]{4,}', x), sn.attrib)[0]
                 if old_class and cur_class != old_class:

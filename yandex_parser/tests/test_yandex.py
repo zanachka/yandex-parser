@@ -1068,6 +1068,37 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Уэска')
         self.assertEquals(serp['sn'][49]['s'], u'Провинция Уэска знаменита тем, что здесь находятся самые высокие пики арагонских Пиренеев. Туристы специально приезжают сюда...')
 
+    def test57(self):
+        html = self.get_data('context-2017-03-31.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+
+    def test58(self):
+        html = self.get_data('context-2017-03-31-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 11)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 'r')
+        self.assertEquals(serp['sn'][10]['a'], 'r')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
