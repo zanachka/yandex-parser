@@ -184,12 +184,8 @@ class YandexParser(object):
         if not h2:
             return None, self._get_url_from_mobile_greenurl(sn)
 
-        if not is_video_snippet and 'serp-item__title' not in h2.attrib['class'] and 'organic__title-wrapper' not in h2.attrib['class']:
-            raise YandexParserError(u'parse error')
-
         if infected:
             link = h2
-            # url = sn.find('.//*[@class="template-infected__unsafe"]').find('a').attrib['href']
             url = self._get_infected_url(sn)
         else:
             link = h2.find('a')
@@ -224,7 +220,7 @@ class YandexParser(object):
         return domain
 
     def _is_context_snippet(self, sn):
-        return 'serp-adv' in sn.attrib['class']
+        return 'serp-adv' in sn.attrib['class'] or 't-construct-adapter__adv' in sn.attrib['class']
 
     def _ignore_block(self, sn):
         if self._is_context_snippet(sn):
@@ -246,6 +242,17 @@ class YandexParser(object):
 
         # игнорим предложения на маркете
         if 't-market-offers' in sn.attrib['class']:
+            return True
+
+        if 't-construct-adapter__market-' in sn.attrib['class']:
+            return True
+
+        # игнорим картинки
+        if 't-construct-adapter__images' in sn.attrib['class']:
+            return True
+
+        # игнорим видео
+        if 't-construct-adapter__video' in sn.attrib['class']:
             return True
 
         # игонорим тизеры
@@ -327,7 +334,9 @@ class YandexParser(object):
                                 or sn.xpath('.//div[contains(@class,"serp-item__data")]') \
                                 or sn.xpath('.//div[contains(@class,"social-snippet2__text")]') \
                                 or sn.xpath('.//div[contains(@class,"organic__text")]') \
-                                or sn.xpath('.//div[contains(@class,"extended-text__short")]') # для мобильной выдачи
+                                or sn.xpath('.//div[contains(@class,"extended-text__short")]') \
+                                or sn.xpath('.//div[@class="text"]')
+
                     snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
                     snippet['s'] = snippet['s'] or ''
                 div_saved_copy_link = sn.xpath('.//div[contains(@class,"popup2")]')

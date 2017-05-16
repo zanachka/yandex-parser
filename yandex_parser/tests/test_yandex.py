@@ -1099,6 +1099,66 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][2]['a'], 'r')
         self.assertEquals(serp['sn'][10]['a'], 'r')
 
+    def test59(self):
+        html = self.get_data('mobile-2017-05-16.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'hi-tech.mail.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://hi-tech.mail.ru/review/fitness_band_sony_garmin_huawei/')
+        self.assertEquals(serp['sn'][0]['t'], u'Обзор фитнес-браслетов Garmin, Huawei и Sony - Hi-Tech Mail.Ru')
+        self.assertEquals(serp['sn'][0]['s'], u'Читайте первую часть сводного обзора фитнес-браслетов: Polar, Jawbone, Fitbit, Nike. Huawei Talkband B1. Этот браслет был представлен публике на выставке MWC, которая прошла...')
+
+        self.assertEquals(serp['sn'][49]['d'], 'avito.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'https://www.avito.ru/rossiya?sgtd=1&q=%D1%84%D0%B8%D1%82%D0%BD%D0%B5%D1%81+%D0%B1%D1%80%D0%B0%D1%81%D0%BB%D0%B5%D1%82+huawei')
+        self.assertEquals(serp['sn'][49]['t'], u'фитнес браслет huawei - Доска объявлений от частных лиц...')
+        self.assertEquals(serp['sn'][49]['s'], u'Продам умные часы-фитнес браслет Huawei Honor Band. 2 500 руб. Фитнес-браслет Huawei TalkBand B2. 8 000 руб. Спорт и отдых.')
+
+    def test60(self):
+        html = self.get_data('mobile-2017-05-16-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'svyaznoy.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.svyaznoy.ru/catalog/phone/224/nokia')
+        self.assertEquals(serp['sn'][0]['t'], u'Купить телефоны Nokia, цены на мобильные телефоны Нокия...')
+        self.assertEquals(serp['sn'][0]['s'], u'Заказать и купить телефон Nokia по низкой цене, в том числе в рассрочку, можно через наш интернет магазин - продажа сотовых телефонов Нокия осуществляется с доставкой по России - Москва.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'market.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://market.ru/category/c257-sotovye-telefony/nokia')
+        self.assertEquals(serp['sn'][49]['t'], u'Мобильные телефоны Nokia цены в Москве | купить...')
+        self.assertEquals(serp['sn'][49]['s'], u'Интернет магазин Маркет - низкие цены на Мобильные телефоны Nokia в Москве - отзывы, доставка, каталог, сравнение цен в магазинах города.')
+
+    def test61(self):
+        html = self.get_data('mobile-2017-05-16-2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'svyaznoy.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.svyaznoy.ru/catalog/phone/224/senseit')
+        self.assertEquals(serp['sn'][0]['t'], u'Купить телефоны SENSEIT, цены на мобильные телефоны...')
+        self.assertEquals(serp['sn'][0]['s'], u'В нашем каталоге Вы можете подобрать сотовый телефон Сэнсит по техническим параметрам, отзывам покупателей и Главная Телефоны Все телефоны Мобильные телефоны SENSEIT.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'service-centers.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'https://service-centers.ru/senseit')
+        self.assertEquals(serp['sn'][49]['t'], u'Сервисные центры Senseit, ремонт Senseit в Москве — полный...')
+        self.assertEquals(serp['sn'][49]['s'], u'Сервисные центры Senseit. Мы нашли для вас 219 сервисных центров Senseit в Москве. Ремонт внешних аккумуляторов, мобильных телефонов Senseit.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
