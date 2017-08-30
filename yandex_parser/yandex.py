@@ -292,6 +292,10 @@ class YandexParser(object):
         if 't-construct-adapter__ugc' in sn.attrib['class']:
             return True
 
+        # конвертер
+        if 't-construct-adapter__units-converter' in sn.attrib['class']:
+            return True
+
         return False
 
     def get_snippets(self):

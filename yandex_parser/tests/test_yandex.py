@@ -1179,6 +1179,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'ЖК «Новая Звезда» — купить квартиру от застройщикав...')
         self.assertEquals(serp['sn'][49]['s'], u'ЖК «Новая Звезда»- это жилой комплекс, расположенный в Северо-Западном административном округе. ... Застройщик: Крост Недвижимость. Высота зданий от 11 до 24 этажей. В комплексе предусмотрены :1к.кв., 2к.кв., 3к.кв.. В ЖК можно...')
 
+    def test63(self):
+        html = self.get_data('2017-08-30-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 91000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'kalkulator.pro')
+        self.assertEquals(serp['sn'][0]['u'], 'http://kalkulator.pro/inches-to-centimeters.html')
+        self.assertEquals(serp['sn'][0]['t'], u'Калькулятор Дюймы в Сантиметры | Сколько...')
+        self.assertEquals(serp['sn'][0]['s'], u'Преобразование дюймов в сантиметры (инчи в см) и наоборот в режиме он-лайн, бесплатный сервис калькулятор.про. ... Калькулятор Дюймы в Сантиметры. Онлайн конвертер дюйм см (инч см).')
+
+        self.assertEquals(serp['sn'][49]['d'], 'tentology.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://tentology.ru/spravka-inch-%26-foot.htm')
+        self.assertEquals(serp['sn'][49]['t'], u'Дюйм в см, Чему равен дюйм и фут? Как перевести...')
+        self.assertEquals(serp['sn'][49]['s'], u'Сколько сантиметров в дюйме? ... 1 дюйм = 2,54 см. 1 фут = 12 дюймов = 0,3048 метра. Обозначение. В современном русском языке общепринятого буквенного сокращения для обозначения дюймов нет.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
