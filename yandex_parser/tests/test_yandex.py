@@ -1219,6 +1219,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Стандарт телеком - Москва')
         self.assertEquals(serp['sn'][49]['s'], u'Оставить заявку можно на сайте, по телефону +7 (495) 357-07-07 или по почте sale@standtel.ru Стандарт Телеком — новый стандарт качества!')
 
+    def test65(self):
+        html = self.get_data('2017-08-30-3.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 63000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'mos.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.mos.ru/city/projects/renovation/')
+        self.assertEquals(serp['sn'][0]['t'], u'Список домов, включенных в программу реновации')
+        self.assertEquals(serp['sn'][0]['s'], u'Дом не включен в программу реновации. Если у вас есть вопросы, позвоните в Единую справочную службу Москвы +7 (495) 777-77-77.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'law03.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://law03.ru/news/read/renovaciya-zhilya-v-moskve-2017')
+        self.assertEquals(serp['sn'][49]['t'], u'Реновация жилья в Москве 2017: последние новости')
+        self.assertEquals(serp['sn'][49]['s'], u'Закон о реновации жилищного фонда в Москве был принят Мосгордумой 17 мая 2017 года. В нем закреплены дополнительные гарантии для тех граждан...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

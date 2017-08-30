@@ -300,6 +300,10 @@ class YandexParser(object):
         if 't-construct-adapter__calculator' in sn.attrib['class']:
             return True
 
+        # реновация
+        if 't-construct-adapter__demolition' in sn.attrib['class']:
+            return True
+
         return False
 
     def get_snippets(self):
