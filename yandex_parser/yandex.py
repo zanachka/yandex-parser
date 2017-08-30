@@ -296,6 +296,10 @@ class YandexParser(object):
         if 't-construct-adapter__units-converter' in sn.attrib['class']:
             return True
 
+        # калькулятор
+        if 't-construct-adapter__calculator' in sn.attrib['class']:
+            return True
+
         return False
 
     def get_snippets(self):

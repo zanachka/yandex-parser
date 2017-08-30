@@ -1199,6 +1199,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Дюйм в см, Чему равен дюйм и фут? Как перевести...')
         self.assertEquals(serp['sn'][49]['s'], u'Сколько сантиметров в дюйме? ... 1 дюйм = 2,54 см. 1 фут = 12 дюймов = 0,3048 метра. Обозначение. В современном русском языке общепринятого буквенного сокращения для обозначения дюймов нет.')
 
+    def test64(self):
+        html = self.get_data('2017-08-30-2.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 21000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'voda-schet.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://voda-schet.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'Поверка счетчиков воды в москве и московской области')
+        self.assertEquals(serp['sn'][0]['s'], u'Ваши данные не будут переданы третьим лицам. Все поля обязательны для заполнения. +7 (495) 357-30-11.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'standtel.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://standtel.ru/')
+        self.assertEquals(serp['sn'][49]['t'], u'Стандарт телеком - Москва')
+        self.assertEquals(serp['sn'][49]['s'], u'Оставить заявку можно на сайте, по телефону +7 (495) 357-07-07 или по почте sale@standtel.ru Стандарт Телеком — новый стандарт качества!')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
