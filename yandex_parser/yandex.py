@@ -288,6 +288,10 @@ class YandexParser(object):
         if div and 'z-' in div.attrib['class']:
             return True
 
+        # На ваш запрос можно дать короткий и однозначный ответ?
+        if 't-construct-adapter__ugc' in sn.attrib['class']:
+            return True
+
         return False
 
     def get_snippets(self):

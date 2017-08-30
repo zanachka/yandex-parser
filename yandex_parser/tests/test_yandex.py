@@ -1159,6 +1159,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Сервисные центры Senseit, ремонт Senseit в Москве — полный...')
         self.assertEquals(serp['sn'][49]['s'], u'Сервисные центры Senseit. Мы нашли для вас 219 сервисных центров Senseit в Москве. Ремонт внешних аккумуляторов, мобильных телефонов Senseit.')
 
+    def test62(self):
+        html = self.get_data('2017-08-30.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 109000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'krost.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.krost.ru/sale/15632/')
+        self.assertEquals(serp['sn'][0]['t'], u'Беспроцентная рассрочка при покупке квартиры в жилом...')
+        self.assertEquals(serp['sn'][0]['s'], u'Рассрочка в жилом комплексе «Новая Звезда». ... Концерн «КРОСТ» предлагает своим клиентам воспользоваться рассрочкой платежа при покупке квартиры в жилом комплексе «Новая Звезда».')
+
+        self.assertEquals(serp['sn'][49]['d'], 'living.papacarlostudio.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://living.papacarlostudio.ru/msk/objects/detail/zhk_novaya_zvezda_11205/')
+        self.assertEquals(serp['sn'][49]['t'], u'ЖК «Новая Звезда» — купить квартиру от застройщикав...')
+        self.assertEquals(serp['sn'][49]['s'], u'ЖК «Новая Звезда»- это жилой комплекс, расположенный в Северо-Западном административном округе. ... Застройщик: Крост Недвижимость. Высота зданий от 11 до 24 этажей. В комплексе предусмотрены :1к.кв., 2к.кв., 3к.кв.. В ЖК можно...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
