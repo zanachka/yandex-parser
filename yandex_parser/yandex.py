@@ -304,6 +304,10 @@ class YandexParser(object):
         if 't-construct-adapter__demolition' in sn.attrib['class']:
             return True
 
+        # Вы нашли то, что искали
+        if 'ugc-item' in sn.attrib['class']:
+            return True
+
         return False
 
     def get_snippets(self):

@@ -1239,6 +1239,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Реновация жилья в Москве 2017: последние новости')
         self.assertEquals(serp['sn'][49]['s'], u'Закон о реновации жилищного фонда в Москве был принят Мосгордумой 17 мая 2017 года. В нем закреплены дополнительные гарантии для тех граждан...')
 
+    def test66(self):
+        html = self.get_data('2017-08-30-4.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 156000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'kp.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.kp.ru/guide/zabolevanie-gorla-i-gortani.html')
+        self.assertEquals(serp['sn'][0]['t'], u'Заболевание горла и гортани: симптомы, признаки...')
+        self.assertEquals(serp['sn'][0]['s'], u'Где можно пройти обследование? МРТ горла и гортани — диагностический метод обследования ... При частых ЛОР-заболеваниях вам нужны комплексы для улучшения работы иммунной системы, а также препараты-иммуномодуляторы.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'stopparodontoz.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://StopParodontoz.ru/bolezni-gorla-i-gortani/')
+        self.assertEquals(serp['sn'][49]['t'], u'Болезни горла и гортани: симптомы и лечение')
+        self.assertEquals(serp['sn'][49]['s'], u'Хронические заболевания горла чаще имеют совсем другие причины ― это воспалительные заболевания носа или пищеварительного тракта. ... При первых признаках затяжного процесса в горле необходимо пройти обследование.Раннее...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
