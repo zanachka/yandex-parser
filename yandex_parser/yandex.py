@@ -18,6 +18,14 @@ class YandexParser(object):
         'captcha': re.compile(u'<img class="image form__captcha".*?src=\"([^\"]+)\"', params_regexr),
     }
 
+    USE_IGNORE_BLOCK = True
+
+    PAGECOUNT_PATTERNS = (
+        re.compile(u'found"\:"&mdash;&nbsp;(.*?)отв', params_regexr),
+        re.compile(ur'"found":"[^\\]\\n([^"]*?)отв', params_regexr),
+        re.compile(ur'<div class="serp-adv__found">Наш[^ ]+\s+(.*?)рез', params_regexr)
+    )
+
     def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm')):
         self.content = to_unicode(content)
         self.snippet_fileds = snippet_fileds
@@ -115,13 +123,8 @@ class YandexParser(object):
         if self.is_not_found():
             return 0
 
-        patterns = (
-            self.patterns['pagecount'],
-            re.compile(ur'"found":"[^\\]\\n([^"]*?)отв', self.params_regexr),
-            re.compile(ur'<div class="serp-adv__found">Наш[^ ]+\s+(.*?)рез', self.params_regexr)
-        )
-
-        for pattern in patterns:
+        match = None
+        for pattern in self.PAGECOUNT_PATTERNS:
             match = pattern.search(self.content)
             if match:
                 break
@@ -319,7 +322,7 @@ class YandexParser(object):
             snippets = []
             position = 0
             for sn in serp:
-                if self._ignore_block(sn):
+                if self.USE_IGNORE_BLOCK and self._ignore_block(sn):
                     continue
 
                 infected = 'template-infected' in sn.attrib['class']
