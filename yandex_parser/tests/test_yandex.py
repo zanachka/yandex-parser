@@ -1259,6 +1259,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Болезни горла и гортани: симптомы и лечение')
         self.assertEquals(serp['sn'][49]['s'], u'Хронические заболевания горла чаще имеют совсем другие причины ― это воспалительные заболевания носа или пищеварительного тракта. ... При первых признаках затяжного процесса в горле необходимо пройти обследование.Раннее...')
 
+    def test67(self):
+        html = self.get_data('mobile-2017-12-11.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'e-katalog.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.e-katalog.ru/PHILIPS-XENIUM-V387.htm')
+        self.assertEquals(serp['sn'][0]['t'], u'Philips Xenium V387 – купить мобильный телефон, сравнение цен...')
+        self.assertEquals(serp['sn'][0]['s'], u'Цена: от 9990 р. до 9990 р. >>> Мобильный телефон Philips Xenium V387 Купить по лучшей цене Описание, фото, видео Рейтинги, тесты, сравнение Отзывы, обсуждение пользователей. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], '1001planshet.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.1001planshet.ru/kupit/smartphones/philips-xenium-v387-16gb-dual-sim-black')
+        self.assertEquals(serp['sn'][49]['t'], u'Продажа смартфона Philips Xenium V387 16Gb Dual SIM Black.')
+        self.assertEquals(serp['sn'][49]['s'], u'смартфон Philips Xenium V387. гарнитура. зарядное устройство. ... Мы не перекупщики, поэтому у нас выгодные цены, вследствие чего с нами легко экономить! Мы продаем смартфоны и планшеты уже 5 лет! Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

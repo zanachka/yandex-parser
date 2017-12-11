@@ -358,6 +358,7 @@ class YandexParser(object):
                                 or sn.xpath('.//div[contains(@class,"social-snippet2__text")]') \
                                 or sn.xpath('.//div[contains(@class,"organic__text")]') \
                                 or sn.xpath('.//div[contains(@class,"extended-text__short")]') \
+                                or sn.xpath('.//span[contains(@class,"extended-text__short")]') \
                                 or sn.xpath('.//div[@class="text"]')
 
                     snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
@@ -371,27 +372,37 @@ class YandexParser(object):
                         snippet['savedCopy'] = None
 
                 snippets.append(snippet)
-            result = snippets
-
-            pagecount = self.get_pagecount()
-            len_snippets = len(snippets)
-            if pagecount > 50 and len_snippets % 10 != 0:
-                cut_snippets = []
-                # в этом случае убираем поддомены яндекса из серпа, так чтобы получилось число кратное 10
-                need_delete = len_snippets - len_snippets / 10  * 10
-                p = 0
-                for sn in snippets:
-                    if need_delete and re.search(ur'^(?:.+\.|)yandex\.ru$', sn['d'], re.I):
-                        need_delete -= 1
-                        continue
-                    p += 1
-                    sn['p'] = p
-                    cut_snippets.append(sn)
-                result = cut_snippets
+            result = self._exclude_if_ya_domains(snippets)
         except Exception as e:
             raise YandexParserError(str(e))
-
         return result
+
+    def _exclude_if_ya_domains(self, snippets):
+        # pagecount = self.get_pagecount()
+        # if pagecount <= 50:
+        #     return snippets
+
+        len_snippets = len(snippets)
+        if len_snippets % 10 == 0:
+            return snippets
+
+        return self._exclude_ya_domains(snippets)
+
+    def _exclude_ya_domains(self, snippets):
+        cut_snippets = []
+
+        # в этом случае убираем поддомены яндекса из серпа, так чтобы получилось число кратное 10
+        len_snippets = len(snippets)
+        need_delete = len_snippets - len_snippets / 10 * 10
+        p = 0
+        for sn in snippets:
+            if need_delete and re.search(ur'^(?:.+\.|)yandex\.ru$', sn['d'], re.I):
+                need_delete -= 1
+                continue
+            p += 1
+            sn['p'] = p
+            cut_snippets.append(sn)
+        return cut_snippets
 
     def _get_fl(self, sn):
         els = sn.xpath('.//span[contains(@class,"serp-meta__item")]')
