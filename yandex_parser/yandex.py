@@ -311,6 +311,11 @@ class YandexParser(object):
         if 'ugc-item' in sn.attrib['class']:
             return True
 
+        if 't-construct-adapter__market' in sn.attrib['class']:
+            html = etree.tostring(sn)
+            if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
+                return True
+
         return False
 
     def get_snippets(self):

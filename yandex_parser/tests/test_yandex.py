@@ -1279,6 +1279,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Продажа смартфона Philips Xenium V387 16Gb Dual SIM Black.')
         self.assertEquals(serp['sn'][49]['s'], u'смартфон Philips Xenium V387. гарнитура. зарядное устройство. ... Мы не перекупщики, поэтому у нас выгодные цены, вследствие чего с нами легко экономить! Мы продаем смартфоны и планшеты уже 5 лет! Читать ещё')
 
+    def test68(self):
+        html = self.get_data('mobile-2017-12-12.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'm.avito.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://m.avito.ru/moskva/telefony?q=Samsung+galaxy+NOTE+3')
+        self.assertEquals(serp['sn'][0]['t'], u'Samsung galaxy NOTE 3 - Купить мобильный телефон, смартфон...')
+        self.assertEquals(serp['sn'][0]['s'], u'Samsung Galaxy Note 3 Neo SM-N7502 Duos 16Gb White. ... Samsung galaxy note 8 64gb black черный евротест. 49 000 руб. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'moscow-tablet.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://moscow-tablet.ru/best_tablet.php?price=1')
+        self.assertEquals(serp['sn'][49]['t'], u'Планшет Самсунг Галакси Ноут 10.1 N8000 16Гб купить...')
+        self.assertEquals(serp['sn'][49]['s'], u'Распродажа 2017 планшетов Samsung (самсунг) Galaxy Note 10.1 N8000 16Gb со клада в Москве. ... Планшет Samsung (самсунг) Galaxy Note 10.1 N8000 16Gb: купить, г. Москва. Цена: 16399 руб.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
