@@ -1299,6 +1299,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Планшет Самсунг Галакси Ноут 10.1 N8000 16Гб купить...')
         self.assertEquals(serp['sn'][49]['s'], u'Распродажа 2017 планшетов Samsung (самсунг) Galaxy Note 10.1 N8000 16Gb со клада в Москве. ... Планшет Samsung (самсунг) Galaxy Note 10.1 N8000 16Gb: купить, г. Москва. Цена: 16399 руб.')
 
+    def test69(self):
+        html = self.get_data('mobile-2017-12-13.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], '4pda.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://4pda.ru/forum/index.php?showtopic=654520')
+        self.assertEquals(serp['sn'][0]['t'], u'[Android Wear] WatchMaker Watch Face - 4PDA | Форум')
+        self.assertEquals(serp['sn'][0]['s'], u'Требуется Android: 2.3+ Поддерживаемый экран: Круглый, Квадратный Русский интерфейс: Нет. Скачать: WatchMaker Watch Face v4.6.5. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'revdl.com')
+        self.assertEquals(serp['sn'][49]['u'], 'https://www.revdl.com/despicable-me-android.html/')
+        self.assertEquals(serp['sn'][49]['t'], u'Minion Rush Despicable Me 5.1.0g Apk + MOD Free Purchase/Unlocked | RevDL | Download Android Apps & Games')
+        self.assertEquals(serp['sn'][49]['s'], u'Direct Download Android Minion Rush Despicable Me Apk 5.1.0g + MOD (Free Purchase/Unlocked) + Data + MEGA MOD From RevDL .')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
