@@ -1319,6 +1319,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Minion Rush Despicable Me 5.1.0g Apk + MOD Free Purchase/Unlocked | RevDL | Download Android Apps & Games')
         self.assertEquals(serp['sn'][49]['s'], u'Direct Download Android Minion Rush Despicable Me Apk 5.1.0g + MOD (Free Purchase/Unlocked) + Data + MEGA MOD From RevDL .')
 
+    def test70(self):
+        html = self.get_data('mobile-2017-12-15.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'dns-shop.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.dns-shop.ru/product/21587dd97a653330/52-smartfon-elephone-s3-16-gb-seryj/')
+        self.assertEquals(serp['sn'][0]['t'], u'Купить 5.2" Смартфон Elephone S3 16 ГБ серый в интернет...')
+        self.assertEquals(serp['sn'][0]['s'], u'Купить с гарантией качества 5.2" Смартфон Elephone S3 16 ГБ серый в интернет магазине DNS. Выгодные цены на Elephone S3 в сети магазинов DNS. Можно купить в кредит или рассрочку. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'ru.gearbest.com')
+        self.assertEquals(serp['sn'][49]['u'], 'https://ru.gearbest.com/elephone-s3-_gear/')
+        self.assertEquals(serp['sn'][49]['t'], u'Elephone S3 - купить Elephone S3 по лучшей цене... | GearBest')
+        self.assertEquals(serp['sn'][49]['s'], u'Elephone S3 16 Гб 4G Смартфон 5.2 дюйма MTK6753 3GB RAM 13MP камера 2.5D FHD дисплей Android 6.0 64 битный 8 ядер 1.3GHz сканер отпечатков пальцев. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

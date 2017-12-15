@@ -315,10 +315,14 @@ class YandexParser(object):
         if 't-construct-adapter__app-search-view' in sn.attrib['class']:
             return True
 
+        html = etree.tostring(sn)
         if 't-construct-adapter__market' in sn.attrib['class']:
-            html = etree.tostring(sn)
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
                 return True
+
+        # Вы нашли то, что искали(мобильная версия)
+        if 'ugc_player_default' in html:
+            return True
 
         return False
 
