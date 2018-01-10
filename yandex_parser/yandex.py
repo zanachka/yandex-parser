@@ -71,6 +71,10 @@ class YandexParser(object):
             if not is_context_snippet:
                 continue
 
+            # исключаем блок директа с баннером
+            if sn.xpath('./div[contains(@class,"composite_gap_none")]'):
+                continue
+
             t_or_b = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]') \
                 or sn.cssselect('li.serp-adv-item div.organic__subtitle')
             if t_or_b:

@@ -1339,6 +1339,24 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Elephone S3 - купить Elephone S3 по лучшей цене... | GearBest')
         self.assertEquals(serp['sn'][49]['s'], u'Elephone S3 16 Гб 4G Смартфон 5.2 дюйма MTK6753 3GB RAM 13MP камера 2.5D FHD дисплей Android 6.0 64 битный 8 ядер 1.3GHz сканер отпечатков пальцев. Читать ещё')
 
+    def test71(self):
+        html = self.get_data('context-2018-01-01.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 8)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 't')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+        self.assertEquals(serp['sn'][7]['a'], 'b')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
