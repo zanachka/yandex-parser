@@ -319,6 +319,10 @@ class YandexParser(object):
         if 't-construct-adapter__app-search-view' in sn.attrib['class']:
             return True
 
+        # Блок маркета спарава
+        if 't-construct-adapter__market-constr' in sn.attrib['class']:
+            return True
+
         html = etree.tostring(sn)
         if 't-construct-adapter__market' in sn.attrib['class']:
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
