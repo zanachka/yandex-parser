@@ -23,7 +23,7 @@ class YandexParser(object):
     PAGECOUNT_PATTERNS = (
         re.compile(u'found"\:"&mdash;&nbsp;(.*?)отв', params_regexr),
         re.compile(ur'"found":"[^\\]\\n([^"]*?)отв', params_regexr),
-        re.compile(ur'<div class="serp-adv__found">Наш[^ ]+\s+(.*?)рез', params_regexr)
+        re.compile(ur'<div class="?serp-adv__found"?>Наш[^ ]+\s+(.*?)рез', params_regexr)
     )
 
     def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm')):
@@ -330,6 +330,10 @@ class YandexParser(object):
 
         # Вы нашли то, что искали(мобильная версия)
         if 'ugc_player_default' in html:
+            return True
+
+        # Подробное описание объекта
+        if 'object-badge' in html:
             return True
 
         return False

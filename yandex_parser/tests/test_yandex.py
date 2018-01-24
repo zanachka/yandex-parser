@@ -1375,6 +1375,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][6]['a'], 'b')
         self.assertEquals(serp['sn'][7]['a'], 'b')
 
+
+    def test73(self):
+        html = self.get_data('2018-01-24.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7000000)
+
+        self.assertEquals(serp['sn'][0]['d'], 'megapolisfit.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://megapolisfit.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'Megapolis. Фитнес-клуб')
+        self.assertEquals(serp['sn'][0]['s'], u'Приходите и займите свой фитнес-квартал в Мегаполисе! ... Семь минут пешком от м.Савёловская.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'megapolis-parking.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'https://megapolis-parking.ru/')
+        self.assertEquals(serp['sn'][49]['t'], u'Парковочный комплекс ТРЦ Мегаполис')
+        self.assertEquals(serp['sn'][49]['s'], u'Посетители ТРЦ Мегаполис могут воспользоваться подземным паркингом на 170 машиномест или многоуровневым паркингом на 450 машиномест...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
