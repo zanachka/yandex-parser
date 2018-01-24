@@ -1414,6 +1414,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Сколько стоит КАСКО на Honda CR-V в Санкт-Петербурге?')
         self.assertEquals(serp['sn'][49]['s'], u'КАСКО на Honda CR-V Страховая сумма 900 000 Страховая премия 47 000 Страховая компания Сургутнефтегаз. Рассчитайте стоимость КАСКО на свой автомобиль прямо сейчас по ссылке.')
 
+    def test75(self):
+        html = self.get_data('mobile-2018-01-24.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'e-katalog.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.e-katalog.ru/list/122/asus/')
+        self.assertEquals(serp['sn'][0]['t'], u'Мобильные телефоны Asus - каталог цен, где купить...')
+        self.assertEquals(serp['sn'][0]['s'], u'Мобильные телефоны Asus. цены на 49 моделей. ... Каталог Asus 2018 - новинки, хиты продаж, купить мобильные телефоны. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'svyaztelecom.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.svyaztelecom.ru/catalog/65.html')
+        self.assertEquals(serp['sn'][49]['t'], u'Сотовые телефоны ASUS - купить, цена смартфона ASUS...')
+        self.assertEquals(serp['sn'][49]['s'], u'В каталоге Сотовые телефоны интернет магазина Связь Телеком представлен широкий выбор моделей ASUS. В нем Вы можете подобрать... Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
