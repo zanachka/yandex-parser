@@ -1395,6 +1395,25 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Парковочный комплекс ТРЦ Мегаполис')
         self.assertEquals(serp['sn'][49]['s'], u'Посетители ТРЦ Мегаполис могут воспользоваться подземным паркингом на 170 машиномест или многоуровневым паркингом на 450 машиномест...')
 
+    def test74(self):
+        html = self.get_data('2018-01-24-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 170000000)
+
+        self.assertEquals(serp['sn'][0]['d'], 'mirkasko.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://MirKasko.ru/kasko_na_honda_cr-v.html')
+        self.assertEquals(serp['sn'][0]['t'], u'Стоимость КАСКО на Honda CR-V (Хонда срв)')
+        self.assertEquals(serp['sn'][0]['s'], u'СК. Honda CR-V 2012г. ... 131 824. 106 964. КАСКО для наиболее стандартного портрета водителя - расчет КАСКО произведен для условий')
+
+        self.assertEquals(serp['sn'][49]['d'], '98rus.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://98rus.ru/poslednie-zastrahovannye-mashiny/kasko-na-honda-cr-v')
+        self.assertEquals(serp['sn'][49]['t'], u'Сколько стоит КАСКО на Honda CR-V в Санкт-Петербурге?')
+        self.assertEquals(serp['sn'][49]['s'], u'КАСКО на Honda CR-V Страховая сумма 900 000 Страховая премия 47 000 Страховая компания Сургутнефтегаз. Рассчитайте стоимость КАСКО на свой автомобиль прямо сейчас по ссылке.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

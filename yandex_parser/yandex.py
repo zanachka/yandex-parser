@@ -336,6 +336,10 @@ class YandexParser(object):
         if 'object-badge' in html:
             return True
 
+        # Подробное описание объекта
+        if 'entity-search' in html:
+            return True
+
         return False
 
     def get_snippets(self):
