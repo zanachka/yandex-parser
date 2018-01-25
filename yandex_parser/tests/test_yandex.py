@@ -1454,6 +1454,25 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'ЗАМОЧНО-СКОБЯНЫЕ ИЗДЕЛИЯ')
         self.assertEquals(serp['sn'][49]['s'], u'ЗАМОЧНО-СКОБЯНЫЕ ИЗДЕЛИЯ купить в Кирове по низкой цене. Распилим. ... ЗАМОЧНО-СКОБЯНЫЕ ИЗДЕЛИЯ. 12 3 4 ... 45 След. Читать ещё')
 
+    def test77(self):
+        html = self.get_data('2018-01-25.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 61000000)
+
+        self.assertEquals(serp['sn'][0]['d'], 'entero.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.Entero.ru/item/49964')
+        self.assertEquals(serp['sn'][0]['t'], u'Зонт вытяжной Кобор ЗПВ-150/80')
+        self.assertEquals(serp['sn'][0]['s'], u'Вытяжной зонт Кобор ЗПВ-150/80 предназначен для очистки воздуха от жира, масла, дыма и водяного пара на предприятиях пищевой промышленности...')
+
+        self.assertEquals(serp['sn'][49]['d'], 'xn------8cdkhe3aqic9ag3b0g4e.xn--p1ai')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.xn------8cdkhe3aqic9ag3b0g4e.xn--p1ai/category_name-78/category_name-35')
+        self.assertEquals(serp['sn'][49]['t'], u'Зонты вентиляционные')
+        self.assertEquals(serp['sn'][49]['s'], u'Купить. В закладки. В сравнение. Зонт вытяжной пристенный ЗПВ -150/80.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

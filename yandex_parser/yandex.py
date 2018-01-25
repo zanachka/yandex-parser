@@ -348,6 +348,10 @@ class YandexParser(object):
         if 'entity-search' in html:
             return True
 
+        # калькулятор
+        if 'calculator__wrapper' in html:
+            return True
+
         return False
 
     def get_snippets(self):
