@@ -1434,6 +1434,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Сотовые телефоны ASUS - купить, цена смартфона ASUS...')
         self.assertEquals(serp['sn'][49]['s'], u'В каталоге Сотовые телефоны интернет магазина Связь Телеком представлен широкий выбор моделей ASUS. В нем Вы можете подобрать... Читать ещё')
 
+    def test76(self):
+        html = self.get_data('mobile-2018-01-25.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'fb.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://fb.ru/article/217598/skobyanyie-izdeliya---chto-eto-takoe-vidyi-i-harakteristika-skobyanyih-izdeliy')
+        self.assertEquals(serp['sn'][0]['t'], u'Скобяные изделия - что это такое? Виды и характеристика...')
+        self.assertEquals(serp['sn'][0]['s'], u'Во все времена пользовались высоким спросом скобяные изделия. Что это такое? ... В очень разных ситуациях нам могут пригодиться скобяные изделия. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'bmskirov.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.bmskirov.ru/catalog/zamochno_skobyanye_izdeliya/')
+        self.assertEquals(serp['sn'][49]['t'], u'ЗАМОЧНО-СКОБЯНЫЕ ИЗДЕЛИЯ')
+        self.assertEquals(serp['sn'][49]['s'], u'ЗАМОЧНО-СКОБЯНЫЕ ИЗДЕЛИЯ купить в Кирове по низкой цене. Распилим. ... ЗАМОЧНО-СКОБЯНЫЕ ИЗДЕЛИЯ. 12 3 4 ... 45 След. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
