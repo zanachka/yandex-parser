@@ -227,6 +227,10 @@ class YandexParser(object):
         return domain
 
     def _is_context_snippet(self, sn):
+        # Рекламный блок
+        if sn.xpath('.//div[contains(@class,"label_color_yellow")]'):
+            return True
+
         return 'serp-adv' in sn.attrib['class'] or 't-construct-adapter__adv' in sn.attrib['class']
 
     def _ignore_block(self, sn):
@@ -353,7 +357,7 @@ class YandexParser(object):
             return True
 
         # Различные составные блоки
-        if sn.xpath('.//div[contains(@class,"composite_gap_s")]'):
+        if sn.xpath('.//div[contains(@class,"composite_gap_")]'):
             return True
 
         return False

@@ -1493,6 +1493,25 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Мобильные телефоны Ginza - каталог мобильных телефонов')
         self.assertEquals(serp['sn'][49]['s'], u'Мобильные телефоны ginza. Ginza MS100 Поддерживаемые стандарты: GSM 1800/GSM 1900/GSM 850/GSM 900 Размеры телефона: 108x46x17 мм ... Сотовые телефоны Ginza: все модели. Ginza MS100. Читать ещё')
 
+    def test79(self):
+        html = self.get_data('2018-01-26.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 38000000)
+
+        self.assertEquals(serp['sn'][0]['d'], 'aviashop.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.AviaShop.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'Авиабилеты ДЕШЕВО - купить билет на самолет! - Москва')
+        self.assertEquals(serp['sn'][0]['s'], u'Вы покупаете авиабилеты по ценам авиакомпаний. ... Узнать стоимость авиабилетов можно в режиме онлайн и по телефонам.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'farf.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.farf.ru/deshevie-bileti-na-samolet/')
+        self.assertEquals(serp['sn'][49]['t'], u'Купить самые дешевые авиабилеты (билеты на самолет)...')
+        self.assertEquals(serp['sn'][49]['s'], u'Мы поможем Вам выбрать наиболее удачный рейс, учитывая все Ваши пожелания, в том числе и предпочтительную стоимость авиабилетов.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
