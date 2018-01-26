@@ -352,6 +352,10 @@ class YandexParser(object):
         if 'calculator__wrapper' in html:
             return True
 
+        # Различные составные блоки
+        if sn.xpath('.//div[contains(@class,"composite_gap_s")]'):
+            return True
+
         return False
 
     def get_snippets(self):

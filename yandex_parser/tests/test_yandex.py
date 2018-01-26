@@ -1473,6 +1473,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Зонты вентиляционные')
         self.assertEquals(serp['sn'][49]['s'], u'Купить. В закладки. В сравнение. Зонт вытяжной пристенный ЗПВ -150/80.')
 
+    def test78(self):
+        html = self.get_data('mobile-2018-01-26.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'svyaznoy.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.svyaznoy.ru/catalog/phone/224/ginzzu')
+        self.assertEquals(serp['sn'][0]['t'], u'Мобильные телефоны Ginzzu купить в Москве, цена сотового телефона Гинззу в интернет-магазине Связной')
+        self.assertEquals(serp['sn'][0]['s'], u'В интернет-магазине Связной представлен широкий выбор сотовых телефонов Ginzzu. В нашем каталоге Вы можете подобрать мобильный телефон Гинззу. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'mobilecatalog.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.mobilecatalog.ru/ginza/')
+        self.assertEquals(serp['sn'][49]['t'], u'Мобильные телефоны Ginza - каталог мобильных телефонов')
+        self.assertEquals(serp['sn'][49]['s'], u'Мобильные телефоны ginza. Ginza MS100 Поддерживаемые стандарты: GSM 1800/GSM 1900/GSM 850/GSM 900 Размеры телефона: 108x46x17 мм ... Сотовые телефоны Ginza: все модели. Ginza MS100. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
