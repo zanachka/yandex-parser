@@ -307,6 +307,10 @@ class YandexParser(object):
         if 't-construct-adapter__units-converter' in sn.attrib['class']:
             return True
 
+        # конвертер(похоже новая версия)
+        if sn.xpath('.//div[contains(@class,"converter-form")]'):
+            return True
+
         # калькулятор
         if 't-construct-adapter__calculator' in sn.attrib['class']:
             return True
@@ -354,6 +358,10 @@ class YandexParser(object):
 
         # калькулятор
         if 'calculator__wrapper' in html:
+            return True
+
+        # палитра
+        if sn.xpath('.//div[contains(@class,"colorpalette")]'):
             return True
 
         # Различные составные блоки

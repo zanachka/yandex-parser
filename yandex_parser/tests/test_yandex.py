@@ -1512,6 +1512,44 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Купить самые дешевые авиабилеты (билеты на самолет)...')
         self.assertEquals(serp['sn'][49]['s'], u'Мы поможем Вам выбрать наиболее удачный рейс, учитывая все Ваши пожелания, в том числе и предпочтительную стоимость авиабилетов.')
 
+    def test80(self):
+        html = self.get_data('2018-01-29.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 95000000)
+
+        self.assertEquals(serp['sn'][0]['d'], 'coffeemag.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.coffeemag.ru/Bumazhnye-stakany-250ml')
+        self.assertEquals(serp['sn'][0]['t'], u'Бумажные стаканы 250 мл млкупить Бумажные стаканы...')
+        self.assertEquals(serp['sn'][0]['s'], u'Бумажные стаканы 250 мл выпускаются разноцветными и белыми, с рисунком или специально нанесенным логотипом.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'geo-vita.com')
+        self.assertEquals(serp['sn'][49]['u'], 'https://geo-vita.com/gofrirovannyj-stakan-240-ml/')
+        self.assertEquals(serp['sn'][49]['t'], u'Одноразовый гофрированный стаканчик для кофе 250 мл')
+        self.assertEquals(serp['sn'][49]['s'], u'Одноразовый биоразлагаемый стакан премиального качества GEOVITA: - дольше сохраняет напиток горячим или холодным - не обжигает руку - биоразлагаемый и экологически чистый продукт - уникальный дизайн...')
+
+    def test81(self):
+        html = self.get_data('2018-01-29-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 178000000)
+
+        self.assertEquals(serp['sn'][0]['d'], 'ru.wikipedia.org')
+        self.assertEquals(serp['sn'][0]['u'], 'https://ru.wikipedia.org/wiki/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D1%8B%D0%B9_%D1%86%D0%B2%D0%B5%D1%82')
+        self.assertEquals(serp['sn'][0]['t'], u'Розовый цвет — Википедия')
+        self.assertEquals(serp['sn'][0]['s'], u'Розовый — цвет, образующийся при смешивании красного и белого. Хотя иногда его описывают как светло-красный, однако точнее будет сказать, что это ненасыщенный красный цвет, причём чаще всего с примесью пурпурного.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'fashiony.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://fashiony.ru/tag.php?id_t=1160')
+        self.assertEquals(serp['sn'][49]['t'], u'розовый')
+        self.assertEquals(serp['sn'][49]['s'], u'Сочетать розовый и красный в рамках одного лука?! Если вы находите эту идею интересной (а, возможно, у вас уже есть не один образ...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
