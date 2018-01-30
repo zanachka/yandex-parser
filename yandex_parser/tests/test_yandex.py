@@ -1550,6 +1550,25 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'розовый')
         self.assertEquals(serp['sn'][49]['s'], u'Сочетать розовый и красный в рамках одного лука?! Если вы находите эту идею интересной (а, возможно, у вас уже есть не один образ...')
 
+    def test82(self):
+        html = self.get_data('2018-01-30.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 87000000)
+
+        self.assertEquals(serp['sn'][0]['d'], 'kp.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.kp.ru/guide/analizy-na-vich.html')
+        self.assertEquals(serp['sn'][0]['t'], u'Анализы на ВИЧ: какие анализы сдают и как проводят...')
+        self.assertEquals(serp['sn'][0]['s'], u'Анализы на выявление ВИЧ и СПИД: когда они назначаются, где проводятся и как трактуются результаты. Молекулярно-биологическое исследование крови на ДНК вируса иммунодефицита человека ВИЧ-1 (Humman immunodeficiency virus HIV-1)...')
+
+        self.assertEquals(serp['sn'][49]['d'], 'ztema.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'https://ztema.ru/inspect/analiz-krovi-na-vich')
+        self.assertEquals(serp['sn'][49]['t'], u'Анализ крови на ВИЧ')
+        self.assertEquals(serp['sn'][49]['s'], u'Конечной развернутой стадией ВИЧ-инфекции является СПИД – синдром приобретенного иммунодефицита. ... В каких случаях следует сдать анализ на ВИЧ? Вирус бессимптомно может жить в организме человека несколько лет.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

@@ -282,6 +282,10 @@ class YandexParser(object):
         if re.search(ur't-construct-adapter__.+-fact', sn.attrib['class'], re.I):
             return True
 
+        # игнорим факты
+        if sn.xpath('.//div[contains(@class,"fact")]'):
+            return True
+
         # почтовые индексы
         if 't-post-indexes' in sn.attrib['class']:
             return True
