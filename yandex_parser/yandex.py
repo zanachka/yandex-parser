@@ -266,6 +266,10 @@ class YandexParser(object):
         if 't-construct-adapter__video' in sn.attrib['class']:
             return True
 
+        # игонорим видео
+        if sn.xpath('.//div[contains(@class,"video2_theme_online")]'):
+            return True
+
         # игонорим тизеры
         if sn.xpath('.//div[contains(@class,"teaser ")]'):
             return True
@@ -280,6 +284,10 @@ class YandexParser(object):
 
         # игнорим факты
         if re.search(ur't-construct-adapter__.+-fact', sn.attrib['class'], re.I):
+            return True
+
+        # счет матча
+        if sn.xpath('.//div[contains(@class,"sport-livescore")]'):
             return True
 
         # игнорим факты

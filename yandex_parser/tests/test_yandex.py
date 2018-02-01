@@ -1569,6 +1569,46 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Анализ крови на ВИЧ')
         self.assertEquals(serp['sn'][49]['s'], u'Конечной развернутой стадией ВИЧ-инфекции является СПИД – синдром приобретенного иммунодефицита. ... В каких случаях следует сдать анализ на ВИЧ? Вирус бессимптомно может жить в организме человека несколько лет.')
 
+    def test83(self):
+        html = self.get_data('2018-02-01.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 98000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'matchtv.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://matchtv.ru/on-air')
+        self.assertEquals(serp['sn'][0]['t'], u'Матч ТВ: прямой эфир, футбольные трансляции...')
+        self.assertEquals(serp['sn'][0]['s'], u'Овечкин выиграл конкурс на силу броска в мастер-шоу Матча звезд НХЛ. Мартин Сундбю: «Решение МОК по Устюгову?')
+
+        self.assertEquals(serp['sn'][49]['d'], 'goal-online.org')
+        self.assertEquals(serp['sn'][49]['u'], 'http://goal-online.org/')
+        self.assertEquals(serp['sn'][49]['t'], u'Смотрите футбол онлайн - Прямые трансляции матчей')
+        self.assertEquals(serp['sn'][49]['s'], u'Онлайн трансляции футбольных матчей в HD, SopCast, AceStream. Видео обзоры голов, таблицы, новости.')
+
+    def test84(self):
+        html = self.get_data('2018-02-01-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 53000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'sports.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.sports.ru/chelsea/news/')
+        self.assertEquals(serp['sn'][0]['t'], u'Новости команды Челси на Sports.ru')
+        self.assertEquals(serp['sn'][0]['s'], u'Челси, Новости на Sports.ru - все новости, состав, календарь, интервью, фото и видео. История и форма команды, форумы и блоги болельщиков.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'profootball.ua')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.profootball.ua/2018/01/31/chelsi_obyavil_o_perehode.html')
+        self.assertEquals(serp['sn'][49]['t'], u'"Челси" объявил о переходе Эмерсона | ПРО ФУТБОЛ')
+        self.assertEquals(serp['sn'][49]['s'], u'Комментарии новостей. ... "Челси" объявил о переходе Эмерсона. Защитник "Ромы" Эмерсон Палмиери дос Сантос продолжит карьеру в "Челси", сообщает...')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
