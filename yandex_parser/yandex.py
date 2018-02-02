@@ -266,7 +266,7 @@ class YandexParser(object):
         if 't-construct-adapter__video' in sn.attrib['class']:
             return True
 
-        # игонорим видео
+        # игнорим видео
         if sn.xpath('.//div[contains(@class,"video2_theme_online")]'):
             return True
 
