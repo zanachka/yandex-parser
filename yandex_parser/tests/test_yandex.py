@@ -1609,25 +1609,25 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'"Челси" объявил о переходе Эмерсона | ПРО ФУТБОЛ')
         self.assertEquals(serp['sn'][49]['s'], u'Комментарии новостей. ... "Челси" объявил о переходе Эмерсона. Защитник "Ромы" Эмерсон Палмиери дос Сантос продолжит карьеру в "Челси", сообщает...')
 
-    def test85(self):
-        html = self.get_data('2018-02-02.html')
+    def test82(self):
+        html = self.get_data('2018-02-12.html')
 
         parser = YandexParser(html)
         serp = parser.get_serp()
 
         self.assertTrue(YandexParser.is_yandex(html))
-        self.assertEquals(serp['pc'], 53000000)
+        self.assertEquals(serp['pc'], 58000000)
         self.assertEquals(len(serp['sn']), 50)
 
-        self.assertEquals(serp['sn'][0]['d'], 'sports.ru')
-        self.assertEquals(serp['sn'][0]['u'], 'https://www.sports.ru/chelsea/news/')
-        self.assertEquals(serp['sn'][0]['t'], u'Новости команды Челси на Sports.ru')
-        self.assertEquals(serp['sn'][0]['s'], u'Челси, Новости на Sports.ru - все новости, состав, календарь, интервью, фото и видео. История и форма команды, форумы и блоги болельщиков.')
+        self.assertEquals(serp['sn'][0]['d'], 'alltime.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.alltime.ru/watch/filter/params:skeleton/')
+        self.assertEquals(serp['sn'][0]['t'], u'Наручные часы скелетоны купить в интернет-магазине...')
+        self.assertEquals(serp['sn'][0]['s'], u'Популярные наручные часы скелетоны. женские мужские. Вниманию истинных часовых гурманов представляет наш интернет магазин - наручные часы скелетоны!')
 
-        self.assertEquals(serp['sn'][49]['d'], 'profootball.ua')
-        self.assertEquals(serp['sn'][49]['u'], 'http://www.profootball.ua/2018/01/31/chelsi_obyavil_o_perehode.html')
-        self.assertEquals(serp['sn'][49]['t'], u'"Челси" объявил о переходе Эмерсона | ПРО ФУТБОЛ')
-        self.assertEquals(serp['sn'][49]['s'], u'Комментарии новостей. ... "Челси" объявил о переходе Эмерсона. Защитник "Ромы" Эмерсон Палмиери дос Сантос продолжит карьеру в "Челси", сообщает...')
+        self.assertEquals(serp['sn'][49]['d'], 'xn----7sbbibna0c5aqo4e8e.xn--p1ai')
+        self.assertEquals(serp['sn'][49]['u'], 'http://xn----7sbbibna0c5aqo4e8e.xn--p1ai/katalog/chasy-skeleton')
+        self.assertEquals(serp['sn'][49]['t'], u'Купить часы-скелетоны')
+        self.assertEquals(serp['sn'][49]['s'], u'Часы скелетоны. Кроме настенных часов скелетонов довольно много настольных моделей.')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:

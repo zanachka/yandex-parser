@@ -323,6 +323,10 @@ class YandexParser(object):
         if sn.xpath('.//div[contains(@class,"converter-form")]'):
             return True
 
+        # олимпиада
+        if sn.xpath('.//div[contains(@class,"olympiad")]'):
+            return True
+
         # калькулятор
         if 't-construct-adapter__calculator' in sn.attrib['class']:
             return True
