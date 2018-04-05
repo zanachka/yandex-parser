@@ -1609,7 +1609,7 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'"Челси" объявил о переходе Эмерсона | ПРО ФУТБОЛ')
         self.assertEquals(serp['sn'][49]['s'], u'Комментарии новостей. ... "Челси" объявил о переходе Эмерсона. Защитник "Ромы" Эмерсон Палмиери дос Сантос продолжит карьеру в "Челси", сообщает...')
 
-    def test82(self):
+    def test85(self):
         html = self.get_data('2018-02-12.html')
 
         parser = YandexParser(html)
@@ -1628,6 +1628,24 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['u'], 'http://xn----7sbbibna0c5aqo4e8e.xn--p1ai/katalog/chasy-skeleton')
         self.assertEquals(serp['sn'][49]['t'], u'Купить часы-скелетоны')
         self.assertEquals(serp['sn'][49]['s'], u'Часы скелетоны. Кроме настенных часов скелетонов довольно много настольных моделей.')
+
+    def test86(self):
+        html = self.get_data('context-2018-04-05.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 8)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 't')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+        self.assertEquals(serp['sn'][7]['a'], 'b')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:

@@ -58,7 +58,13 @@ class YandexParser(object):
         is_top = True
         old_class = None
 
-        dom = PyQuery(self.content)
+        # очищаем встроенные в рекламу сниппеты serp-item
+        content = re.sub(
+            ur'<div class=direct-map-modal__snippet><div class=serp-item.*?</div>\s*</div>',
+            '', self.content, flags=re.I | re.M | re.S
+        )
+
+        dom = PyQuery(content)
         serp = dom('.serp-item')
         for sn in serp:
             is_ignore_block = self._ignore_block(sn)
