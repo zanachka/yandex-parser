@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import re
 import urllib
+from urlparse import urlparse, parse_qs
 
 from pyquery import PyQuery
 import lxml.html
@@ -173,6 +174,11 @@ class YandexParser(object):
         #Яндекс жжет. Берем домен из гринурла
         infected = False
 
+        # парсим турбо-страницы
+        if url.startswith('https://yandex.ru/turbo?'):
+            o = urlparse(url)
+            url = parse_qs(o.query)['text'][0]
+
         if url == 'http://':
             html = etree.tostring(sn)
             pattern = re.compile(ur'<div class="serp-item__greenurl.*?<a class="link serp-url__link".*?>(.*?)</a>', re.I | re.M | re.S)
@@ -187,6 +193,8 @@ class YandexParser(object):
             if match_url_infected:
                 url = urllib.unquote(match_url_infected.group(1))
                 infected = True
+
+
 
         return url, infected
 

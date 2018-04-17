@@ -1647,6 +1647,31 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][6]['a'], 'b')
         self.assertEquals(serp['sn'][7]['a'], 'b')
 
+    def test87(self):
+        html = self.get_data('mobile-2018-04-17.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'takelag-partner.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.takelag-partner.ru/service/rigging/shop-move')
+        self.assertEquals(serp['sn'][0]['t'], u'Такелаж торгового оборудования - Такелаж-Партнер')
+        self.assertEquals(serp['sn'][0]['s'], u'Именно такую услугу, как такелаж торгового оборудования по Москве и за её пределами, предлагает наша компания «Такелаж-Партнёр». Читать ещё')
+
+        self.assertEquals(serp['sn'][2]['d'], 'takelaj-gruz.ru')
+        self.assertEquals(serp['sn'][2]['u'], 'http://takelaj-gruz.ru/takelazh/torgobogo-oborudovaniya/')
+        self.assertEquals(serp['sn'][2]['t'], u'Такелаж торгового оборудования в Москве - "Столичное..."')
+        self.assertEquals(serp['sn'][2]['s'], u'Перевозка и такелаж торгового оборудования может быть выполнены по Москве и Московской области и в другие регионы по территории России. Читать ещё')
+
+        self.assertEquals(serp['sn'][9]['d'], 'takelazhnye-uslugi.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'http://takelazhnye-uslugi.ru/takelazh-torgovogo-oborudovaniya.html')
+        self.assertEquals(serp['sn'][9]['t'], u'Такелаж торгового оборудования')
+        self.assertEquals(serp['sn'][9]['s'], u'Такелаж торгового оборудования – одна из ключевых услуг нашей компании. Каждая организация, занимающаяся таким видом деятельности, как торговля... Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
