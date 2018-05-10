@@ -27,6 +27,8 @@ class YandexParser(object):
         re.compile(ur'<div class="?serp-adv__found"?>Наш[^ ]+\s+(.*?)рез', params_regexr)
     )
 
+    CONTEXT_ORGANIC_BLOCK = 'organic block'
+
     def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm')):
         self.content = to_unicode(content)
         self.snippet_fileds = snippet_fileds
@@ -53,12 +55,7 @@ class YandexParser(object):
 
         return 'b'
 
-
     def get_context_serp(self):
-        result = []
-        is_top = True
-        old_class = None
-
         # очищаем встроенные в рекламу сниппеты serp-item
         content = re.sub(
             ur'<div class=direct-map-modal__snippet><div class=serp-item.*?</div>\s*</div>',
@@ -67,43 +64,97 @@ class YandexParser(object):
 
         dom = PyQuery(content)
         serp = dom('.serp-item')
-        for sn in serp:
+
+        r_blocks, tb_blocks = self._find_context_r_or_tb_blocks(serp)
+        t_blocks, b_blocks = self._divide_context_tb_blocks(tb_blocks)
+
+        self._set_a(t_blocks, 't')
+        self._set_a(b_blocks, 'b')
+        self._set_a(r_blocks, 'r')
+
+        result = self._format_context_blocks(t_blocks + b_blocks + r_blocks)
+        return {'pc': len(result), 'sn': result}
+
+    def _find_context_r_or_tb_blocks(self, serp):
+        is_organic_started = False
+        tb_blocks = []
+        r_blocks = []
+        for index, sn in enumerate(serp):
             is_ignore_block = self._ignore_block(sn)
             is_context_snippet = self._is_context_snippet(sn)
 
             if not is_ignore_block:
-                is_top = False
-                continue
-
-            if not is_context_snippet:
+                if not is_organic_started:
+                    is_organic_started = True
+                    tb_blocks.append({'index': index, 'sn': self.CONTEXT_ORGANIC_BLOCK})
                 continue
 
             # исключаем блок директа с баннером
             if sn.xpath('./div[contains(@class,"composite_gap_none")]'):
                 continue
 
+            if not is_context_snippet:
+                continue
+
             t_or_b = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]') \
                 or sn.cssselect('li.serp-adv-item div.organic__subtitle')
             if t_or_b:
+                tb_blocks.append({'index': index, 'sn': sn})
+                continue
+            r_blocks.append({'index': index, 'sn': sn})
+        return r_blocks, tb_blocks
+
+
+    def _divide_context_tb_blocks(self, tb_blocks):
+        t_blocks = []
+        b_blocks = []
+        is_ob_exists = filter(lambda x: x['sn'] == self.CONTEXT_ORGANIC_BLOCK, tb_blocks)
+        if is_ob_exists:
+            is_bottom = False
+            for block in tb_blocks:
+                if block['sn'] == self.CONTEXT_ORGANIC_BLOCK:
+                    is_bottom = True
+                    continue
+
+                if is_bottom:
+                    b_blocks.append(block)
+                    continue
+
+                t_blocks.append(block)
+        else:
+            is_bottom = False
+            old_class = None
+            for block in tb_blocks:
+                sn = block['sn']
                 cur_class = filter(lambda x: re.match(ur'data-[\w\d]{4,}', x), sn.attrib)[0]
                 if old_class and cur_class != old_class:
-                    is_top = False
+                    is_bottom = True
                 old_class = cur_class
 
-            if not t_or_b:
-                a = 'r'
-            elif is_top:
-                a = 't'
-            else:
-                a = 'b'
+                if is_bottom:
+                    b_blocks.append(block)
+                    continue
 
+                t_blocks.append(block)
+
+        return t_blocks, b_blocks
+
+    def _format_context_blocks(self, blocks):
+        result = []
+        for block in sorted(blocks, key=lambda x: x['index']):
+            sn = block['sn']
             title, url = self._get_title(sn, False)
-            item = {'u': url, 't': title}
-            item['vu'] = self.get_context_visible_url(sn)
-            item['a'] = a
-            result.append(item)
+            result.append({
+                'u': url,
+                't': title,
+                'vu': self.get_context_visible_url(sn),
+                'a': block['a']
+            })
+        return result
 
-        return {'pc': len(result), 'sn': result}
+    def _set_a(self, blocks, a):
+        for block in blocks:
+            block['a'] = a
 
     def get_serp(self):
         if self.is_not_found():

@@ -1002,7 +1002,6 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][6]['u'], 'http://yabs.yandex.ru/count/Jy3pERat9NO40000ZhcYLOi5KfK2cm5kGxS2BG4qYBv6Bp02YRJ9QwS3c8qKdQSZyGEc8egvdcg81Dor5ay_1hsqhSf-1AekfQR3OWUD0Tq1tf0az96_JpkO3vVmVIcQ5ktd7WsJXGsYP9a5GeoeQcO4jgpiKG6rg60U0Q2jkjS4hwXgPWIpg2yx0RIeO1u1sQswrmJQg2yx0PIMMkUdaHiAgA7PBcgam0000941hk9nmcdIa7Z6iG6of1400ldYSS9fqf1unhcd8_43k_2nVq1_2HMw1y7__________m_2yuUzS0tidNe9n075Zm_I__________yFq___________3-u1s_3nsBE62HMw1z-53UMGyYljWoZrtyIaKITn0lRIX-1lKvbKVIC0?q=%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D1%8B%D0%B5+%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5+%D0%BE%D0%BA%D0%BD%D0%B0+%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B')
         self.assertEquals(serp['sn'][6]['a'], 'b')
 
-
     def test55(self):
         html = self.get_data('context-2017-02-28-1.html')
 
@@ -1671,6 +1670,23 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['u'], 'http://takelazhnye-uslugi.ru/takelazh-torgovogo-oborudovaniya.html')
         self.assertEquals(serp['sn'][9]['t'], u'Такелаж торгового оборудования')
         self.assertEquals(serp['sn'][9]['s'], u'Такелаж торгового оборудования – одна из ключевых услуг нашей компании. Каждая организация, занимающаяся таким видом деятельности, как торговля... Читать ещё')
+
+    def test88(self):
+        html = self.get_data('context-2018-05-10.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 't')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
