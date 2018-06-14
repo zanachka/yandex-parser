@@ -1688,6 +1688,23 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][5]['a'], 'b')
         self.assertEquals(serp['sn'][6]['a'], 'b')
 
+    def test89(self):
+        html = self.get_data('context-2018-06-13.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

@@ -66,6 +66,8 @@ class YandexParser(object):
         serp = dom('.serp-item')
 
         r_blocks, tb_blocks = self._find_context_r_or_tb_blocks(serp)
+        tb_blocks = self._aggregate_organic_blocks(tb_blocks)
+        tb_blocks = self._remove_little_organic_blocks(tb_blocks)
         t_blocks, b_blocks = self._divide_context_tb_blocks(tb_blocks)
 
         self._set_a(t_blocks, 't')
@@ -76,17 +78,16 @@ class YandexParser(object):
         return {'pc': len(result), 'sn': result}
 
     def _find_context_r_or_tb_blocks(self, serp):
-        is_organic_started = False
         tb_blocks = []
         r_blocks = []
+        organic_block_len = 0
         for index, sn in enumerate(serp):
             is_ignore_block = self._ignore_block(sn)
             is_context_snippet = self._is_context_snippet(sn)
 
             if not is_ignore_block:
-                if not is_organic_started:
-                    is_organic_started = True
-                    tb_blocks.append({'index': index, 'sn': self.CONTEXT_ORGANIC_BLOCK})
+                organic_block_len += 1
+                tb_blocks.append({'index': index, 'sn': self.CONTEXT_ORGANIC_BLOCK})
                 continue
 
             # исключаем блок директа с баннером
@@ -104,6 +105,48 @@ class YandexParser(object):
             r_blocks.append({'index': index, 'sn': sn})
         return r_blocks, tb_blocks
 
+    def _remove_little_organic_blocks(self, tb_blocks):
+        max_ob_len = 0
+        max_ob_index = None
+        for i, block in enumerate(tb_blocks):
+            if block['sn'] == self.CONTEXT_ORGANIC_BLOCK and block['len'] >= max_ob_len:
+                max_ob_len = block['len']
+                max_ob_index = i
+
+        if max_ob_index is None:
+            return tb_blocks
+
+        blocks = []
+        for i, block in enumerate(tb_blocks):
+            if block['sn'] != self.CONTEXT_ORGANIC_BLOCK:
+                blocks.append(block)
+
+            if i != max_ob_index:
+                continue
+
+            blocks.append(block)
+        return blocks
+
+    def _aggregate_organic_blocks(self, tb_blocks):
+        agg_blocks = []
+        ob_len = 0
+        old_ob_block = None
+        for block in tb_blocks:
+            if block['sn'] != self.CONTEXT_ORGANIC_BLOCK:
+                if ob_len:
+                    old_ob_block['len'] = ob_len
+                    agg_blocks.append(old_ob_block)
+                    old_ob_block = None
+                    ob_len = 0
+                agg_blocks.append(block)
+                continue
+
+            old_ob_block = block
+            ob_len += 1
+        if ob_len:
+            old_ob_block['len'] = ob_len
+            agg_blocks.append(old_ob_block)
+        return agg_blocks
 
     def _divide_context_tb_blocks(self, tb_blocks):
         t_blocks = []
