@@ -1705,6 +1705,31 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][5]['a'], 'b')
         self.assertEquals(serp['sn'][6]['a'], 'b')
 
+    def test90(self):
+        html = self.get_data('2018-07-25.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 87000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'zavod-svai.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://www.zavod-svai.ru/ceny/')
+        self.assertEquals(serp['sn'][0]['t'], u'Винтовые сваи, цены - купить винтовые сваи для...')
+        self.assertEquals(serp['sn'][0]['s'], u'Наиболее актуальным решением купить винтовые сваи класса "Премиум" будет в ... Также оформить заказ на винтовые сваи в Москве можно в нашем офисе. Читать ещё')
+
+        self.assertEquals(serp['sn'][23]['d'], 'svaybur.ru')
+        self.assertEquals(serp['sn'][23]['u'], 'https://www.SvayBur.ru/tseny')
+        self.assertEquals(serp['sn'][23]['t'], u'Винтовые сваи - цена от 749 рублей | Купить недорого...')
+        self.assertEquals(serp['sn'][23]['s'], u'Цена на винтовые сваи с монтажом и без. Купить в Москве недорого заводские винтовые сваи в компании «СВАЙБУР» круглосуточно.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'svai-vintovie-moskva.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://svai-vintovie-moskva.ru/')
+        self.assertEquals(serp['sn'][49]['t'], u'svai-vintovie-moskva.ru - Москва')
+        self.assertEquals(serp['sn'][49]['s'], u'')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

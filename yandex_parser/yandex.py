@@ -15,7 +15,10 @@ class YandexParser(object):
 
     patterns = {
         'pagecount': re.compile(u'found"\:"&mdash;&nbsp;(.*?)отв', params_regexr),
-        'infected': re.compile(u'/search/infected/?\?url=([^&]+)', params_regexr),
+        'infected': (
+            re.compile(u'/search/infected/?\?url=([^&]+)', params_regexr),
+            re.compile(u'/safety/\?url=([^&]+)', params_regexr),
+        ),
         'captcha': re.compile(u'<img class="image form__captcha".*?src=\"([^\"]+)\"', params_regexr),
     }
 
@@ -282,14 +285,14 @@ class YandexParser(object):
                 domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
                 url = 'http://{}'.format(domain)
 
-        if 'infected' in url:
-            match_url_infected = self.patterns['infected'].match(url)
-            if match_url_infected:
-                url = urllib.unquote(match_url_infected.group(1))
+        if 'infected' in url or url.startswith('/safety/'):
+            for pattern in self.patterns['infected']:
+                res = pattern.match(url)
+                if not res:
+                    continue
+
+                url = urllib.unquote(res.group(1))
                 infected = True
-
-
-
         return url, infected
 
     def _get_title(self, sn, infected):
