@@ -1730,6 +1730,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'svai-vintovie-moskva.ru - Москва')
         self.assertEquals(serp['sn'][49]['s'], u'')
 
+    def test91(self):
+        html = self.get_data('2018-08-23.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 244000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'lustra-house.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://lustra-house.ru/katalog/lyustry/nedorogie/')
+        self.assertEquals(serp['sn'][0]['t'], u'Купить люстры недорого, интернет-магазин недорогих...')
+        self.assertEquals(serp['sn'][0]['s'], u'Интернет-магазин люстр и светильников. ... Недорогие люстры. Люстра Lumion 3057/5C. Наличие уточняйте. Цена: 2 740 руб. Купить. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'europalight.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://www.EuropaLight.ru/catalog/lyustry/')
+        self.assertEquals(serp['sn'][49]['t'], u'Люстры из Европы купить недорого в Москве')
+        self.assertEquals(serp['sn'][49]['s'], u'Интернет-магазин Europa Light предлагает купить Люстры в Москве: низкие цены, качественные фото. ... Смелые идеи воплотили дизайнерские люстры: купить оригинальные светильники теперь стало проще. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

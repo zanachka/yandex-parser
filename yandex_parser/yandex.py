@@ -487,6 +487,10 @@ class YandexParser(object):
         if 'calculator__wrapper' in html:
             return True
 
+        # чаты с организациями
+        if 'chat-list__header' in html:
+            return True
+
         # палитра
         if sn.xpath('.//div[contains(@class,"colorpalette")]'):
             return True
