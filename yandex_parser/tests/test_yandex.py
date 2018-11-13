@@ -1750,6 +1750,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Люстры из Европы купить недорого в Москве')
         self.assertEquals(serp['sn'][49]['s'], u'Интернет-магазин Europa Light предлагает купить Люстры в Москве: низкие цены, качественные фото. ... Смелые идеи воплотили дизайнерские люстры: купить оригинальные светильники теперь стало проще. Читать ещё')
 
+    def test92(self):
+        html = self.get_data('2018-11-13.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 133000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'baza-nakalinovke.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://baza-nakalinovke.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'База отдыха в Астрахани – «На Калиновке»')
+        self.assertEquals(serp['sn'][0]['s'], u'База отдыха категории 3 звезды для семейного и корпоративного досуга, охоты и рыбалки. Описание номеров различных категорий с фотографиями. Транспортные услуги: трансфер, теплоход, катера, квадроциклы, скутеры. Развлечения для детей и взрослых, оздор... Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'sites.reformal.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://sites.reformal.ru/baza-nakalinovke.ru')
+        self.assertEquals(serp['sn'][49]['t'], u'baza-nakalinovke.ru... База отдыха в Астрахани – «На...»')
+        self.assertEquals(serp['sn'][49]['s'], u'База отдыха в Астрахани – «На Калиновке». Мета-описание: Рыболовные и охотничьи туры в Астраханской области, комфортные номера, ухоженная территория, бассейн, все условия для семейного отдыха.. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

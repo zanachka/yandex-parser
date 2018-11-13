@@ -8,6 +8,7 @@ import lxml.html
 from yandex_parser.exceptions import EmptySerp, YandexParserError
 from yandex_parser.utils import to_unicode, get_full_domain_without_scheme
 from lxml import etree
+from HTMLParser import HTMLParser
 
 
 class YandexParser(object):
@@ -470,6 +471,11 @@ class YandexParser(object):
         if 't-construct-adapter__market' in sn.attrib['class']:
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
                 return True
+
+        # Яндекс.Путешествия
+        html = HTMLParser().unescape(html)
+        if re.search(ur'<a class="link.*?<b>Яндекс\.Путешествия</b>', html, re.I | re.M):
+            return True
 
         # Вы нашли то, что искали(мобильная версия)
         if 'ugc_player_default' in html:
