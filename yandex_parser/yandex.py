@@ -8,7 +8,6 @@ import lxml.html
 from yandex_parser.exceptions import EmptySerp, YandexParserError
 from yandex_parser.utils import to_unicode, get_full_domain_without_scheme
 from lxml import etree
-from HTMLParser import HTMLParser
 
 
 class YandexParser(object):
@@ -467,14 +466,13 @@ class YandexParser(object):
         if 'card__colorize' in sn.attrib['class']:
             return True
 
-        html = etree.tostring(sn)
+        html = etree.tostring(sn, method='html', encoding='UTF-8')
         if 't-construct-adapter__market' in sn.attrib['class']:
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
                 return True
 
         # Яндекс.Путешествия
-        html = HTMLParser().unescape(html)
-        if re.search(ur'<a class="link.*?<b>Яндекс\.Путешествия</b>', html, re.I | re.M):
+        if u'<b>Яндекс\.Путешествия</b>' in html:
             return True
 
         # Вы нашли то, что искали(мобильная версия)
