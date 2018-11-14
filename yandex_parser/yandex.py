@@ -472,7 +472,7 @@ class YandexParser(object):
                 return True
 
         # Яндекс.Путешествия
-        if u'<b>Яндекс\.Путешествия</b>' in html:
+        if u'<b>Яндекс.Путешествия</b>' in html:
             return True
 
         # Вы нашли то, что искали(мобильная версия)

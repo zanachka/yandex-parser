@@ -1770,6 +1770,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'baza-nakalinovke.ru... База отдыха в Астрахани – «На...»')
         self.assertEquals(serp['sn'][49]['s'], u'База отдыха в Астрахани – «На Калиновке». Мета-описание: Рыболовные и охотничьи туры в Астраханской области, комфортные номера, ухоженная территория, бассейн, все условия для семейного отдыха.. Читать ещё')
 
+    def test93(self):
+        html = self.get_data('2018-11-14.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 136000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], '101hotels.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.101hotels.ru/main/cities/ekaterinburg/hostels_center')
+        self.assertEquals(serp['sn'][0]['t'], u'Хостелы Екатеринбурга в центре недорого: цены...')
+        self.assertEquals(serp['sn'][0]['s'], u'Здесь представлены недорогие хостелы и отели в центре Екатеринбурга с ценами, отзывами, актуальными скидками и спецпредложениями. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'ekb1.likehostels.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'http://ekb1.likehostels.ru/')
+        self.assertEquals(serp['sn'][49]['t'], u'Like Hostel - гостиница в Екатеринбурге от 350 рублей!')
+        self.assertEquals(serp['sn'][49]['s'], u'Like Hostel - недорогая гостиница в центре города. Комфортное размещение от 350 рублей! ... У нас можно снять комнату в Екатеринбурге недорого и с хорошими условиями комфортного проживания в центральных районах города. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
