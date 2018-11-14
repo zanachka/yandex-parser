@@ -1790,6 +1790,10 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['t'], u'Like Hostel - гостиница в Екатеринбурге от 350 рублей!')
         self.assertEquals(serp['sn'][49]['s'], u'Like Hostel - недорогая гостиница в центре города. Комфортное размещение от 350 рублей! ... У нас можно снять комнату в Екатеринбурге недорого и с хорошими условиями комфортного проживания в центральных районах города. Читать ещё')
 
+    def test94(self):
+        html = self.get_data('captcha_2.html')
+        self.assertTrue(YandexParser.is_yandex(html))
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
