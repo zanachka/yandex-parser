@@ -97,6 +97,10 @@ class YandexParser(object):
             if sn.xpath('./div[contains(@class,"composite_gap_none")]'):
                 continue
 
+            # исключаем блок директа с товарами
+            if sn.xpath('./div[contains(@class,"carousel")]'):
+                continue
+
             if not is_context_snippet:
                 continue
 
@@ -503,6 +507,10 @@ class YandexParser(object):
 
         # Различные составные блоки
         if sn.xpath('.//div[contains(@class,"composite_gap_")]'):
+            return True
+
+        # исключаем блок директа с товарами
+        if sn.xpath('./div[contains(@class,"carousel")]'):
             return True
 
         return False
