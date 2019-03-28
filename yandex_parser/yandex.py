@@ -19,7 +19,7 @@ class YandexParser(object):
             re.compile(u'/search/infected/?\?url=([^&]+)', params_regexr),
             re.compile(u'/safety/\?url=([^&]+)', params_regexr),
         ),
-        'captcha': re.compile(u'<img class="image form__captcha".*?src=\"([^\"]+)\"', params_regexr),
+        'captcha': re.compile(u'<img class="image form__(?:captcha|image)".*?src=\"([^\"]+)\"', params_regexr),
     }
 
     USE_IGNORE_BLOCK = True

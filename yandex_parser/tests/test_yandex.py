@@ -1813,6 +1813,23 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][7]['a'], 'b')
         self.assertEquals(serp['sn'][8]['a'], 'b')
 
+    def test96(self):
+        self.maxDiff = None
+        html = self.get_data('captcha_3.html')
+        parser = YandexParser(html)
+
+        captcha_data = parser.get_captcha_data()
+        exp = {
+            'url': u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDI2NUFmTGQwcHZSeGU4cHdnUlB0b3FSSTBWRFI3UA,,_0/1553773996/f2712c3d83b6e2b6231abc5e829cf01b_144b55b97ef8536dc99339901a76280a',
+            'form_action': '/checkcaptcha',
+            'form_data': {
+                'key': '00265AfLd0pvRxe8pwgRPtoqRI0VDR7P_0/1553773996/f2712c3d83b6e2b6231abc5e829cf01b_1a86e6e248af6a9a3a32f2198b7af51c',
+                'retpath': 'https://yandex.ru/search/touch?msid=1553773995.145862.3091&lr=213&text=satellite%20c850%20e7k&suggest_reqid=498590402153961121639951454095371_7865790594b24f955ee827816529be73'
+            }
+        }
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(captcha_data, exp)
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
