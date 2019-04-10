@@ -1830,6 +1830,47 @@ class YandexParserTestCase(YandexParserTests):
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(captcha_data, exp)
 
+    def test97(self):
+        html = self.get_data('context-2019-04-10.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self._print_context_sn(serp)
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 9)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 't')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+        self.assertEquals(serp['sn'][7]['a'], 'b')
+        self.assertEquals(serp['sn'][8]['a'], 'b')
+
+    def test98(self):
+        html = self.get_data('context-2019-04-10.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'mebel-v-podolske.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'http://Mebel-v-Podolske.ru/divanyi-v-podolske')
+        self.assertEquals(serp['sn'][0]['t'], u'Диваны в Подольске недорого можно купить в нашем...')
+        self.assertEquals(serp['sn'][0]['s'], u'Цены снижены на все диваны в Подольске. Покупайте диван недорого. ... Именно поэтому купить диван в Подольске недорого в нашем интернет магазине – значит приобрести самый необходимый элемент интерьера. Читать ещё')
+
+        self.assertEquals(serp['sn'][49]['d'], 'podolqwzsk.sravni.com')
+        self.assertEquals(serp['sn'][49]['u'], 'https://podolqwzsk.sravni.com/catc4606t18312.html')
+        self.assertEquals(serp['sn'][49]['t'], u'Диваны. Цены в Подольске на Диваны. Купить')
+        self.assertEquals(serp['sn'][49]['s'], u'Диваны: сравнить цены в Подольске. Купить Диван в интернет-магазинах г. Подольск. ... Купить Диваны в Подольске. Lareto Диван Rosso 2 - х местный Компактные размеры двухместного дивана " Rosso" позволят ему отлично разместиться даже в маленькой комнате. Внешний вид изделия... Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

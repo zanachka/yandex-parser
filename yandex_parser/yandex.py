@@ -101,6 +101,10 @@ class YandexParser(object):
             if sn.xpath('./div[contains(@class,"carousel")]'):
                 continue
 
+            # исключаем блок директа с товарами
+            if sn.xpath('./div[contains(@class,"companies-map-")]'):
+                continue
+
             if not is_context_snippet:
                 continue
 
@@ -511,6 +515,10 @@ class YandexParser(object):
 
         # исключаем блок директа с товарами
         if sn.xpath('./div[contains(@class,"carousel")]'):
+            return True
+
+        # исключаем блок директа с компаниями
+        if sn.xpath('.//div[contains(@class,"companies-map-")]'):
             return True
 
         return False
