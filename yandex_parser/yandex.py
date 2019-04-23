@@ -32,9 +32,10 @@ class YandexParser(object):
 
     CONTEXT_ORGANIC_BLOCK = 'organic block'
 
-    def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm')):
+    def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm'), exclude_market_yandex=True):
         self.content = to_unicode(content)
         self.snippet_fileds = snippet_fileds
+        self.exclude_market_yandex = exclude_market_yandex
 
     def get_context_snippet_title(self, content):
         res = re.search(ur'<h2[^>]*?>\s*<a[^>]*?href="([^"]+?)"[^>]*?>\s*(.*?)\s*</a>', content, re.I | re.M | re.S)
@@ -294,6 +295,8 @@ class YandexParser(object):
                 domain = re.sub(ur'<[^>]+>', '', res.group(1), flags=re.I | re.M | re.S)
                 domain = re.sub(ur'\s+', '', domain, flags=re.I | re.M | re.S)
                 url = 'http://{}'.format(domain)
+        elif url.startswith('//'):
+            url = 'https:' + url
 
         if 'infected' in url or url.startswith('/safety/'):
             for pattern in self.patterns['infected']:
@@ -380,7 +383,7 @@ class YandexParser(object):
             return True
 
         # игнорим картинки
-        if 't-construct-adapter__images' in sn.attrib['class']:
+        if 't-construct-adapter__images' in sn.attrib['class'] or sn.xpath('.//div[contains(@class,"Images")]'):
             return True
 
         # игнорим видео
@@ -511,6 +514,8 @@ class YandexParser(object):
 
         # Различные составные блоки
         if sn.xpath('.//div[contains(@class,"composite_gap_")]'):
+            if not self.exclude_market_yandex and 'market.yandex.ru' in html:
+                return False
             return True
 
         # исключаем блок директа с товарами
@@ -551,7 +556,7 @@ class YandexParser(object):
                     'domain': domain,
                     'p': position,
                     'u': url,
-                    'm': url.startswith('http://maps.yandex.ru'),
+                    'm': url.startswith('https://maps.yandex.ru'),
                     't': None,  # title snippet
                     's': None,  # body snippet
                     'i': infected,
@@ -591,6 +596,9 @@ class YandexParser(object):
         # pagecount = self.get_pagecount()
         # if pagecount <= 50:
         #     return snippets
+
+        if not self.exclude_market_yandex:
+            return snippets
 
         len_snippets = len(snippets)
         if len_snippets % 10 == 0:

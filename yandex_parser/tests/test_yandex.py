@@ -1836,8 +1836,6 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
         serp = parser.get_context_serp()
 
-        self._print_context_sn(serp)
-
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(serp['pc'], 9)
 
@@ -1870,6 +1868,31 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][49]['u'], 'https://podolqwzsk.sravni.com/catc4606t18312.html')
         self.assertEquals(serp['sn'][49]['t'], u'Диваны. Цены в Подольске на Диваны. Купить')
         self.assertEquals(serp['sn'][49]['s'], u'Диваны: сравнить цены в Подольске. Купить Диван в интернет-магазинах г. Подольск. ... Купить Диваны в Подольске. Lareto Диван Rosso 2 - х местный Компактные размеры двухместного дивана " Rosso" позволят ему отлично разместиться даже в маленькой комнате. Внешний вид изделия... Читать ещё')
+
+    def test99(self):
+        html = self.get_data('2019-04-23.html')
+
+        parser = YandexParser(html, exclude_market_yandex=False)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 9000000)
+        self.assertEquals(len(serp['sn']), 11)
+
+        self.assertEquals(serp['sn'][0]['d'], 'mvideo.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.mvideo.ru/pylesosy-i-aksessuary/pylesosy-2438')
+        self.assertEquals(serp['sn'][0]['t'], u'Купить Пылесосы в интернет-магазине М.Видео, низкие...')
+        self.assertEquals(serp['sn'][0]['s'], u'Пылесосы﻿ легко купить онлайн на сайте или по телефону 8 800 600 777 5, заказать доставку по указанному адресу или оформить самовывоз из магазина. В «М.Видео» действует программа «Гарантия лучшей цены». Если у... Читать ещё')
+
+        self.assertEquals(serp['sn'][2]['d'], 'market.yandex.ru')
+        self.assertEquals(serp['sn'][2]['u'], 'https://market.yandex.ru/product--pylesos-samsung-sc5241/7825239?hid=16302535&nid=83796&clid=502')
+        self.assertEquals(serp['sn'][2]['t'], u'Пылесос Samsung SC5241 на Маркете')
+        self.assertEquals(serp['sn'][2]['s'], u'тип: традиционный, тип пылесборника: мешок, тип уборки: сухая, мощность всасывания: 410 Вт, потребляемая мощность: 1800 Вт, комплектация: фильтр тонкой очистки, труба всасывания: телескопическая, дополнительные функции: индикатор заполнения пылесборника')
+
+        self.assertEquals(serp['sn'][10]['d'], 'holodilnik.ru')
+        self.assertEquals(serp['sn'][10]['u'], 'https://www.holodilnik.ru/domestic/vacuum_cleaners/')
+        self.assertEquals(serp['sn'][10]['t'], u'Пылесосы, моющие пылесосы, выбор пылесосов...')
+        self.assertEquals(serp['sn'][10]['s'], u'предлагает купить в Москве и МО Пылесосы. ... Приобретая технику в рассрочку, вы не можете воспользоваться другими видами скидок. Читать ещё')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
