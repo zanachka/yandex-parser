@@ -1894,6 +1894,31 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][10]['t'], u'Пылесосы, моющие пылесосы, выбор пылесосов...')
         self.assertEquals(serp['sn'][10]['s'], u'предлагает купить в Москве и МО Пылесосы. ... Приобретая технику в рассрочку, вы не можете воспользоваться другими видами скидок. Читать ещё')
 
+    def test100(self):
+        html = self.get_data('2019-06-18.html')
+
+        parser = YandexParser(html, exclude_market_yandex=False)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 8000)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'asna.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.asna.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'АСНА - Ассоциация Независимых Аптек')
+        self.assertEquals(serp['sn'][0]['s'], u'Купить лекарства в аптеках Москва по низкой цене в сети аптек АСНА. Онлайн бронирование препаратов. Аптеки, подключенные к программе, отмечены значком.')
+
+        self.assertEquals(serp['sn'][6]['d'], 'yandex.ru')
+        self.assertEquals(serp['sn'][6]['u'], 'https://yandex.ru/maps/?source=wizbiz_new_text_multi&text=%D0%B0%D1%81%D0%BD%D0%B0&ll=37.64083873%2C55.71776114&sll=37.64083873%2C55.71776114&sctx=ZAAAAAgBEAMaKAoSCXsuU5Pg00JAET3vxoLC2ktAEhIJMGqkuwr7tD8RWW%2F%2BZQqkpz8iBQABAgQFKAAwATiX6ZfCoZeZgHlA%2Ba0HSAFVzczMPlgAYiRtaWRkbGVfYXNrX2RpcmVjdF9xdWVyeV90eXBlcz1ydWJyaWNiKG1pZGRsZV9pbmZsYXRlX2RpcmVjdF9maWx0ZXJfd2luZG93PTUwMDBiEnJlbGV2X2RydWdfYm9vc3Q9MWJEbWlkZGxlX2RpcmVjdF9zbmlwcGV0cz1waG90b3MvMi54LGJ1c2luZXNzcmF0aW5nLzIueCxtYXNzdHJhbnNpdC8xLnhiKm1pZGRsZV9pbmZsYXRlX2RpcmVjdF9yZXF1ZXN0X3dpbmRvdz0xMDAwMGIebWlkZGxlX2Fza19kaXJlY3RfcGVybWFsaW5rcz0xYiBtaWRkbGVfZGlyZWN0X2V4cGVyaW1lbnQtaWQ9NzI3OWIdcmVsZXZfZmlsdGVyX2d3a2luZHM9MC4zLDAuNDViKXJlYXJyPXNjaGVtZV9Mb2NhbC9HZW8vQWxsb3dUcmF2ZWxCb29zdD0xYjFyZWFycj1zY2hlbWVfTG9jYWwvR2VvdXBwZXIvZmVhdHVyZXNGcm9tT2JqZWN0cz0xYi9yZWFycj1zY2hlbWVfTG9jYWwvR2VvL1Bvc3RmaWx0ZXIvQWJzVGhyZXNoPTAuMmIpcmVhcnI9c2NoZW1lX0xvY2FsL0dlby9DdXRBZmlzaGFTbmlwcGV0PTFiMHJlYXJyPXNjaGVtZV9Mb2NhbC9HZW8vSG90ZWxCb29zdD1wYXJ0bmVyX2NsaWNrc2IpcmVhcnI9c2NoZW1lX0xvY2FsL0dlby9Vc2VHZW9UcmF2ZWxSdWxlPTFqAnJ1cAGVAQAAAACdAc3MTD6gAQGoAQC9AWkw5DfCAR2C8bLCnAPtw%2Ben9AWH%2BImz%2FAHjnLiK9QG7n9jfRQ%3D%3D&sspn=0.047665%2C0.026845')
+        self.assertEquals(serp['sn'][6]['t'], u'Асна в Даниловском районе - отзывы, фото, телефоны,…')
+        self.assertEquals(serp['sn'][6]['s'], u'Асна в Даниловском районе - отзывы, фото, телефоны, адреса с рейтингом, отзывами и фотографиями. Адреса, телефоны, часы работы, схема проезда.')
+
+        self.assertEquals(serp['sn'][9]['d'], 'zoon.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://zoon.ru/msk/drugstore/network/asna/')
+        self.assertEquals(serp['sn'][9]['t'], u'АСНА, сеть аптек - 187 аптек, фотографии, отзывы...')
+        self.assertEquals(serp['sn'][9]['s'], u'АСНА, сеть аптек в Москве - мы нашли для вас 187 аптек. Самый полный каталог заведений с фото, ☎️ и отзывами, удобный поиск мест на карте. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

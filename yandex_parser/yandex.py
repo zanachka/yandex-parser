@@ -367,6 +367,10 @@ class YandexParser(object):
             #реклама
             return True
 
+        # боковая карта справа
+        if 'card__narrow' in sn.attrib['class']:
+            return True
+
         # игнорим новости
         if 't-construct-adapter__news' in sn.attrib['class']:
             return True
@@ -512,12 +516,6 @@ class YandexParser(object):
         if sn.xpath('.//div[contains(@class,"colorpalette")]'):
             return True
 
-        # Различные составные блоки
-        if sn.xpath('.//div[contains(@class,"composite_gap_")]'):
-            if not self.exclude_market_yandex and 'market.yandex.ru' in html:
-                return False
-            return True
-
         # исключаем блок директа с товарами
         if sn.xpath('./div[contains(@class,"carousel")]'):
             return True
@@ -527,6 +525,19 @@ class YandexParser(object):
             return True
 
         return False
+
+    def _is_composite_gap_block(self, sn):
+        # Различные составные блоки
+        return sn.xpath('.//div[contains(@class,"composite_gap_")]')
+
+    def _need_exclude_composite_gap_block(self, url):
+        if 'market.yandex.ru' in url and not self.exclude_market_yandex:
+            return False
+
+        if 'yandex.ru/maps' in url:
+            return False
+
+        return True
 
     def get_snippets(self):
 
@@ -542,7 +553,18 @@ class YandexParser(object):
 
                 infected = 'template-infected' in sn.attrib['class']
 
-                title, url = self._get_title(sn, infected)
+                # различные составные блоки
+                is_composite_gap = self._is_composite_gap_block(sn)
+
+                try:
+                    title, url = self._get_title(sn, infected)
+                except YandexParserError:
+                    if is_composite_gap:
+                        continue
+                    raise
+
+                if is_composite_gap and self._need_exclude_composite_gap_block(url):
+                    continue
 
                 url, url_infected = self._get_true_url(sn, url)
                 infected |= url_infected
