@@ -418,6 +418,10 @@ class YandexParser(object):
         if sn.xpath('.//div[contains(@class,"sport-livescore")]'):
             return True
 
+        # счет матча
+        if sn.xpath('.//div[contains(@class,"sport-tournament")]'):
+            return True
+
         # игнорим факты
         if sn.xpath('.//div[contains(@class,"fact")]'):
             return True
@@ -498,10 +502,6 @@ class YandexParser(object):
 
         # Подробное описание объекта
         if 'object-badge' in html:
-            return True
-
-        # Подробное описание объекта
-        if 'entity-search' in html:
             return True
 
         # калькулятор

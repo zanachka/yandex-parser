@@ -1919,6 +1919,31 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['t'], u'АСНА, сеть аптек - 187 аптек, фотографии, отзывы...')
         self.assertEquals(serp['sn'][9]['s'], u'АСНА, сеть аптек в Москве - мы нашли для вас 187 аптек. Самый полный каталог заведений с фото, ☎️ и отзывами, удобный поиск мест на карте. Читать ещё')
 
+    def test101(self):
+        html = self.get_data('2019-06-19.html')
+
+        parser = YandexParser(html, exclude_market_yandex=False)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 6000000)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'footboom.com')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.footboom.com/spain/cup/matches')
+        self.assertEquals(serp['sn'][0]['t'], u'Кубок Испании по футболу (Кубок Короля) 2018-2019...')
+        self.assertEquals(serp['sn'][0]['s'], u'Кубок Испании по футболу (он же – Кубок короля) – отличная возможность для ... Розыгрыш Кубка Испании по футболу 2018-2019 уже на ранних стадиях оказался богат на сенсации. Коллективы Ла Лиги потеряли сразу четырех своих... Читать ещё')
+
+        self.assertEquals(serp['sn'][8]['d'], 'football.kulichki.net')
+        self.assertEquals(serp['sn'][8]['u'], 'https://football.kulichki.net/spain/2018/cup.htm')
+        self.assertEquals(serp['sn'][8]['t'], u'КУБОК ИСПАНИИ 2017/2018')
+        self.assertEquals(serp['sn'][8]['s'], u'5:0 в матче за Кубок страны – это очень мощно. Но от таких игр всё же хотелось бы большей непредсказуемости. Они носят особый статус, их исход определяет судьбу трофея, которая, по идее, должна решаться в равной борьбе. Читать ещё')
+
+        self.assertEquals(serp['sn'][9]['d'], 'goal.net.ua')
+        self.assertEquals(serp['sn'][9]['u'], 'https://goal.net.ua/news/69262.html')
+        self.assertEquals(serp['sn'][9]['t'], u'Все победители Кубка Испании (ТАБЛИЦА)')
+        self.assertEquals(serp['sn'][9]['s'], u'За несколько дней до финала «Кубка короля» испанская пресса «взбодрила» наставника «Барселоны» Херардо Мартино новостью о его скорой отставке. Якобы руководство «сине-гранатовых» уже определилось с увольнением... Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
