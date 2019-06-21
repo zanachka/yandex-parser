@@ -693,7 +693,7 @@ class YandexSerpCleaner(object):
         ur'ondblclick=".*?"',
         ur'style=".*?"',
         ur'<noscript>.*?<\/noscript>',
-        ur'<link.*?/>',
+        ur'<link.*?/?>',
         ur'<!--.*?-->',
         ur'<i\s+><\/i>',
         ur'data-bem\s*=\s*"[^"]*?"',

@@ -1944,6 +1944,15 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['t'], u'Все победители Кубка Испании (ТАБЛИЦА)')
         self.assertEquals(serp['sn'][9]['s'], u'За несколько дней до финала «Кубка короля» испанская пресса «взбодрила» наставника «Барселоны» Херардо Мартино новостью о его скорой отставке. Якобы руководство «сине-гранатовых» уже определилось с увольнением... Читать ещё')
 
+    def test102(self):
+        html = self.get_data('2019-06-21.html')
+        parser = YandexParser(html, exclude_market_yandex=False)
+        content = parser.get_clean_html()
+        with open('ya.html', 'w') as f:
+            f.write(content)
+        self.assertFalse('</title></svg>' in content)
+
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
