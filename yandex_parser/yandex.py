@@ -106,6 +106,9 @@ class YandexParser(object):
             if sn.xpath('./div[contains(@class,"companies-map-")]'):
                 continue
 
+            if self._is_card_narrow(sn):
+                continue
+
             if not is_context_snippet:
                 continue
 
@@ -361,6 +364,10 @@ class YandexParser(object):
 
         return 'serp-adv' in sn.attrib['class'] or 't-construct-adapter__adv' in sn.attrib['class']
 
+    def _is_card_narrow(self, sn):
+        # боковая карта справа
+        return 'card__narrow' in sn.attrib['class']
+
     def _ignore_block(self, sn):
         if self._is_context_snippet(sn):
             return True
@@ -372,7 +379,7 @@ class YandexParser(object):
             return True
 
         # боковая карта справа
-        if 'card__narrow' in sn.attrib['class']:
+        if self._is_card_narrow(sn):
             return True
 
         # игнорим новости
