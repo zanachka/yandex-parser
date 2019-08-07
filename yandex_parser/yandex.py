@@ -110,7 +110,8 @@ class YandexParser(object):
                 continue
 
             t_or_b = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]') \
-                or sn.cssselect('li.serp-adv-item div.organic__subtitle')
+                or sn.cssselect('li.serp-adv-item div.organic__subtitle') \
+                or sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_theme_direct")]')
             if t_or_b:
                 tb_blocks.append({'index': index, 'sn': sn})
                 continue
@@ -353,6 +354,9 @@ class YandexParser(object):
     def _is_context_snippet(self, sn):
         # Рекламный блок
         if sn.xpath('.//div[contains(@class,"label_color_yellow")]'):
+            return True
+
+        if sn.xpath('.//div[contains(@class,"label_theme_direct")]'):
             return True
 
         return 'serp-adv' in sn.attrib['class'] or 't-construct-adapter__adv' in sn.attrib['class']
