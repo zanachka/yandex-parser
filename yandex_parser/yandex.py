@@ -541,11 +541,14 @@ class YandexParser(object):
         # Различные составные блоки
         return sn.xpath('.//div[contains(@class,"composite_gap_")]')
 
-    def _need_exclude_composite_gap_block(self, url):
+    def _need_exclude_composite_gap_block(self, composite_gaps, url):
         if 'market.yandex.ru' in url and not self.exclude_market_yandex:
             return False
 
         if 'yandex.ru/maps' in url:
+            return False
+
+        if 'companies' in composite_gaps[0].attrib['class']:
             return False
 
         return True
@@ -574,7 +577,7 @@ class YandexParser(object):
                         continue
                     raise
 
-                if is_composite_gap and self._need_exclude_composite_gap_block(url):
+                if is_composite_gap and self._need_exclude_composite_gap_block(is_composite_gap, url):
                     continue
 
                 url, url_infected = self._get_true_url(sn, url)

@@ -1971,6 +1971,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][7]['a'], 'b')
         self.assertEquals(serp['sn'][8]['a'], 'b')
 
+    def test104(self):
+        html = self.get_data('mobile-2019-08-23.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'mrdivanoff.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://mrdivanoff.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'Интернет-магазин мебели в Москве - Купить мебель недорого - Цены от производителя')
+        self.assertEquals(serp['sn'][0]['s'], u'В интернет-магазине мебели Мистер Диванофф представлена недорогая мебель. Низкие цены, широкий ассортимент, гарантии, доставка мебели по Москве и области! Звоните +7 (495) 109-05-36.')
+
+        self.assertEquals(serp['sn'][9]['d'], '7divanov.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://www.7divanov.ru/')
+        self.assertEquals(serp['sn'][9]['t'], u'Диваны - купить диван в интернет-магазине мебели в Москве по цене производителя')
+        self.assertEquals(serp['sn'][9]['s'], u'Интернет-магазин диванов 7Диванов.ру предлагает купить диван в Москве по лучшим ценам.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
