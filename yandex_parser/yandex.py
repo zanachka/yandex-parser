@@ -535,6 +535,10 @@ class YandexParser(object):
         if sn.xpath('.//div[contains(@class,"companies-map-")]'):
             return True
 
+        # спросите у консультантов
+        if 'BusinessChatCenter-MpCroWt' in html:
+            return True
+
         return False
 
     def _is_composite_gap_block(self, sn):

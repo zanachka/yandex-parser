@@ -1991,6 +1991,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['t'], u'Диваны - купить диван в интернет-магазине мебели в Москве по цене производителя')
         self.assertEquals(serp['sn'][9]['s'], u'Интернет-магазин диванов 7Диванов.ру предлагает купить диван в Москве по лучшим ценам.')
 
+    def test105(self):
+        html = self.get_data('2019-08-26.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 7000000)
+        self.assertEquals(len(serp['sn']), 15)
+
+        self.assertEquals(serp['sn'][0]['d'], 'gifts.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://gifts.ru/id/53645')
+        self.assertEquals(serp['sn'][0]['t'],  u'Декантер Il Lago (артикул Z38177) - Проект 111')
+        self.assertEquals(serp['sn'][0]['s'],  u'Итальянский декантер Il Lago бренда IVV украсит любой праздничный стол и превратит ужин с бутылкой вина в красивую церемонию.')
+
+        self.assertEquals(serp['sn'][14]['d'], '40nog.ru')
+        self.assertEquals(serp['sn'][14]['u'], 'https://40nog.ru/dekanter-il-lago')
+        self.assertEquals(serp['sn'][14]['t'], u'Декантер il lago﻿ в Москве купить недорого в интернет...')
+        self.assertEquals(serp['sn'][14]['s'], u'В наличии широкий выбор предложений в категории декантер il lago﻿. Доставка в Москве. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
