@@ -536,7 +536,7 @@ class YandexParser(object):
             return True
 
         # спросите у консультантов
-        if 'BusinessChatCenter-MpCroWt' in html:
+        if sn.xpath('.//div[contains(@id,"BusinessChatCenter-")]'):
             return True
 
         return False

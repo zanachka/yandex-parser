@@ -2011,6 +2011,46 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][14]['t'], u'Декантер il lago﻿ в Москве купить недорого в интернет...')
         self.assertEquals(serp['sn'][14]['s'], u'В наличии широкий выбор предложений в категории декантер il lago﻿. Доставка в Москве. Читать ещё')
 
+    def test106(self):
+        html = self.get_data('2019-08-27.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 10000000)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'avtomaty.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.avtomaty.ru/terminals')
+        self.assertEquals(serp['sn'][0]['t'], u'Платежные терминалы от 32 000 руб., купить терминалы...')
+        self.assertEquals(serp['sn'][0]['s'], u'Купить платежный терминал и начать бизнес по приему платежей просто! ... Уважаемые друзья и партнеры из компании Автоматы.ру, Мы высоко оцениваем Ваш профессионализм и оперативность в работе с нами. Читать ещё')
+
+        self.assertEquals(serp['sn'][9]['d'], 'stampservice.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'http://www.StampService.ru/product/terms')
+        self.assertEquals(serp['sn'][9]['t'], u'Терминалы оплаты - стоимость и цены, купить терминалы...')
+        self.assertEquals(serp['sn'][9]['s'], u'Платежные терминалы, уличные платежные терминалы ОСМП - купить ... Цена остается доступной, а качество изготовленных автоматов – неизменно высоким. Именно поэтому продукция компании СТАМП прослужит Вам не один год. Читать ещё')
+
+    def test107(self):
+        html = self.get_data('2019-08-27-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 10000000)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'mebelstol.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://mebelstol.ru/rubric/tables/')
+        self.assertEquals(serp['sn'][0]['t'], u'Столы недорого купить в магазине MebelStol')
+        self.assertEquals(serp['sn'][0]['s'], u'Столы по самой низкой цене. Квалифицированные менеджеры помогут с выбором: 8 (800) 555-39-46 (по России звонок бесплатный). Огромный ассортимент в наличии. Гарантия на все товары! Удобные способы оплаты, наличие чека. Читать ещё')
+
+        self.assertEquals(serp['sn'][9]['d'], 'lifemebel.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://lifemebel.ru/catalog/stoly/dlya_kuhni/')
+        self.assertEquals(serp['sn'][9]['t'], u'Кухонные столы в Москве, купить стол для кухни...')
+        self.assertEquals(serp['sn'][9]['s'], u'Столы для кухни по доступным ценам от 6 300 руб. в каталоге интернет-магазина ЛайфМебель. Купить кухонный стол недорого можно с доставкой по Москве и всей России. Звоните ☎8 (495) 540-55-17! Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
