@@ -1948,8 +1948,6 @@ class YandexParserTestCase(YandexParserTests):
         html = self.get_data('2019-06-21.html')
         parser = YandexParser(html, exclude_market_yandex=False)
         content = parser.get_clean_html()
-        with open('ya.html', 'w') as f:
-            f.write(content)
         self.assertFalse('</title></svg>' in content)
 
     def test103(self):
@@ -2050,6 +2048,24 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['u'], 'https://lifemebel.ru/catalog/stoly/dlya_kuhni/')
         self.assertEquals(serp['sn'][9]['t'], u'Кухонные столы в Москве, купить стол для кухни...')
         self.assertEquals(serp['sn'][9]['s'], u'Столы для кухни по доступным ценам от 6 300 руб. в каталоге интернет-магазина ЛайфМебель. Купить кухонный стол недорого можно с доставкой по Москве и всей России. Звоните ☎8 (495) 540-55-17! Читать ещё')
+
+    def test108(self):
+        html = self.get_data('captcha-2019-10-02.html')
+
+        parser = YandexParser(html)
+        captcha = parser.get_captcha_data()
+
+        exp = {
+            'url': u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDJxZlBLMGlreEFyaWtmTWhLUUVRd0N4dnpXQnFmSCZzZXJ2aWNlPXdlYg,,_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_dfdf1aedb489780274c71d408502e2c8',
+            'form_action': '/checkcaptcha',
+            'form_data': {
+                'key': '002qfPK0ikxArikfMhKQEQwCxvzWBqfH_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_2f242589f99d31de58088b803cf02b4c',
+                'retpath': 'https://yandex.ru/search?text=%D0%BF%D1%83%D1%82%D0%B5%D0%B2%D0%BA%D0%B8%20%D0%B2%20%D0%BA%D1%80%D1%8B%D0%BC%20%D0%B8%D0%B7%20%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%B0&lr=213&p=1_8be1020da495c1fb5c7b7f7560a06031'
+            }
+        }
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEqual(captcha, exp)
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:

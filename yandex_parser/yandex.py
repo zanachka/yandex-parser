@@ -681,8 +681,21 @@ class YandexParser(object):
         if 'checkcaptcha' not in self.content:
             return
 
-        match_captcha = self.patterns['captcha'].findall(self.content)
+        patterns = [
+            self.patterns['captcha'],
+            re.compile(u'<div class="captcha__image"><img\s*src=\"([^\"]+)\"'),
+        ]
+
+        match_captcha = None
+        for pattern in patterns:
+            match_captcha = pattern.findall(self.content)
+            if match_captcha:
+                break
+
+        if not match_captcha:
+            raise YandexParserError()
         url_image = match_captcha[0]
+
         html = lxml.html.fromstring(self.content)
         form = html.forms[0]
         form_data = dict(form.form_values())
