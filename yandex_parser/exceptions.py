@@ -7,3 +7,7 @@ class EmptySerp(Exception):
 class YandexParserError(Exception):
     pass
 
+
+class YandexParserContentError(YandexParserError):
+    pass
+

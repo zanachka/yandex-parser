@@ -5,7 +5,7 @@ from urlparse import urlparse, parse_qs
 
 from pyquery import PyQuery
 import lxml.html
-from yandex_parser.exceptions import EmptySerp, YandexParserError
+from yandex_parser.exceptions import EmptySerp, YandexParserError, YandexParserContentError
 from yandex_parser.utils import to_unicode, get_full_domain_without_scheme
 from lxml import etree
 
@@ -220,7 +220,7 @@ class YandexParser(object):
             return {'pc': 0, 'sn': []}
 
         if not YandexParser.is_yandex(self.content):
-            raise YandexParserError(u'content is not yandex')
+            raise YandexParserContentError(u'content is not yandex')
 
         pagecount = self.get_pagecount()
         snippets = self.get_snippets()

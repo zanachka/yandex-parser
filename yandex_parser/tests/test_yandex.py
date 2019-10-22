@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
 
-from yandex_parser.exceptions import YandexParserError
+from yandex_parser.exceptions import YandexParserContentError
 from yandex_parser.tests import YandexParserTests
 from yandex_parser.yandex import YandexParser
 from yandex_parser.yandex_bar import YandexBarParser
@@ -2066,6 +2066,14 @@ class YandexParserTestCase(YandexParserTests):
 
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertEqual(captcha, exp)
+
+    def test109(self):
+        html = 'bad content'
+        parser = YandexParser(html)
+        self.assertFalse(YandexParser.is_yandex(html))
+
+        with self.assertRaises(YandexParserContentError) as e:
+            parser.get_serp()
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
