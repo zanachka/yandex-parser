@@ -203,6 +203,10 @@ class YandexParser(object):
         for block in sorted(blocks, key=lambda x: x['index']):
             sn = block['sn']
             title, url = self._get_title(sn, False)
+
+            if not re.search('^https?://yabs\.yandex\.ru', url):
+                raise YandexParserError(u'incorrect context url={}'.format(url))
+
             result.append({
                 'u': url,
                 't': title,
