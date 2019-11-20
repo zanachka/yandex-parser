@@ -106,6 +106,9 @@ class YandexParser(object):
             if sn.xpath('./div[contains(@class,"companies-map-")]'):
                 continue
 
+            if 'data-fast-wzrd' in sn.attrib and sn.attrib['data-fast-wzrd'] == 'market_constr':
+                continue
+
             if self._is_card_narrow(sn):
                 continue
 
