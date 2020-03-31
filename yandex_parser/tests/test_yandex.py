@@ -2114,6 +2114,31 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][7]['a'], 'b')
         self.assertEquals(serp['sn'][8]['a'], 'b')
 
+    def test112(self):
+        html = self.get_data('2020-03-30.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 5000000)
+        self.assertEquals(len(serp['sn']), 11)
+
+        self.assertEquals(serp['sn'][0]['d'], 'novostroy-m.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.Novostroy-m.ru/baza/mfk_zilart/otzyvy')
+        self.assertEquals(serp['sn'][0]['t'], u'226 реальных отзывов от дольщиков о ЖК «ЗИЛАРТ»...')
+        self.assertEquals(serp['sn'][0]['s'], u'Март 2020 — 226 новых отзывов о ЖК «ЗИЛАРТ» от реальных покупателей на сайте Novostroy-M.ru. Читайте мнения на форуме дольщиков о расположении, экологии... Читать ещёМарт 2020 — 226 новых отзывов о ЖК «ЗИЛАРТ» от реальных покупателей на сайте Novostroy-M.ru. Читайте мнения на форуме дольщиков о расположении, экологии, планировках, качестве строительства, проблемах застройщика, просрочках по сроку сдачи. ... Ничего критичного, но приятно что все исправили еще до того как мы окончательно приняли квартиру. Ответить. Полезный отзыв? 0. 0. Скрыть')
+
+        self.assertEquals(serp['sn'][9]['d'], 'realty.yandex.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://realty.yandex.ru/moskva/kupit/novostrojka/zilart-185390/?rgid=193297&nosplash=1&utm_source=wizard&utm_campaign=paid_sites&from=wizard.site-thumb#reviews')
+        self.assertEquals(serp['sn'][9]['t'], u'ЖК «ЗИЛАРТ» — отзывы жильцов')
+        self.assertEquals(serp['sn'][9]['s'], u'Цены, планировки и наличие квартир. Актуальные предложения в ЖК «ЗИЛАРТ». Москва, ул. Автозаводская, вл. 23')
+
+        self.assertEquals(serp['sn'][10]['d'], 'msk.restate.ru')
+        self.assertEquals(serp['sn'][10]['u'], 'https://Msk.Restate.ru/complex/zilart-3543/opinion/')
+        self.assertEquals(serp['sn'][10]['t'], u'ЖК ЗИЛАРТ - отзывы дольщиков и покупателей.')
+        self.assertEquals(serp['sn'][10]['s'], u'Отзывы дольщиков о жилом комплексе ЗИЛАРТ. Всегда самые новые комментарии покупателей о ЖК. Читать ещёОтзывы дольщиков о жилом комплексе ЗИЛАРТ. Всегда самые новые комментарии покупателей о ЖК. ... ЖК "Зиларт" - знаковый, даже знаменитый объект на рынке недвижимости Москвы. В предыдущих мнениях редакции мы детально описывали достоинства, недостатки и ход строительства ЖК. Список плюсов и минусов остается актуальным, существенных изменений в рыночном статусе объекта не произошло. Скрыть')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

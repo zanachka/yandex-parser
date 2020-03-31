@@ -32,10 +32,11 @@ class YandexParser(object):
 
     CONTEXT_ORGANIC_BLOCK = 'organic block'
 
-    def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm'), exclude_market_yandex=True):
+    def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm'), exclude_market_yandex=True, exclude_realty_yandex=True):
         self.content = to_unicode(content)
         self.snippet_fileds = snippet_fileds
         self.exclude_market_yandex = exclude_market_yandex
+        self.exclude_realty_yandex = exclude_realty_yandex
 
     def get_context_snippet_title(self, content):
         res = re.search(ur'<h2[^>]*?>\s*<a[^>]*?href="([^"]+?)"[^>]*?>\s*(.*?)\s*</a>', content, re.I | re.M | re.S)
@@ -556,6 +557,9 @@ class YandexParser(object):
         if 'market.yandex.ru' in url and not self.exclude_market_yandex:
             return False
 
+        if 'realty.yandex.ru' in url and not self.exclude_realty_yandex:
+            return False
+
         if 'yandex.ru/maps' in url:
             return False
 
@@ -644,7 +648,7 @@ class YandexParser(object):
         # if pagecount <= 50:
         #     return snippets
 
-        if not self.exclude_market_yandex:
+        if not self.exclude_market_yandex or not self.exclude_realty_yandex:
             return snippets
 
         len_snippets = len(snippets)
