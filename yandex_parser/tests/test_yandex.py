@@ -2139,6 +2139,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][10]['t'], u'ЖК ЗИЛАРТ - отзывы дольщиков и покупателей.')
         self.assertEquals(serp['sn'][10]['s'], u'Отзывы дольщиков о жилом комплексе ЗИЛАРТ. Всегда самые новые комментарии покупателей о ЖК. Читать ещёОтзывы дольщиков о жилом комплексе ЗИЛАРТ. Всегда самые новые комментарии покупателей о ЖК. ... ЖК "Зиларт" - знаковый, даже знаменитый объект на рынке недвижимости Москвы. В предыдущих мнениях редакции мы детально описывали достоинства, недостатки и ход строительства ЖК. Список плюсов и минусов остается актуальным, существенных изменений в рыночном статусе объекта не произошло. Скрыть')
 
+    def test113(self):
+        html = self.get_data('2020-06-29.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 14000000)
+        self.assertEquals(len(serp['sn']), 9)
+
+        self.assertEquals(serp['sn'][0]['d'], 'pravda-sotrudnikov.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://pravda-sotrudnikov.ru/company/coral-travel')
+        self.assertEquals(serp['sn'][0]['t'], u'Туроператор Coral Travel: отзывы сотрудников...')
+        self.assertEquals(serp['sn'][0]['s'], u'Нужны отзывы сотрудников о компании Туроператор Coral Travel? ... Компания Coral Travel (Россия, Турция, Украина, Польша, Белоруссия, Грузия) входит в крупную международную структуру OTI Holding, основанную в 1992 году. OTI Holding также владеет компаниями Odeon Tours (Турция, Египет, Таиланд, ОАЭ... Читать ещёНужны отзывы сотрудников о компании Туроператор Coral Travel? На нашем сайте есть информация о данной компании. ... Компания Coral Travel (Россия, Турция, Украина, Польша, Белоруссия, Грузия) входит в крупную международную структуру OTI Holding, основанную в 1992 году. OTI Holding также владеет компаниями Odeon Tours (Турция, Египет, Таиланд, ОАЭ, Испания, Греция), Sunmar Tour (Россия), «Сеть Турагентств Coral Travel» (Россия, Украина), A-Class Travel (Россия, Турция), Wezyr Holydays (Польша), Holiday Market Service (Турция), OGD Security & Consultancy (Турция) и отелями Otium Eco Club Side 5*, Xanadu Resort Hotel 5. Скрыть')
+
+        self.assertEquals(serp['sn'][8]['d'], 'ru.indeed.com')
+        self.assertEquals(serp['sn'][8]['u'], 'https://ru.indeed.com/cmp/Coral-Travel/reviews')
+        self.assertEquals(serp['sn'][8]['t'], u'Работа в компании Coral Travel: Отзывы сотрудников')
+        self.assertEquals(serp['sn'][8]['s'], u'Отзывы от сотрудников компании Coral Travel о корпоративной культуре, заработной плате, соц. пакетах, руководстве и безопасности на работе в компании Coral Travel. Читать ещёОтзывы от сотрудников компании Coral Travel о корпоративной культуре, заработной плате, соц. пакетах, руководстве и безопасности на работе в компании Coral Travel. ... Работа в Coral travel мне нравится. Да, бывают недовольные клиенты, какие-то претензии с их стороны, которые могут портить нервы и отнимать кучу сил, но я знала, куда шла работать. В подобных компаниях везде так, от этого никуда не денешься. Скрыть')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

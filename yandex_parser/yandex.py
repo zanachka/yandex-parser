@@ -287,7 +287,7 @@ class YandexParser(object):
 
         url = div[0].xpath('.//a')
         if not url:
-            raise YandexParserError(u'Тайтла нет, greenurl - нет')
+            return None
         return url[0].attrib['href']
 
     def _get_true_url(self, sn, url):
@@ -587,6 +587,10 @@ class YandexParser(object):
 
                 try:
                     title, url = self._get_title(sn, infected)
+
+                    if title is None and url is None:
+                        continue
+
                 except YandexParserError:
                     if is_composite_gap:
                         continue
