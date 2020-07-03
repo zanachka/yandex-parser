@@ -2159,6 +2159,10 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][8]['t'], u'Работа в компании Coral Travel: Отзывы сотрудников')
         self.assertEquals(serp['sn'][8]['s'], u'Отзывы от сотрудников компании Coral Travel о корпоративной культуре, заработной плате, соц. пакетах, руководстве и безопасности на работе в компании Coral Travel. Читать ещёОтзывы от сотрудников компании Coral Travel о корпоративной культуре, заработной плате, соц. пакетах, руководстве и безопасности на работе в компании Coral Travel. ... Работа в Coral travel мне нравится. Да, бывают недовольные клиенты, какие-то претензии с их стороны, которые могут портить нервы и отнимать кучу сил, но я знала, куда шла работать. В подобных компаниях везде так, от этого никуда не денешься. Скрыть')
 
+    def test114(self):
+        html = self.get_data('2020-07-03.html')
+        self.assertTrue(YandexParser.is_yandex(html))
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
