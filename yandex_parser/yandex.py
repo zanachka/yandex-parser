@@ -264,7 +264,7 @@ class YandexParser(object):
         if not match:
             return
 
-        pagecount_raw = match.group(1)
+        pagecount_raw = match.group(1).replace('&nbsp;', ' ')
         pagecount = int(pagecount_raw.split()[0])
         if u'тыс' in pagecount_raw:
             pagecount *= 1000

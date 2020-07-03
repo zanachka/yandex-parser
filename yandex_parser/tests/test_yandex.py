@@ -2161,7 +2161,13 @@ class YandexParserTestCase(YandexParserTests):
 
     def test114(self):
         html = self.get_data('2020-07-03.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        serp = parser.get_serp()
+
         self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 6000000)
+        self.assertEquals(len(serp['sn']), 10)
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
