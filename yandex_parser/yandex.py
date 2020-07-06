@@ -223,6 +223,48 @@ class YandexParser(object):
         for block in blocks:
             block['a'] = a
 
+    def get_current_query(self):
+        match = re.search(
+            r'<input class="input__control mini-suggest__input"[^>]+?name="text"[^>]+?value="([^"]+?)"',
+            self.content
+        )
+        if not match:
+            raise YandexParserError(u'не удалось найти текущий запрос')
+
+        return match.group(1)
+
+    def get_current_page(self):
+        match = re.search(
+            r'<span class="[^"]+?pager__item_current_yes[^"]+?"[^>]*?>\s*(\d+)\s*</span>',
+            self.content
+        )
+        if not match:
+            return 1
+
+        return int(match.group(1))
+
+    def get_current_region(self):
+        match = re.search(
+            r'<input type="?hidden"? name="lr" value="(\d+)"',
+            self.content,
+            flags=re.I | re.M
+        )
+        if not match:
+            raise YandexParserError(u'не удалось найти текущий регион')
+
+        return int(match.group(1))
+
+    def get_next_page(self):
+        match = re.search(
+            r'</span>\s*<a class="[^"]+?pager__item pager__item_kind_page[^"]+?"[^>]+?>\s*(\d+)\s*</a>',
+            self.content,
+            flags=re.I | re.M
+        )
+        if not match:
+            return None
+
+        return int(match.group(1))
+
     def get_serp(self):
         if self.is_not_found():
             return {'pc': 0, 'sn': []}

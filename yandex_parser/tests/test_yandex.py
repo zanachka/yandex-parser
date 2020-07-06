@@ -2169,6 +2169,51 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['pc'], 6000000)
         self.assertEquals(len(serp['sn']), 10)
 
+    def test115(self):
+        html = self.get_data('2020-07-03.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        current_query = parser.get_current_query()
+        current_page = parser.get_current_page()
+        current_region = parser.get_current_region()
+        next_page = parser.get_next_page()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEqual(current_query, u'бонусы мегафон как потратить')
+        self.assertEqual(current_page, 1)
+        self.assertEqual(current_region, 10658)
+        self.assertEqual(next_page, 2)
+
+    def test116(self):
+        html = self.get_data('2020-07-06-not-found.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        current_query = parser.get_current_query()
+        current_page = parser.get_current_page()
+        current_region = parser.get_current_region()
+        next_page = parser.get_next_page()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEqual(current_query, u'фвазйщшгнукзщйрыяфждывфывафывафывафыва')
+        self.assertEqual(current_page, 1)
+        self.assertEqual(current_region, 41)
+        self.assertEqual(next_page, None)
+
+    def test117(self):
+        html = self.get_data('2020-07-06-one-page.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        current_query = parser.get_current_query()
+        current_page = parser.get_current_page()
+        current_region = parser.get_current_region()
+        next_page = parser.get_next_page()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEqual(current_query, u'123123123123234234')
+        self.assertEqual(current_page, 1)
+        self.assertEqual(current_region, 41)
+        self.assertEqual(next_page, None)
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
