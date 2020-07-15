@@ -287,7 +287,7 @@ class YandexParser(object):
     def is_yandex(cls, content):
         return '<a class="logo__link" href="//www.yandex.' in content \
             or u'<title>Яндекс' in content \
-            or 'href="https://www.yandex.ru" title="Яндекс"' in content \
+            or u'href="https://www.yandex.ru" title="Яндекс"' in content \
             or '<a class="logo logo_type_link' in content
 
     def get_clean_html(self):
