@@ -727,13 +727,21 @@ class YandexParser(object):
         span_text = els[0].text_content() or ''
         return int(span_text.lower() == u'Ссылки на страницу содержат:'.lower())
 
-
     def get_region_code(self, default=None):
         dom = PyQuery(self.content)
         inputs = dom.find('input[name=rstr]')
         if inputs:
             return int(inputs[0].attrib['value'].lstrip('-'))
         return default
+
+    def page_exists(self, page):
+        match = re.search(
+            '<(?:span|a) class="[^"]*pager__item[^"]*"[^>]*>\s*{}\s*</(?:span|a)>'.format(page),
+            self.content,
+            flags=re.I | re.M
+        )
+        return bool(match)
+
 
     def get_captcha_data(self):
         if 'checkcaptcha' not in self.content:

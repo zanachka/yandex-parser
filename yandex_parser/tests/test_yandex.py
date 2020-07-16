@@ -2214,6 +2214,15 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEqual(current_region, 41)
         self.assertEqual(next_page, None)
 
+    def test118(self):
+        html = self.get_data('2020-07-16.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertTrue(parser.page_exists(1))
+        self.assertTrue(parser.page_exists(2))
+        self.assertFalse(parser.page_exists(3))
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
