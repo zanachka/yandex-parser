@@ -227,7 +227,7 @@ class YandexParser(object):
 
     def get_current_query(self):
         match = re.search(
-            r'<input class="input__control mini-suggest__input"[^>]+?name="text"[^>]+?value="([^"]+?)"',
+            r'<input class="(?:input__control mini-suggest__input|header3__input[^"]+?)"[^>]+?name="text"[^>]+?value="([^"]+?)"',
             self.content
         )
         if not match:

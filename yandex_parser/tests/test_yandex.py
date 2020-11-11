@@ -2276,6 +2276,11 @@ class YandexParserTestCase(YandexParserTests):
 
         self.assertTrue(YandexParser.is_next_mobile_page(html))
 
+        yp = YandexParser(html)
+        self.assertEquals(yp.get_current_query(), u'самый быстрый интернет на телефон')
+        self.assertEquals(yp.get_current_page(), 1)
+        self.assertEquals(yp.get_current_region(), 10946)
+
     def test121(self):
         html = self.get_data('mobile-2020-11-11-only-one-page.html')
         self.assertFalse(YandexParser.is_next_mobile_page(html))
