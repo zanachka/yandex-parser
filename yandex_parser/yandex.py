@@ -30,6 +30,8 @@ class YandexParser(object):
         re.compile(ur'<div class="?serp-adv__found"?>Наш[^ ]+\s+(.*?)рез', params_regexr)
     )
 
+    IS_YANDEX_PATTERN = '<a class="header3__logo"'
+
     CONTEXT_ORGANIC_BLOCK = 'organic block'
 
     def __init__(self, content, snippet_fileds=('d', 'p', 'u', 't', 's', 'm'), exclude_market_yandex=True, exclude_realty_yandex=True):
@@ -254,6 +256,37 @@ class YandexParser(object):
 
         return int(match.group(1))
 
+    @classmethod
+    def extract_mobile_page_content(self, content, page):
+        dom = PyQuery(content)
+        pages_serp = dom('.serp-list').children('.serp-list__page')
+        for page_serp in pages_serp:
+            html = etree.tostring(page_serp).replace('serp-list__page', 'serp-list')
+            if '<div class="serp-cut">{}'.format(page) in html:
+                return html
+
+        raise YandexParserError(u'не удалось найти страницу {}'.format(page))
+
+    @classmethod
+    def create_mobile_page(cls, content):
+        return """
+        <html>
+            {}
+            <body>
+            {}
+            </body>
+        </html>
+        """.format(cls.IS_YANDEX_PATTERN, content)
+
+    @classmethod
+    def is_next_mobile_page(cls, content):
+        match = re.search(
+            r'<div class="more more_under-related_yes',
+            content,
+            flags=re.I | re.M
+        )
+        return bool(match)
+
     def get_next_page(self):
         match = re.search(
             r'</span>\s*<a class="[^"]+?pager__item pager__item_kind_page[^"]+?"[^>]+?>\s*(\d+)\s*</a>',
@@ -288,7 +321,8 @@ class YandexParser(object):
         return '<a class="logo__link" href="//www.yandex.' in content \
             or u'<title>Яндекс' in content \
             or u'href="https://www.yandex.ru" title="Яндекс"' in content \
-            or '<a class="logo logo_type_link' in content
+            or '<a class="logo logo_type_link' in content \
+            or cls.IS_YANDEX_PATTERN in content
 
     def get_clean_html(self):
         return YandexSerpCleaner.clean(self.content)

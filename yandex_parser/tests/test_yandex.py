@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
 
-from yandex_parser.exceptions import YandexParserContentError
+from yandex_parser.exceptions import YandexParserContentError, YandexParserError
 from yandex_parser.tests import YandexParserTests
 from yandex_parser.yandex import YandexParser
 from yandex_parser.yandex_bar import YandexBarParser
@@ -2222,6 +2222,73 @@ class YandexParserTestCase(YandexParserTests):
         self.assertTrue(parser.page_exists(1))
         self.assertTrue(parser.page_exists(2))
         self.assertFalse(parser.page_exists(3))
+
+    def test119(self):
+        html = self.get_data('mobile-2020-11-11.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'zen.yandex.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://zen.yandex.ru/media/technologicus/samyi-bystryi-mobilnyi-internet-2020-5f0c77d924e4507b2677fef7')
+        self.assertEquals(serp['sn'][0]['t'], u'Самый быстрый мобильный интернет 2020 | Технологикус | Яндекс Дзен | Яндекс Дзен | Блогерская платформаzen.yandex.ru › media…samyi-bystryi…')
+        self.assertEquals(serp['sn'][0]['s'], u'В июле 2020 года компания Ookla, которой принадлежит мобильное приложение Speedtest, основной функцией которого является замер скорости интернета... Читать ещёВ июле 2020 года компания Ookla, которой принадлежит мобильное приложение Speedtest, основной функцией которого является замер скорости интернета, определила мобильного оператора с самым быстрым мобильным интернетом в России. В четвёртый раз подряд награду получил Мегафон. Скрыть')
+
+        self.assertEquals(serp['sn'][9]['d'], 'itmaster.guru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://itmaster.guru/nastrojka-interneta/mobilnyj-internet/kakoy-4g-internet-luchshe.html')
+        self.assertEquals(serp['sn'][9]['t'], u'Какой 4g интернет лучше - самый быстрый провайдер через модем (МТС, Билайн, Теле2, Мегафон и др)itmaster.guru › nastrojka-interneta…')
+        self.assertEquals(serp['sn'][9]['s'], u'Какие операторы самые популярные в России и какие условия на интернет они предлагают? ... Он, как и телефон, ловит сигнал от оператора благодаря «симке», вставленной в него. Читать ещёКакие операторы самые популярные в России и какие условия на интернет они предлагают? Какие компании подойдут для города, а какие, к примеру, для дачи? Содержание. ... Он, как и телефон, ловит сигнал от оператора благодаря «симке», вставленной в него. «Симка» должна быть, естественно, от того оператора, которого вы выбрали ранее, следуя нашим советам выше. Можно сразу купить не модем, а мобильный роутер, чтобы раздавать «Вай-Фай» для всех своих устройств. Скрыть')
+
+    def test120(self):
+        html = self.get_data('mobile-2020-11-11-pages5.html')
+
+        page2 = YandexParser.extract_mobile_page_content(html, 2)
+        self.assertTrue('>2' in page2)
+
+        page3 = YandexParser.extract_mobile_page_content(html, 3)
+        self.assertTrue('>3' in page3)
+
+        page4 = YandexParser.extract_mobile_page_content(html, 4)
+        self.assertTrue('>4' in page4)
+
+        page5 = YandexParser.extract_mobile_page_content(html, 5)
+        self.assertTrue('>5' in page5)
+
+        page5_full = YandexParser.create_mobile_page(page5)
+        self.assertTrue(YandexParser.is_yandex(page5_full))
+        serp5 = YandexParser(page5_full).get_serp()
+        self.assertEquals(serp5['sn'][0]['d'], 'viborprost.ru')
+        self.assertEquals(serp5['sn'][0]['u'], 'https://viborprost.ru/texnika/kompyuter/kakogo-operatora-vybrat-dlya-interneta.html')
+        self.assertEquals(serp5['sn'][0]['t'], u'Мобильный интернет - какой оператор лучше: какого оператора сотовой связи выбрать для безлимитного интернетаviborprost.ru › …dlya-interneta.html')
+        self.assertEquals(serp5['sn'][0]['s'], u'Как выбрать недорогой и быстрый мобильный интернет, желательно безлимитный? ... Подключить на них самый дешевый интернет и войти в сеть. С телефона или с модема проверить скорость интернета можно на сайте... Читать ещёКак выбрать недорогой и быстрый мобильный интернет, желательно безлимитный? На каком операторе сотовой связи остановиться? В этом обзоре мы расскажем об основных тарифах и порекомендуем, на что обращать внимание при выборе тарифа на мобильный интернет. ... Подключить на них самый дешевый интернет и войти в сеть. С телефона или с модема проверить скорость интернета можно на сайте http://www.speedtest.net/. Желательно выполнить проверку несколько раз в течение суток. Это поможет выявить проблемные периоды у каждого оператора. Скрыть')
+
+        self.assertEquals(serp5['sn'][9]['d'], 'tvoysmartphone-ru.turbopages.org')
+        self.assertEquals(serp5['sn'][9]['u'], 'https://tvoysmartphone-ru.turbopages.org/tvoysmartphone.ru/s/uroki/142-kak-uskorit-internet-na-android-ustroystvah.html?turbo_uid=AABi4_qXowenH596TJ7De2aSNkIx1hMuXS2JdeLIqZDZr4Gx3Ks7EqXmMeEVwGrOxoBnPs4Cxzd2Pob1E-qrNDYMNFDbXgwBF63Au9LDB07CSblDPg%2C%2C&turbo_ic=AAAhGVsRTeVyQShKy0xfsL9Geqfp6pEbvxNFpMTX81mEl581iUzo1AAcOdACASdOGi_DgaaskuBuzZQsTEigDqRAkecu38WrKgpxRcYae34u07PcdQ%2C%2C&parent-reqid=1605098549896773-1760764814187405568900107-production-app-host-vla-web-yp-223&trbsrc=wb')
+        self.assertEquals(serp5['sn'][9]['t'], u'Как ускорить интернет на Андроид устройствахTvoySmartphone.ru › …142…internet-na…')
+        self.assertEquals(serp5['sn'][9]['s'], u'Как ускорить мобильный интернет на телефоне или планшете Андроид. ... Это самый весомый фактор, ибо каким бы навороченным и быстрым не было ваше устройство - если есть ограничение скорости на стороне провайдера то... Читать ещёКак ускорить мобильный интернет на телефоне или планшете Андроид. Как уменьшить задержки и пинг по Wi-Fi сменой DNS. Интернет плотно обосновался в нашей жизни и большинству уже трудно представить обычный день без доступа к нему, на интернете завязаны как развлечения так и поиск информации или ответов на вопросы. ... Это самый весомый фактор, ибо каким бы навороченным и быстрым не было ваше устройство - если есть ограничение скорости на стороне провайдера то уже мало что сможет помочь. Скрыть')
+
+        with self.assertRaises(YandexParserError):
+            YandexParser.extract_mobile_page_content(html, 6)
+
+        self.assertTrue(YandexParser.is_next_mobile_page(html))
+
+    def test121(self):
+        html = self.get_data('mobile-2020-11-11-only-one-page.html')
+        self.assertFalse(YandexParser.is_next_mobile_page(html))
+        
+        serp = YandexParser(html).get_serp()
+        self.assertEquals(serp['sn'][0]['d'], 'prodomain.info')
+        self.assertEquals(serp['sn'][0]['u'], 'https://prodomain.info/whois/skdjha.com')
+        self.assertEquals(serp['sn'][0]['t'], u'Whois domain skdjha.com, n/aprodomain.info › whois/skdjha.comвчера')
+        self.assertEquals(serp['sn'][0]['s'], u'lksdjha.com. Читать ещёlksdjha.com. rkkdjha.com. sxkjha.com. Скрыть')
+
+        self.assertEquals(serp['sn'][1]['d'], 'pageglimpse.com')
+        self.assertEquals(serp['sn'][1]['u'], 'http://www.pageglimpse.com/brandworks.com')
+        self.assertEquals(serp['sn'][1]['t'], u'Site Disclaimerpageglimpse.com › brandworks.com')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
