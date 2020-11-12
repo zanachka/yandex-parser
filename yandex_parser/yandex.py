@@ -291,7 +291,7 @@ class YandexParser(object):
     @classmethod
     def is_next_mobile_page(cls, content):
         match = re.search(
-            r'<div class="more more_under-related_yes',
+            r'<div class="more__content',
             content,
             flags=re.I | re.M
         )
