@@ -2232,6 +2232,8 @@ class YandexParserTestCase(YandexParserTests):
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertEquals(serp['pc'], None)
         self.assertEquals(len(serp['sn']), 10)
+        with self.assertRaises(YandexParserError):
+            self.assertEquals(parser.get_mobile_current_page(), 5)
 
         self.assertEquals(serp['sn'][0]['d'], 'zen.yandex.ru')
         self.assertEquals(serp['sn'][0]['u'], 'https://zen.yandex.ru/media/technologicus/samyi-bystryi-mobilnyi-internet-2020-5f0c77d924e4507b2677fef7')
@@ -2279,6 +2281,7 @@ class YandexParserTestCase(YandexParserTests):
         yp = YandexParser(html)
         self.assertEquals(yp.get_current_query(), u'самый быстрый интернет на телефон')
         self.assertEquals(yp.get_current_page(), 1)
+        self.assertEquals(yp.get_mobile_current_page(), 5)
         self.assertEquals(yp.get_current_region(), 10946)
 
     def test121(self):

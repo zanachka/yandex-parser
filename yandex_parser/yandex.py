@@ -245,6 +245,16 @@ class YandexParser(object):
 
         return int(match.group(1))
 
+    def get_mobile_current_page(self):
+        pages = re.findall(
+            r'<div class="serp-cut">(\d+)',
+            self.content
+        )
+        if not pages:
+            raise YandexParserError('Не удалось найти текущую страницу')
+
+        return int(max(pages))
+
     def get_current_region(self):
         match = re.search(
             r'<input type="?hidden"? name="lr" value="(\d+)"',
