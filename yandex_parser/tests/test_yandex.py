@@ -2298,6 +2298,19 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][1]['u'], 'http://www.pageglimpse.com/brandworks.com')
         self.assertEquals(serp['sn'][1]['t'], u'Site Disclaimerpageglimpse.com › brandworks.com')
 
+    def test122(self):
+        html = self.get_data('mobile-2021-03-01.html')
+
+        parser = YandexParser(html, exclude_realty_yandex=False)
+        current_query = parser.get_current_query()
+        current_page = parser.get_current_page()
+        current_region = parser.get_current_region()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEqual(current_query, u'владимирская область отдых')
+        self.assertEqual(current_page, 1)
+        self.assertEqual(current_region, 213)
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

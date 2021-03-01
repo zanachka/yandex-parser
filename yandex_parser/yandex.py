@@ -256,15 +256,24 @@ class YandexParser(object):
         return int(max(pages))
 
     def get_current_region(self):
-        match = re.search(
-            r'<input type="?hidden"? name="lr" value="(\d+)"',
-            self.content,
-            flags=re.I | re.M
-        )
-        if not match:
-            raise YandexParserError(u'не удалось найти текущий регион')
+        patterns = [
+            re.compile(
+                r'<input type="?hidden"? name="lr" value="(\d+)"',
+                flags=re.I | re.M
+            ),
+            re.compile(
+                r'"lr":\s*(\d+)\s*',
+                flags=re.I | re.M
+            ),
+        ]
 
-        return int(match.group(1))
+        for pattern in patterns:
+            match = pattern.search(self.content)
+            if match:
+                return int(match.group(1))
+
+        raise YandexParserError(u'не удалось найти текущий регион')
+
 
     @classmethod
     def extract_mobile_page_content(self, content, page):
