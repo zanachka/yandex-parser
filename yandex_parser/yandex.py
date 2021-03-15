@@ -800,29 +800,45 @@ class YandexParser(object):
         if 'checkcaptcha' not in self.content:
             return
 
-        patterns = [
-            self.patterns['captcha'],
-            re.compile(u'<div class="captcha__image"><img\s*src=\"([^\"]+)\"'),
-        ]
+        captcha_type = None
+        form_method = None
+        if re.search(ur'>Я не робот<', self.content):
+            url_image = None
+            captcha_type = 'i_not_robot'
 
-        match_captcha = None
-        for pattern in patterns:
-            match_captcha = pattern.findall(self.content)
-            if match_captcha:
-                break
+            html = lxml.html.fromstring(self.content)
+            form = html.forms[0]
+            form_data = dict(form.form_values())
+            form_action = form.action
+            form_method = form.method
 
-        if not match_captcha:
-            raise YandexParserError()
-        url_image = match_captcha[0]
+        else:
+            patterns = [
+                self.patterns['captcha'],
+                re.compile(u'<div class="captcha__image"><img\s*src=\"([^\"]+)\"'),
+            ]
 
-        html = lxml.html.fromstring(self.content)
-        form = html.forms[0]
-        form_data = dict(form.form_values())
+            match_captcha = None
+            for pattern in patterns:
+                match_captcha = pattern.findall(self.content)
+                if match_captcha:
+                    break
+
+            if not match_captcha:
+                raise YandexParserError()
+            url_image = match_captcha[0]
+
+            html = lxml.html.fromstring(self.content)
+            form = html.forms[0]
+            form_data = dict(form.form_values())
+            form_action = form.action
 
         return {
+            'captcha_type': captcha_type,
             'url': url_image,
-            'form_action': form.action,
+            'form_action': form_action,
             'form_data': form_data,
+            'form_method': form_method,
         }
 
     @classmethod

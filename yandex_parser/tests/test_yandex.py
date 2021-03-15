@@ -15,17 +15,12 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
 
         captcha_data = parser.get_captcha_data()
-        exp = {
-            'url': u'http://yandex.ru/captchaimg?aHR0cDovL3MuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT1kM1I3SDhDRGlTT3RlVzNvYk9zcFo4bk1lc0NOUjhXQw,,_0/1435077202/853e18711cde74266e45da1315dacee2_2bf39001bd241d1c6539b7db6a0464ad', 
-            'form_action': '/checkcaptcha',
-            'form_data': {
-                'key': 'd3R7H8CDiSOteW3obOspZ8nMesCNR8WC_0/1435077202/853e18711cde74266e45da1315dacee2_ff263da232b103004f79fe4c4e139913', 
-                'retpath': 'http://yandex.ru/yandsearch?p=0&text=%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D1%80%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D0%B1%D0%B0%D0%BD%D0%BA%D0%B8&site=&numdoc=50&lr=213_cefc8bbe530fbaf69685556720f14a26'
-            }
-        }
         self.assertTrue(YandexParser.is_yandex(html))
-        self.assertEquals(captcha_data, exp)
-   
+        self.assertEquals(captcha_data['url'], u'http://yandex.ru/captchaimg?aHR0cDovL3MuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT1kM1I3SDhDRGlTT3RlVzNvYk9zcFo4bk1lc0NOUjhXQw,,_0/1435077202/853e18711cde74266e45da1315dacee2_2bf39001bd241d1c6539b7db6a0464ad')
+        self.assertEquals(captcha_data['form_action'], '/checkcaptcha')
+        self.assertEquals(captcha_data['form_data']['key'], 'd3R7H8CDiSOteW3obOspZ8nMesCNR8WC_0/1435077202/853e18711cde74266e45da1315dacee2_ff263da232b103004f79fe4c4e139913')
+        self.assertEquals(captcha_data['form_data']['retpath'], 'http://yandex.ru/yandsearch?p=0&text=%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D1%80%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D0%B1%D0%B0%D0%BD%D0%BA%D0%B8&site=&numdoc=50&lr=213_cefc8bbe530fbaf69685556720f14a26')
+
        
     def test_bar_info_1(self):
         html = self.get_data('bar_info_1.xml')
@@ -1819,16 +1814,11 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
 
         captcha_data = parser.get_captcha_data()
-        exp = {
-            'url': u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDI2NUFmTGQwcHZSeGU4cHdnUlB0b3FSSTBWRFI3UA,,_0/1553773996/f2712c3d83b6e2b6231abc5e829cf01b_144b55b97ef8536dc99339901a76280a',
-            'form_action': '/checkcaptcha',
-            'form_data': {
-                'key': '00265AfLd0pvRxe8pwgRPtoqRI0VDR7P_0/1553773996/f2712c3d83b6e2b6231abc5e829cf01b_1a86e6e248af6a9a3a32f2198b7af51c',
-                'retpath': 'https://yandex.ru/search/touch?msid=1553773995.145862.3091&lr=213&text=satellite%20c850%20e7k&suggest_reqid=498590402153961121639951454095371_7865790594b24f955ee827816529be73'
-            }
-        }
         self.assertTrue(YandexParser.is_yandex(html))
-        self.assertEquals(captcha_data, exp)
+        self.assertEquals(captcha_data['url'], u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDI2NUFmTGQwcHZSeGU4cHdnUlB0b3FSSTBWRFI3UA,,_0/1553773996/f2712c3d83b6e2b6231abc5e829cf01b_144b55b97ef8536dc99339901a76280a')
+        self.assertEquals(captcha_data['form_action'], u'/checkcaptcha')
+        self.assertEquals(captcha_data['form_data']['key'], '00265AfLd0pvRxe8pwgRPtoqRI0VDR7P_0/1553773996/f2712c3d83b6e2b6231abc5e829cf01b_1a86e6e248af6a9a3a32f2198b7af51c')
+        self.assertEquals(captcha_data['form_data']['retpath'], 'https://yandex.ru/search/touch?msid=1553773995.145862.3091&lr=213&text=satellite%20c850%20e7k&suggest_reqid=498590402153961121639951454095371_7865790594b24f955ee827816529be73')
 
     def test97(self):
         html = self.get_data('context-2019-04-10.html')
@@ -2055,17 +2045,11 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
         captcha = parser.get_captcha_data()
 
-        exp = {
-            'url': u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDJxZlBLMGlreEFyaWtmTWhLUUVRd0N4dnpXQnFmSCZzZXJ2aWNlPXdlYg,,_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_dfdf1aedb489780274c71d408502e2c8',
-            'form_action': '/checkcaptcha',
-            'form_data': {
-                'key': '002qfPK0ikxArikfMhKQEQwCxvzWBqfH_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_2f242589f99d31de58088b803cf02b4c',
-                'retpath': 'https://yandex.ru/search?text=%D0%BF%D1%83%D1%82%D0%B5%D0%B2%D0%BA%D0%B8%20%D0%B2%20%D0%BA%D1%80%D1%8B%D0%BC%20%D0%B8%D0%B7%20%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%B0&lr=213&p=1_8be1020da495c1fb5c7b7f7560a06031'
-            }
-        }
-
         self.assertTrue(YandexParser.is_yandex(html))
-        self.assertEqual(captcha, exp)
+        self.assertEqual(captcha['url'], u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDJxZlBLMGlreEFyaWtmTWhLUUVRd0N4dnpXQnFmSCZzZXJ2aWNlPXdlYg,,_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_dfdf1aedb489780274c71d408502e2c8')
+        self.assertEqual(captcha['form_action'], '/checkcaptcha')
+        self.assertEqual(captcha['form_data']['key'], '002qfPK0ikxArikfMhKQEQwCxvzWBqfH_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_2f242589f99d31de58088b803cf02b4c')
+        self.assertEqual(captcha['form_data']['retpath'], 'https://yandex.ru/search?text=%D0%BF%D1%83%D1%82%D0%B5%D0%B2%D0%BA%D0%B8%20%D0%B2%20%D0%BA%D1%80%D1%8B%D0%BC%20%D0%B8%D0%B7%20%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%B0&lr=213&p=1_8be1020da495c1fb5c7b7f7560a06031')
 
     def test109(self):
         html = 'bad content'
@@ -2310,6 +2294,30 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEqual(current_query, u'владимирская область отдых')
         self.assertEqual(current_page, 1)
         self.assertEqual(current_region, 213)
+
+    def test123(self):
+        html = self.get_data('captcha-2021-03-15.html')
+
+        parser = YandexParser(html)
+        captcha = parser.get_captcha_data()
+
+        exp = {
+            'url': u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDJxZlBLMGlreEFyaWtmTWhLUUVRd0N4dnpXQnFmSCZzZXJ2aWNlPXdlYg,,_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_dfdf1aedb489780274c71d408502e2c8',
+            'form_action': '/checkcaptcha',
+            'form_data': {
+                'key': '002qfPK0ikxArikfMhKQEQwCxvzWBqfH_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_2f242589f99d31de58088b803cf02b4c',
+                'retpath': 'https://yandex.ru/search?text=%D0%BF%D1%83%D1%82%D0%B5%D0%B2%D0%BA%D0%B8%20%D0%B2%20%D0%BA%D1%80%D1%8B%D0%BC%20%D0%B8%D0%B7%20%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%B0&lr=213&p=1_8be1020da495c1fb5c7b7f7560a06031'
+            }
+        }
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEqual(captcha['url'], None)
+        self.assertEqual(captcha['captcha_type'], 'i_not_robot')
+        self.assertEqual(captcha['form_action'], '/checkcaptcha?key=9404dfba-3180a9b-da0b096f-cba87317_2%2F1615794970%2F492cbdaa470b03c3a7edbe2cb8ff656a_d9424dd3a4eaafecda1b65fd10bdd660&retpath=https%3A%2F%2Fwebmaster.yandex.ru%2Fsite%2Fhttps%3Aspiritfit.ru%3A443%2Fsettings%2Faccess%3F_76c596b6385ad6fb2b6866d172df4e93')
+        self.assertEqual(captcha['form_data']['k'], '1_1615794970_6953264976053215454_888e1aba7f9d3b12f82f23633dbb82e1')
+        self.assertEqual(captcha['form_data']['d'], 'NdW06Ww5MiEt/w6RqhMUJK04akI9zFhG4whDAOhPnz0=')
+        self.assertEqual(captcha['form_data']['key'], '9404dfba-3180a9b-da0b096f-cba87317_2/1615794970/492cbdaa470b03c3a7edbe2cb8ff656a_d9424dd3a4eaafecda1b65fd10bdd660')
+        self.assertEqual(captcha['form_method'], 'POST')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
