@@ -2301,15 +2301,6 @@ class YandexParserTestCase(YandexParserTests):
         parser = YandexParser(html)
         captcha = parser.get_captcha_data()
 
-        exp = {
-            'url': u'https://yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMDJxZlBLMGlreEFyaWtmTWhLUUVRd0N4dnpXQnFmSCZzZXJ2aWNlPXdlYg,,_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_dfdf1aedb489780274c71d408502e2c8',
-            'form_action': '/checkcaptcha',
-            'form_data': {
-                'key': '002qfPK0ikxArikfMhKQEQwCxvzWBqfH_0/1570003605/5aecbd65d9bd95d889196461e82e3dd9_2f242589f99d31de58088b803cf02b4c',
-                'retpath': 'https://yandex.ru/search?text=%D0%BF%D1%83%D1%82%D0%B5%D0%B2%D0%BA%D0%B8%20%D0%B2%20%D0%BA%D1%80%D1%8B%D0%BC%20%D0%B8%D0%B7%20%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%B0&lr=213&p=1_8be1020da495c1fb5c7b7f7560a06031'
-            }
-        }
-
         self.assertTrue(YandexParser.is_yandex(html))
         self.assertEqual(captcha['url'], None)
         self.assertEqual(captcha['captcha_type'], 'i_not_robot')
@@ -2317,6 +2308,21 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEqual(captcha['form_data']['k'], '1_1615794970_6953264976053215454_888e1aba7f9d3b12f82f23633dbb82e1')
         self.assertEqual(captcha['form_data']['d'], 'NdW06Ww5MiEt/w6RqhMUJK04akI9zFhG4whDAOhPnz0=')
         self.assertEqual(captcha['form_data']['key'], '9404dfba-3180a9b-da0b096f-cba87317_2/1615794970/492cbdaa470b03c3a7edbe2cb8ff656a_d9424dd3a4eaafecda1b65fd10bdd660')
+        self.assertEqual(captcha['form_method'], 'POST')
+
+    def test124(self):
+        html = self.get_data('captcha-2021-03-15-1.html')
+
+        parser = YandexParser(html)
+        captcha = parser.get_captcha_data()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEqual(captcha['url'], u'https://webmaster.yandex.ru/captchaimg?aHR0cHM6Ly9leHQuY2FwdGNoYS55YW5kZXgubmV0L2ltYWdlP2tleT0wMEFtb3pBd3dvMTI1Z1hJdmEwR1VOVWttVUZVc1BPOSZzZXJ2aWNlPXdlYm1hc3Rlcg,,_3/1615813434/fac4247fb350c3b7e0fbe63800d4fa2a_a1188901867930f32e276f3953142d25')
+        self.assertEqual(captcha['captcha_type'], None)
+        self.assertEqual(captcha['form_action'], '/checkcaptcha?key=00AmozAwwo125gXIva0GUNUkmUFUsPO9_3%2F1615813434%2Ffac4247fb350c3b7e0fbe63800d4fa2a_67cc09bd4c7a8f9553478ae6ea40d875&retpath=https%3A%2F%2Fwebmaster.yandex.ru%2Fsite%2Fhttps%3Achinatutor.ru%3A443%2Fsettings%2Faccess%3F_13be31e8f443a1f4b0faba519a5116b9')
+        self.assertEqual(captcha['form_data']['k'], '1_1615813476_11062802936027662891_966ab4e777ad46cb024728d0b28aa2bd')
+        self.assertEqual(captcha['form_data']['d'], 'i01Wdzt1T4fVsu/LpcZd5YF3snM/de9q3wOSfDVDJwI=')
+        self.assertEqual(captcha['form_data']['key'], '00AmozAwwo125gXIva0GUNUkmUFUsPO9_3/1615813434/fac4247fb350c3b7e0fbe63800d4fa2a_67cc09bd4c7a8f9553478ae6ea40d875')
         self.assertEqual(captcha['form_method'], 'POST')
 
     def _print_context_sn(self, serp):

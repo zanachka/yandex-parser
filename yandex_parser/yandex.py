@@ -816,6 +816,7 @@ class YandexParser(object):
             patterns = [
                 self.patterns['captcha'],
                 re.compile(u'<div class="captcha__image"><img\s*src=\"([^\"]+)\"'),
+                re.compile(u'<img class="AdvancedCaptcha-Image"\s*src=\"([^\"]+)\"'),
             ]
 
             match_captcha = None
@@ -832,6 +833,7 @@ class YandexParser(object):
             form = html.forms[0]
             form_data = dict(form.form_values())
             form_action = form.action
+            form_method = form.method
 
         return {
             'captcha_type': captcha_type,
