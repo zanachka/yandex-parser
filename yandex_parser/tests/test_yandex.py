@@ -2325,6 +2325,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEqual(captcha['form_data']['key'], '00AmozAwwo125gXIva0GUNUkmUFUsPO9_3/1615813434/fac4247fb350c3b7e0fbe63800d4fa2a_67cc09bd4c7a8f9553478ae6ea40d875')
         self.assertEqual(captcha['form_method'], 'POST')
 
+    def test125(self):
+        html = self.get_data('mobile-2021-03-29.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'msk.tele2.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://msk.tele2.ru/mobile/roaming/international/uzbekistan/camel1-unlim')
+        self.assertEquals(serp['sn'][0]['t'], u'Тарифы на звонки и интернет Tele2. Прозрачные тарифы без скрытых платежей для поездок за рубеж.msk.tele2.ru › mobile…uzbekistan…')
+        self.assertEquals(serp['sn'][0]['s'], u'Роуминг в Узбекистане. Выберите страну, в которую собираетесь поехать. ... 350 рублей в день. на остальных тарифах. Платите только в те дни, когда пользуетесь интернетом за границей. Подробнее. Стоимость услуг в Узбекистане. ₽ за Мб... Читать ещё')
+
+        self.assertEquals(serp['sn'][9]['d'], 'megasimka.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://megasimka.ru/product/sim-int-tele2-vig-175/')
+        self.assertEquals(serp['sn'][9]['t'], u'Тариф ТЕЛЕ2 Выгодный 175  MEGA SIMKAmegasimka.ru › product/sim-int-tele2…')
+        self.assertEquals(serp['sn'][9]['s'], u'Выгодный тарифный план на связь для абонентов Теле2 по всей России, за исключением ... Предлагаем вашему вниманию, тарифы с официального сайта Теле2 (Мой онлайн, Мой онлайн+), но с... Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
