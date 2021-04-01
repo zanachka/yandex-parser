@@ -431,6 +431,12 @@ class YandexParser(object):
             url = self._get_infected_url(sn)
         else:
             link = h2.find('a')
+            if link is None:
+                link = h2.find('div/a')
+
+            if link is None:
+                raise YandexParserError('not found title link')
+
             url = link.attrib['href']
 
         if is_video_snippet:
