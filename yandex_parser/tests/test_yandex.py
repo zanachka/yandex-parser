@@ -2365,6 +2365,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][8]['t'], u'Coral Travel, сеть турагентств в Москве: филиалы — 2ГИС')
         self.assertEquals(serp['sn'][8]['s'], u'Coral Travel, сеть турагентств: все адреса на карте, телефоны, время работы, фото и отзывы. Проложите маршрут до нужного вам филиала.')
 
+    def test127(self):
+        html = self.get_data('2021-04-01-1.html')
+
+        parser = YandexParser(html, exclude_market_yandex=False)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 6000000)
+        self.assertEquals(len(serp['sn']), 15)
+
+        self.assertEquals(serp['sn'][0]['d'], 'tatler.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.tatler.ru/heroes/andrej-molchanov-zhena-liza-soavtor-moej-zhizni')
+        self.assertEquals(serp['sn'][0]['t'], u'Андрей Молчанов: «Жена Лиза — соавтор моей жизни»')
+        self.assertEquals(serp['sn'][0]['s'], u'Сорокачетырехлетний Андрей Юрьевич так рассказывает про свою мечту, что по ходу интервью мне все больше хочется полезть в кошелек — сколько там сегодня, хватит ли хотя бы на ванную в однушке? Глава «Группы ЛСР» Андрей Молчанов. При этом Молчанов не считает нужным придумывать легенду о том... Читать ещё')
+
+        self.assertEquals(serp['sn'][14]['d'], 'zampolit.com')
+        self.assertEquals(serp['sn'][14]['u'], 'https://zampolit.com/dossier/molchanov-andrey-yurevich/')
+        self.assertEquals(serp['sn'][14]['t'], u'Молчанов Андрей Юрьевич - компромат, биография...')
+        self.assertEquals(serp['sn'][14]['s'], u'Молчанов Андрей Юрьевич - председатель Совета директоров ОАО "Группа ЛСР". Компромат и биография. ... Увлекается путешествиями и рыбалкой. СЕМЬЯ. Жена - Елизавета Молчанова. В семье Молчановых шестеро детей. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

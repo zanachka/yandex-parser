@@ -605,9 +605,15 @@ class YandexParser(object):
         if 'card__colorize' in sn.attrib['class']:
             return True
 
-        # Быстрые ответы
-        if 'data-fast-name' in sn.attrib and sn.attrib['data-fast-name'] == 'related_discovery':
-            return True
+        if 'data-fast-name' in sn.attrib:
+
+            # Быстрые ответы
+            if sn.attrib['data-fast-name'] == 'related_discovery':
+                return True
+
+            # Факты
+            if sn.attrib['data-fast-name'] == 'entity-fact':
+                return True
 
         html = etree.tostring(sn, method='html', encoding='UTF-8')
         if 't-construct-adapter__market' in sn.attrib['class']:
