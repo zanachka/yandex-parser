@@ -605,6 +605,10 @@ class YandexParser(object):
         if 'card__colorize' in sn.attrib['class']:
             return True
 
+        # Быстрые ответы
+        if 'data-fast-name' in sn.attrib and sn.attrib['data-fast-name'] == 'related_discovery':
+            return True
+
         html = etree.tostring(sn, method='html', encoding='UTF-8')
         if 't-construct-adapter__market' in sn.attrib['class']:
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
@@ -653,13 +657,16 @@ class YandexParser(object):
         return sn.xpath('.//div[contains(@class,"composite_gap_")]')
 
     def _need_exclude_composite_gap_block(self, composite_gaps, url):
+        if not url:
+            return True
+
         if 'market.yandex.ru' in url and not self.exclude_market_yandex:
             return False
 
         if 'realty.yandex.ru' in url and not self.exclude_realty_yandex:
             return False
 
-        if 'yandex.ru/maps' in url:
+        if 'yandex.ru/maps' in url.lower():
             return False
 
         if 'companies' in composite_gaps[0].attrib['class']:
@@ -728,7 +735,8 @@ class YandexParser(object):
                                 or sn.xpath('.//div[contains(@class,"organic__text")]') \
                                 or sn.xpath('.//div[contains(@class,"extended-text__short")]') \
                                 or sn.xpath('.//span[contains(@class,"extended-text__short")]') \
-                                or sn.xpath('.//div[@class="text"]')
+                                or sn.xpath('.//div[@class="text"]') \
+                                or sn.xpath('.//div[contains(@class,"TextContainer")]')
 
                     snippet['s'] = unicode(decr_div[0].text_content()) if decr_div else ''
                     snippet['s'] = snippet['s'] or ''

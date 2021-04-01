@@ -2345,6 +2345,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['t'], u'Тариф ТЕЛЕ2 Выгодный 175  MEGA SIMKAmegasimka.ru › product/sim-int-tele2…')
         self.assertEquals(serp['sn'][9]['s'], u'Выгодный тарифный план на связь для абонентов Теле2 по всей России, за исключением ... Предлагаем вашему вниманию, тарифы с официального сайта Теле2 (Мой онлайн, Мой онлайн+), но с... Читать ещё')
 
+    def test126(self):
+        html = self.get_data('2021-04-01.html')
+
+        parser = YandexParser(html, exclude_market_yandex=False)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 4000000)
+        self.assertEquals(len(serp['sn']), 9)
+
+        self.assertEquals(serp['sn'][0]['d'], 'coral.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.coral.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'Coral Travel - туроператор по Турции, России, Греции...')
+        self.assertEquals(serp['sn'][0]['s'], u'Coral Travel - ведущий туроператор по Турции, России, Греции, Испании, Тунису! Поиск туров и бронирование туров онлайн прямо на сайте. Читать ещёCoral Travel - ведущий туроператор по Турции, России, Греции, Испании, Тунису! Поиск туров и бронирование туров онлайн прямо на сайте. Полная информация и любом отеле - цены, фото, видео, описание. ... Компания Coral Travel осуществляет мечты людей об идеальном отдыхе с 1995 года – уже 25 лет! Туроператор предлагает путешествия в 39 стран мира с вылетами из более 40 городов России. Скрыть')
+
+        self.assertEquals(serp['sn'][8]['d'], '2gis.ru')
+        self.assertEquals(serp['sn'][8]['u'], 'https://2gis.ru/moscow/search/Coral%20travel')
+        self.assertEquals(serp['sn'][8]['t'], u'Coral Travel, сеть турагентств в Москве: филиалы — 2ГИС')
+        self.assertEquals(serp['sn'][8]['s'], u'Coral Travel, сеть турагентств: все адреса на карте, телефоны, время работы, фото и отзывы. Проложите маршрут до нужного вам филиала.')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
