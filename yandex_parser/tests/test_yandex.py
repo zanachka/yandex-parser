@@ -2405,6 +2405,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][9]['t'], u'Купить Встраиваемые конвекторы по низким ценам в интернет-магазинах на Яндекс.Маркетеpokupki.market.yandex.ru › catalog…')
         self.assertEquals(serp['sn'][9]['s'], u'Встраиваемые конвекторы - купить на Яндекс.Маркете. Выбор товаров из категории Встраиваемые конвекторы по характеристикам, описанию и отзывам с удобной доставкой.')
 
+    def test129(self):
+        html = self.get_data('mobile-2021-04-05.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 8)
+
+        self.assertEquals(serp['sn'][0]['d'], 'ru-wikipedia-org.turbopages.org')
+        self.assertEquals(serp['sn'][0]['u'], 'https://ru-wikipedia-org.turbopages.org/ru.wikipedia.org/s/wiki/%D0%9F%D0%B8%D0%BB%D0%B0%D1%82%D0%B5%D1%81?turbo_uid=AACk7LWnpfPHVB__nIsNBDX-7w9VAfX0lruYsCLIID1ZS-pmA9qcO0EURs_0y06sKih0BIqD1tjGyu5sG94S7IB4vdsjdr0T07IKBKtFfjtrPix7&turbo_ic=AADH0_XzaZfJpmNXZGm1XW8W0_v3SZxgoKNLWkQqbHBu01tdvQTuQ4-ckcgm6IFcOI0fgodTRd6QHYSk4PCyQ3VQI3AA4WPnjFARopo_Ujtf_f9x&sign=49288c1b80ea83652ef21ae79642d2d70491cd7ca42672580a69b16f8d508919%3A1617575431&parent-reqid=1617575431173151-8257235980975655322-balancer-knoss-search-yp-sas-28-BAL&trbsrc=wb')
+        self.assertEquals(serp['sn'][0]['t'], u'Пилатес — Википедияru.wikipedia.org › wiki/Пилатес')
+        self.assertEquals(serp['sn'][0]['s'], u'Пила́тес — система физических упражнений (фитнеса), разработанная Йозефом Пилатесом в начале XX века для реабилитации после травм.')
+
+        self.assertEquals(serp['sn'][7]['d'], 'goodlooker.ru')
+        self.assertEquals(serp['sn'][7]['u'], 'https://GoodLooker.ru/pilates.html')
+        self.assertEquals(serp['sn'][7]['t'], u'Пилатес: польза, вред, советы. Пилатес для похудения.GoodLooker.ru › pilates.html')
+        self.assertEquals(serp['sn'][7]['s'], u'Пилатес – это серия упражнений для развития мышц всего тела, улучшения осанки и координации. Плюсы и минусы пилатеса, пилатес для похудения. Актуальные советы. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

@@ -621,6 +621,14 @@ class YandexParser(object):
             if sn.attrib['data-fast-name'] == 'entity-fact':
                 return True
 
+            # Википедия, возможно вы искали, смотрите также
+            if sn.attrib['data-fast-name'] == 'entity_search':
+                return True
+
+            # Яндекс Кью
+            if sn.attrib['data-fast-name'] == 'q':
+                return True
+
         html = etree.tostring(sn, method='html', encoding='UTF-8')
         if 't-construct-adapter__market' in sn.attrib['class']:
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
