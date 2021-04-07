@@ -1,7 +1,7 @@
 from setuptools import setup
 
 
-VERSION = "0.0.149"
+VERSION = "0.0.150"
 
 setup(
     name='yandex-parser',
