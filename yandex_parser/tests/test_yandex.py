@@ -2425,6 +2425,26 @@ class YandexParserTestCase(YandexParserTests):
         self.assertEquals(serp['sn'][7]['t'], u'Пилатес: польза, вред, советы. Пилатес для похудения.GoodLooker.ru › pilates.html')
         self.assertEquals(serp['sn'][7]['s'], u'Пилатес – это серия упражнений для развития мышц всего тела, улучшения осанки и координации. Плюсы и минусы пилатеса, пилатес для похудения. Актуальные советы. Читать ещё')
 
+    def test130(self):
+        html = self.get_data('mobile-2021-04-07.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], None)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'ru.investing.com')
+        self.assertEquals(serp['sn'][0]['u'], 'https://ru.investing.com/equities/american-intl-group')
+        self.assertEquals(serp['sn'][0]['t'], u'AIG | Акции AIG - Investing.comru.investing.com › …american…group')
+        self.assertEquals(serp['sn'][0]['s'], u'Получите подробную информацию о акциях American International Group Inc (AIG) включая Цену, Графики, Теханализ, Исторические данные, Отчеты и др. Читать ещёПолучите подробную информацию о акциях American International Group Inc (AIG) включая Цену, Графики, Теханализ, Исторические данные, Отчеты и др. AIG. ... Ниже вы найдете информацию о акциях American International Group Inc. Вы найдете другие подробности в разделах под этой страницей, такие, как исторические данные, графики, теханализ и другое. Пред. закр. 46,21. Скрыть')
+
+        self.assertEquals(serp['sn'][9]['d'], 'finanz.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://www.finanz.ru/aktsii/american_international_group')
+        self.assertEquals(serp['sn'][9]['t'], u'American International Group (AIG) Inc. - Курс акции - USD - NYSEfinanz.ru › …american_international…')
+        self.assertEquals(serp['sn'][9]['s'], u'Курс акций American International Group (AIG) [ISIN: US0268747849]. ... American International Group, Inc. (AIG) – одна из крупнейших в мире страховых компаний. Читать ещё')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

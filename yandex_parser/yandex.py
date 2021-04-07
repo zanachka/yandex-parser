@@ -629,6 +629,10 @@ class YandexParser(object):
             if sn.attrib['data-fast-name'] == 'q':
                 return True
 
+            # Курсы акций
+            if sn.attrib['data-fast-name'] == 'stocks':
+                return True
+
         html = etree.tostring(sn, method='html', encoding='UTF-8')
         if 't-construct-adapter__market' in sn.attrib['class']:
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
