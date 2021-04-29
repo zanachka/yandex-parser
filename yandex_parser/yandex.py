@@ -753,12 +753,12 @@ class YandexParser(object):
                     snippet['t'] = title
 
                 if 's' in self.snippet_fileds:
-                    decr_div = sn.xpath('.//div[contains(@class,"serp-item__text")]') \
+                    decr_div = sn.xpath('.//div[contains(@class,"extended-text__full")]') \
+                                or sn.xpath('.//span[contains(@class,"extended-text__full")]') \
+                                or sn.xpath('.//div[contains(@class,"serp-item__text")]') \
                                 or sn.xpath('.//div[contains(@class,"serp-item__data")]') \
                                 or sn.xpath('.//div[contains(@class,"social-snippet2__text")]') \
                                 or sn.xpath('.//div[contains(@class,"organic__text")]') \
-                                or sn.xpath('.//div[contains(@class,"extended-text__short")]') \
-                                or sn.xpath('.//span[contains(@class,"extended-text__short")]') \
                                 or sn.xpath('.//div[@class="text"]') \
                                 or sn.xpath('.//div[contains(@class,"TextContainer")]')
 
