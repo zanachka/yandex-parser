@@ -442,7 +442,13 @@ class YandexParser(object):
         if is_video_snippet:
             title = unicode(sn.find('.//*[@class="video2__title"]').text_content())
         else:
-            title = unicode(link.text_content())
+            title_div = link.xpath('.//div[contains(@class,"Organic-Title")]') \
+                or link.xpath('.//div[contains(@class,"OrganicTitle-LinkText")]')
+
+            if len(title_div):
+                title = unicode(title_div[0].text_content())
+            else:
+                title = unicode(link.text_content())
 
         return title, url
 
