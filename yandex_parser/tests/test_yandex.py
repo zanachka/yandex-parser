@@ -2476,6 +2476,31 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][9]['u'], 'https://www.Novostroy-m.ru/baza/mfk_zilart')
         self.assertEquals(serp['sn'][9]['t'], u'ЖК «ЗИЛАРТ»: ИПОТЕКА с господдержкой. 615 квартир...')
         self.assertEquals(serp['sn'][9]['s'], u'❗ЖК «ЗИЛАРТ», Даниловский: ✦цены на квартиры от 13 150 720 руб. ⬆291 отзыв покупателей о ЖК «ЗИЛАРТ». Вид из окон, эксклюзивные фото, съемки с воздуха, панорамы 360. ... Жилой комплекс бизнес-класса «ЗИЛАРТ» возводится застройщиком «Группа ЛСР» в рамках масштабного проекта освоения территории бывшего автомобильного завода им. Лихачева. Занимает более 65 гектар и примыкает к берегу Москвы-реки. Включает в себя 17 корпусов от 3 до 40 этажей. Скрыть')
+        
+    def test132(self):
+        html = self.get_data('2021-05-24.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 11000000)
+        self.assertEquals(len(serp['sn']), 10)
+
+        self.assertEquals(serp['sn'][0]['d'], 'medi-salon.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://www.medi-salon.ru/')
+        self.assertEquals(serp['sn'][0]['t'], u'ОРТОПЕДИЧЕСКИЕ САЛОНЫ medi официальный...')
+        self.assertEquals(serp['sn'][0]['s'], u'Официальный интернет-магазин сети ортопедических салонов medi. Компрессионный трикотаж, бандажи, корсеты, ортезы и другие ортопедические товары из Германии.')
+
+        self.assertEquals(serp['sn'][1]['d'], 'medi-salon.ru')
+        self.assertEquals(serp['sn'][1]['u'], 'https://www.medi-salon.ru/salons/')
+        self.assertEquals(serp['sn'][1]['t'], u'Ортопедические салоны medi в Москве')
+        self.assertEquals(serp['sn'][1]['s'], u'Официальные ортопедические салоны medi в Москве: на карте, как добраться, режим работы, товары и услуги в салонах. ... Ортопедический салон medi (м. Академическая). Москва, ул. Дмитрия Ульянова, дом 16, корпус 1. Академическая. Скрыть')
+
+        self.assertEquals(serp['sn'][9]['d'], 'zoon.ru')
+        self.assertEquals(serp['sn'][9]['u'], 'https://zoon.ru/msk/shops/network/medi/')
+        self.assertEquals(serp['sn'][9]['t'], u'Medi, салоны ортопедических товаров - 36 магазинов...')
+        self.assertEquals(serp['sn'][9]['s'], u'Medi, салоны ортопедических товаров в Москве - мы нашли для вас 36 магазинов. Самый полный каталог заведений с фото, ☎️ и отзывами, удобный поиск мест на карте. ... Medi, салоны ортопедических товаров — это 36 заведений в различных местоположениях города. Medi, салоны ортопедических товаров осуществляет свою деятельность в различных категориях, в том числе магазины протезных и ортопедических товаров и многих других. Скрыть')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:

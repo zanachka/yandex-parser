@@ -617,6 +617,10 @@ class YandexParser(object):
             if sn.attrib['data-fast-name'] == 'related_discovery':
                 return True
 
+            # Популярные товары
+            if sn.attrib['data-fast-name'] == 'market_constr':
+                return True
+
             # Факты
             if sn.attrib['data-fast-name'] == 'entity-fact':
                 return True
@@ -632,6 +636,8 @@ class YandexParser(object):
             # Курсы акций
             if sn.attrib['data-fast-name'] == 'stocks':
                 return True
+
+            return True
 
         html = etree.tostring(sn, method='html', encoding='UTF-8')
         if 't-construct-adapter__market' in sn.attrib['class']:
