@@ -650,6 +650,9 @@ class YandexParser(object):
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
                 return True
 
+        if 'organic__advLabel">Реклама<' in html:
+            return True
+
         # Яндекс.Путешествия
         if u'<b>Яндекс.Путешествия</b>' in html:
             return True
