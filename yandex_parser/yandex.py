@@ -420,8 +420,26 @@ class YandexParser(object):
         return url, infected
 
     def _get_title(self, sn, infected):
-        is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
+        link = sn.cssselect('a.OrganicTitle-Link')
+        if link:
+            url = link[0].attrib['href']
 
+            title_element = link[0].cssselect('h2.OrganicTitle-LinkText')
+            if not title_element:
+                title_element = link[0].cssselect('div.OrganicTitle-LinkText')
+                title_element_text = title_element[0].cssselect('div.Organic-Title')
+                if title_element_text:
+                    title_element = title_element_text
+            if not title_element:
+                title_element = link[0]
+
+            if not title_element:
+                raise YandexParserError('not found title text')
+
+            title = unicode(title_element[0].text_content())
+            return title, url
+
+        is_video_snippet = 't-construct-adapter__free-video' in sn.attrib['class']
         h2 = self._get_title_h2(sn, is_video_snippet)
         if not h2:
             return None, self._get_url_from_mobile_greenurl(sn)
