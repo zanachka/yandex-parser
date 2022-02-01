@@ -754,6 +754,10 @@ class YandexParser(object):
                     if title is None and url is None:
                         continue
 
+                    #ignore context
+                    if url.startswith('https://yabs.yandex.ru'):
+                        continue
+
                 except YandexParserError:
                     if is_composite_gap:
                         continue
