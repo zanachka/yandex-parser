@@ -754,8 +754,7 @@ class YandexParser(object):
                     if title is None and url is None:
                         continue
 
-                    #ignore context
-                    if url.startswith('https://yabs.yandex.ru'):
+                    if re.search('^https?://yabs\.yandex\.ru', url):
                         continue
 
                 except YandexParserError:
