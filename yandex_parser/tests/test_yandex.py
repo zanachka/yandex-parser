@@ -2602,6 +2602,21 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][49]['t'], u'ЖК "Лучи": отзывы покупателей')
         self.assertEquals(serp['sn'][49]['s'], 'ЖК "Лучи" (отзывы покупателей утверждают это!) практически всё нужное будет иметь на собственной территории, здесь найдётся всё, что душа пожелает. На территории располагается многофункциональный комплекс с салонами красоты, аптеками, магазинами, на освобождённых от автомобилей придомовых территориях можно превосходно отдыхать с детьми, заниматься спортом, выгуливать собак на специальной площадке. ... И если две школы на территории жилого комплекса чем-то родителей не устроят, то в шаговой доступности находится десяток других школ и гимназий, бассейны, поликлиники и больницы, сетевые супермаркеты. Ход строительства. Скрыть')
 
+    def test137(self):
+        html = self.get_data('2022-04-04.html')
+
+        parser = YandexParser(html)
+        captcha = parser.get_captcha_data()
+
+        self.assertEquals(captcha['captcha_type'], 'i_not_robot')
+        self.assertEquals(captcha['form_action'], '/checkcaptcha?key=efaadba2-708d9a77-d9f55ec2-aef402d_2%2F1649062316%2F073520a45db9eb1df8ef48d1c118afca_b36e70232e52e9d77f42bfa4058894a9&retpath=https%3A%2F%2Fyandex.kz%2Fsearch%3Ftext%3D%25D0%25B6%25D0%25BA%2B%25D0%25BC%25D0%25BE%25D1%2581%25D0%25BA%25D0%25B2%25D0%25B0%2B%25D0%25B0101%2B%25D0%25BE%25D1%2582%25D0%25B7%25D1%258B%25D0%25B2%25D1%258B%2B%25D0%25B6%25D0%25B8%25D0%25BB%25D1%258C%25D1%2586%25D0%25BE%25D0%25B2%26lr%3D213%26suggest_reqid%3D180497601164420590723001485819544%26numdoc%3D50_cde7119087e85fcca0ad87d77b0dc3e3&u=543bf183-99e0b6f-abcb4f60-1f02f7b6')
+        self.assertEquals(captcha['form_data']['k'], '1_1649062316_8393789921230861190_883f13b34055a08f7ac6e3cabbba3f73')
+        self.assertEquals(captcha['form_data']['d'], '72aLqyFE2IuvJTjB3FR2AlEkKXOhAO8rw0BbmKD2LaA=')
+        self.assertEquals(captcha['form_data']['key'], 'efaadba2-708d9a77-d9f55ec2-aef402d_2/1649062316/073520a45db9eb1df8ef48d1c118afca_b36e70232e52e9d77f42bfa4058894a9')
+        self.assertEquals(captcha['form_data']['rdata'], 'lETqmgN++vnaCGqU/nhUY2MGE1GDLM1K8GJhupLGHZPfV7ucA2j66psHAuOuIVtQBApbBo9lgQaWE3X9ztQBgo5TqZEDA73oxEoa7f41QCBrFAVRwDfNEaUhN+vF2g/B10SxzUAoq+6DB1n4/m4QYz1XTF+DYt4J+SY69NOTAYKNVKmRRyW0+MoJGqPvdkxkMEhaFo0ijR/hej35zIVIjM0EvokbIrnn3EAU475iVDg3RUUAxCzNSfRiYf7Bml7Fw0TpkwN+vurDVl3t/jZPIGtCSB/SZcMJoHF5opPFAYKMVKmRA3XhuZ9dCfHuYFQuc0caUZsi2B37OGqoksIPjM0Fv4kbMKr+ygkaoul2THYjUUxfg2PZCflyb7SClRqC1RL53kRo+uiXBwLy8HYSMHMeHV+DZNwJ+SY69NOTAYKLUqmRVTat7oMHXPT+bgJwJEEFUcU3zRHucWOojNRJmM1cqZoPIrnn3EAWp704BWdzCAsXmCLVX7E1PrSCkxyC1QDqx1Ih9KnKFxr7ujUacTQICxaSItVfsTU+tIKTGYLVEvneRGj67poHAqe9OAVnfQZMRYM6m1m2JXe6xcEPmpsU/s4NZr2zjR9Ms6kxWiA0HQtJ1XKaTu9iPamCzEvBgxXuhwMi6qmVUUq0uXhUZGIGExXAbJxO72I9rILMWdKaA6eJR3H6sclEVLK5eFRkZwYTFcBsnE7vYj2vgsxLwYMV7ocDIuCplUNZra8xWiA3HQtJ1XKaTu9iPKmCzEvBgxXuhwMj6qmVQ1mtrzFaIDYXC0nVcppO72I8rILMS8GDFe6HAyPtqZVRSrS5eFRlZwYTB9N1igfhJ2y6moJf1YpKqcwZZuL/3VBd7f4zTyBrUFsGxCzNQ/JiYf7Bml7Fw0TjmQN+vurDVl3t/jxFIGtCSB/SZcMJq3R5osaXQdOKSqnDFGbi/91QXe3+PEAga0JIH9Jlwwmrd3migr9BzIoB6scBLbb9wEZZtbU7GCB9BkFLgzqJSq8zPrSCnhSC1QDqx1Ih9KnGFBr7qCYDZ30GQEGDOptZtiV3usnFD5qJB+fYRGj64psHAqe9OAVnfQZARoM6iUqvMz60goAPms1QpZgPdfr2')
+        self.assertEquals(captcha['form_method'], 'POST')
+
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

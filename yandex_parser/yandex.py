@@ -873,7 +873,7 @@ class YandexParser(object):
 
         captcha_type = None
         form_method = None
-        if re.search(ur'>Я не робот<', self.content):
+        if re.search(ur'CheckboxCaptcha-Button', self.content):
             url_image = None
             captcha_type = 'i_not_robot'
 
