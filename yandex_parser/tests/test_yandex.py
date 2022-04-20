@@ -2616,6 +2616,30 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(captcha['form_data']['rdata'], 'lETqmgN++vnaCGqU/nhUY2MGE1GDLM1K8GJhupLGHZPfV7ucA2j66psHAuOuIVtQBApbBo9lgQaWE3X9ztQBgo5TqZEDA73oxEoa7f41QCBrFAVRwDfNEaUhN+vF2g/B10SxzUAoq+6DB1n4/m4QYz1XTF+DYt4J+SY69NOTAYKNVKmRRyW0+MoJGqPvdkxkMEhaFo0ijR/hej35zIVIjM0EvokbIrnn3EAU475iVDg3RUUAxCzNSfRiYf7Bml7Fw0TpkwN+vurDVl3t/jZPIGtCSB/SZcMJoHF5opPFAYKMVKmRA3XhuZ9dCfHuYFQuc0caUZsi2B37OGqoksIPjM0Fv4kbMKr+ygkaoul2THYjUUxfg2PZCflyb7SClRqC1RL53kRo+uiXBwLy8HYSMHMeHV+DZNwJ+SY69NOTAYKLUqmRVTat7oMHXPT+bgJwJEEFUcU3zRHucWOojNRJmM1cqZoPIrnn3EAWp704BWdzCAsXmCLVX7E1PrSCkxyC1QDqx1Ih9KnKFxr7ujUacTQICxaSItVfsTU+tIKTGYLVEvneRGj67poHAqe9OAVnfQZMRYM6m1m2JXe6xcEPmpsU/s4NZr2zjR9Ms6kxWiA0HQtJ1XKaTu9iPamCzEvBgxXuhwMi6qmVUUq0uXhUZGIGExXAbJxO72I9rILMWdKaA6eJR3H6sclEVLK5eFRkZwYTFcBsnE7vYj2vgsxLwYMV7ocDIuCplUNZra8xWiA3HQtJ1XKaTu9iPKmCzEvBgxXuhwMj6qmVQ1mtrzFaIDYXC0nVcppO72I8rILMS8GDFe6HAyPtqZVRSrS5eFRlZwYTB9N1igfhJ2y6moJf1YpKqcwZZuL/3VBd7f4zTyBrUFsGxCzNQ/JiYf7Bml7Fw0TjmQN+vurDVl3t/jxFIGtCSB/SZcMJq3R5osaXQdOKSqnDFGbi/91QXe3+PEAga0JIH9Jlwwmrd3migr9BzIoB6scBLbb9wEZZtbU7GCB9BkFLgzqJSq8zPrSCnhSC1QDqx1Ih9KnGFBr7qCYDZ30GQEGDOptZtiV3usnFD5qJB+fYRGj64psHAqe9OAVnfQZARoM6iUqvMz60goAPms1QpZgPdfr2')
         self.assertEquals(captcha['form_method'], 'POST')
 
+    def test138(self):
+        html = self.get_data('2022-04-20.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 8000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'market.yandex.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://market.yandex.ru/catalog--radiatory-otopleniia-royal-thermo-otzyvy-pokupatelei/18064178/list?glfilter=7893318%3A8485313&show-reviews=1')
+        self.assertEquals(serp['sn'][0]['t'], u'Радиаторы отопления Royal Thermo: отзывы покупателей')
+        self.assertEquals(serp['sn'][0]['s'], u'Радиаторы отопления Royal Thermo — Яндекс.Маркет поможет выбрать лучший вариант. ... Радиаторы отопления Royal Thermo: отзывы покупателей. Вопросы о товарах 1 477. Товары для строительства и ремонта. Скрыть')
+
+        self.assertEquals(serp['sn'][1]['d'], 'vseinstrumenti.ru')
+        self.assertEquals(serp['sn'][1]['u'], 'https://www.vseinstrumenti.ru/santehnika/radiatory_otopleniya/royal_thermo/otzyvy/')
+        self.assertEquals(serp['sn'][1]['t'], u'Отзывы о радиаторах отопления Royal Thermo')
+        self.assertEquals(serp['sn'][1]['s'], u'Отзывы владельцев и рейтинг радиаторов отопления Royal Thermo. Достоинства и недостатки товаров, мнение реальных покупателей на основе их опыта эксплуатации помогут определиться с выбором.')
+
+        self.assertEquals(serp['sn'][49]['d'], 'master-forum.ru')
+        self.assertEquals(serp['sn'][49]['u'], 'https://master-forum.ru/obzor-radiatorov-fondital-exclusivo-d3-royal-thermo-indigo-super-rifar-supremo-santehprom-rbs-zehnder-charleston-korado-radik-klasik-buderus-logatrend/')
+        self.assertEquals(serp['sn'][49]['t'], u'Обзор радиаторов: Fondital, Royal Thermo, Rifar...')
+        self.assertEquals(serp['sn'][49]['s'], 'Royal Thermo Indigo Super Биметаллические секционные радиаторы. Межосевое расстояние: 500 мм. Высота секции: 572 мм. ... Как и все радиаторы Royal Thermo, Indigo Super снабжён фирменным алюминиевым знаком с логотипом бренда, расположенным в верхнем правом углу прибора. Его наличие, а также маркировка на всех секциях призваны защитить покупателей от возможных подделок – оригинальный радиатор легко отличить. На Indigo Super распространяется гарантия сроком 15 лет и страховка ОАО «Ингосстрахх» с покрытием 65 000 000 руб. Скрыть')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
