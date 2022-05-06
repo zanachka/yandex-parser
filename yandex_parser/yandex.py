@@ -519,6 +519,11 @@ class YandexParser(object):
         if self._is_card_narrow(sn):
             return True
 
+        # Войдите, чтобы пользоваться
+        if 'zalogin-smart' in sn.attrib['class']:
+            return True
+
+
         # игнорим новости
         if 't-construct-adapter__news' in sn.attrib['class']:
             return True

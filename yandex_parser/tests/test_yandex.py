@@ -2641,6 +2641,31 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][49]['t'], u'Обзор радиаторов: Fondital, Royal Thermo, Rifar...')
         self.assertEquals(serp['sn'][49]['s'], 'Royal Thermo Indigo Super Биметаллические секционные радиаторы. Межосевое расстояние: 500 мм. Высота секции: 572 мм. ... Как и все радиаторы Royal Thermo, Indigo Super снабжён фирменным алюминиевым знаком с логотипом бренда, расположенным в верхнем правом углу прибора. Его наличие, а также маркировка на всех секциях призваны защитить покупателей от возможных подделок – оригинальный радиатор легко отличить. На Indigo Super распространяется гарантия сроком 15 лет и страховка ОАО «Ингосстрахх» с покрытием 65 000 000 руб. Скрыть')
 
+    def test139(self):
+        html = self.get_data('2022-05-06.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 6000000)
+        self.assertEquals(len(serp['sn']), 50)
+
+        self.assertEquals(serp['sn'][0]['d'], 'yandex.ru')
+        self.assertEquals(serp['sn'][0]['u'], 'https://yandex.ru/maps/org/ektostroy/176763666056/reviews/')
+        self.assertEquals(serp['sn'][0]['t'], u'Отзывы об «Эктострой» на Новокузнецкой, Россия...')
+        self.assertEquals(serp['sn'][0]['s'], u'Маршруты. Эктострой. Обзор. Фото. 6. Отзывы. 37. Рейтинг. ... Прочитав отрицательные отзывы решил таки написать свой. Компания мне понравилась. Лишнего пафоса нет, приложение и сервер работают лучше чем ожидал. Скрыть')
+
+        self.assertEquals(serp['sn'][1]['d'], 'forumhouse.ru')
+        self.assertEquals(serp['sn'][1]['u'], 'https://www.forumhouse.ru/threads/493478/page-46')
+        self.assertEquals(serp['sn'][1]['t'], u'Ectocontrol - система управления и мониторинга - 2')
+        self.assertEquals(serp['sn'][1]['s'], u'у меня оборудования ЭктоСтроя нет... вот поэтому и предлагаю купить у Вас комплект... но зато есть богатый опыт эксплуатации ZONTa... Поэтому - повторяю предложение. Регистрация: 14.10.19. Сообщения: 479. Благодарности Скрыть')
+
+        self.assertEquals(serp['sn'][49]['d'], 'ectostroy.kz')
+        self.assertEquals(serp['sn'][49]['u'], 'https://ectostroy.kz/')
+        self.assertEquals(serp['sn'][49]['t'], u'GSM сигнализация, купить охранную... | EctoStroy.Kz')
+        self.assertEquals(serp['sn'][49]['s'], 'Ectostroy: Умный дом от производителя; GSM/ WI-Fi Ectocontrol; видеонаблюдение; контроль температуры, протечек, безопасности; управление котлом и бытовыми приборами. ... Ждем Вашего звонка +7 707 41 88 333. Время приема звонков Пн-Пт 9-19, Сб-Вс 11-15ч Показать на карте. Электронная почта: info@ectostroy.kz. Доставка по Астане (Нур-Султану) 1000 Тг 0-1 день. Доставка по Астане до 10км от 2000 Тг 0-1 день. Скрыть')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
