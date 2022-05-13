@@ -423,8 +423,11 @@ class YandexParser(object):
 
         html = etree.tostring(sn, method='html')
         html = HTMLParser().unescape(html)
-        return '<span class="HTxMVvNPhb">Реклама' in html \
-               or 'Реклама<span aria-hidden="true">' in html
+
+        if re.search('<span class="[^"]+?">реклама', html, flags=re.I):
+            return True
+
+        return 'Реклама<span aria-hidden="true">' in html
 
     def _is_card_narrow(self, sn):
         # боковая карта справа
