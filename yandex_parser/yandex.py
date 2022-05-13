@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import re
 import urllib
+from HTMLParser import HTMLParser
 from urlparse import urlparse, parse_qs
 
 from pyquery import PyQuery
@@ -47,7 +48,7 @@ class YandexParser(object):
         return {'u': res.group(1), 't': YandexParser.strip_tags(res.group(2))}
 
     def get_context_visible_url(self, sn):
-        els = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div/a')
+        els = sn.xpath('.//div[contains(@class,"Typo_type_greenurl")]/div/a')
         if not els:
             return ''
         return unicode(els[0].text_content())
@@ -72,10 +73,10 @@ class YandexParser(object):
         dom = PyQuery(content)
         serp = dom('.serp-item')
 
-        r_blocks, tb_blocks = self._find_context_r_or_tb_blocks(serp)
-        tb_blocks = self._aggregate_organic_blocks(tb_blocks)
-        tb_blocks = self._remove_little_organic_blocks(tb_blocks)
-        t_blocks, b_blocks = self._divide_context_tb_blocks(tb_blocks)
+        t_blocks, b_blocks, r_blocks = self._find_context_r_or_tb_blocks(serp)
+        # tb_blocks = self._aggregate_organic_blocks(tb_blocks)
+        # tb_blocks = self._remove_little_organic_blocks(tb_blocks)
+        # t_blocks, b_blocks = self._divide_context_tb_blocks(tb_blocks)
 
         self._set_a(t_blocks, 't')
         self._set_a(b_blocks, 'b')
@@ -85,16 +86,16 @@ class YandexParser(object):
         return {'pc': len(result), 'sn': result}
 
     def _find_context_r_or_tb_blocks(self, serp):
-        tb_blocks = []
+        t_blocks = []
+        b_blocks = []
         r_blocks = []
-        organic_block_len = 0
+
+        is_organic_block = False
         for index, sn in enumerate(serp):
             is_ignore_block = self._ignore_block(sn)
-            is_context_snippet = self._is_context_snippet(sn)
 
             if not is_ignore_block:
-                organic_block_len += 1
-                tb_blocks.append({'index': index, 'sn': self.CONTEXT_ORGANIC_BLOCK})
+                is_organic_block = True
                 continue
 
             # исключаем блок директа с баннером
@@ -115,94 +116,92 @@ class YandexParser(object):
             if self._is_card_narrow(sn):
                 continue
 
-            if not is_context_snippet:
+            if not self._is_context_snippet(sn):
                 continue
 
-            t_or_b = sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_color_yellow")]') \
-                or sn.cssselect('li.serp-adv-item div.organic__subtitle') \
-                or sn.xpath('.//div[contains(@class,"typo_type_greenurl")]/div[contains(@class,"label_theme_direct")]')
-            if t_or_b:
-                tb_blocks.append({'index': index, 'sn': sn})
-                continue
-            r_blocks.append({'index': index, 'sn': sn})
-        return r_blocks, tb_blocks
+            if not is_organic_block:
+                t_blocks.append({'index': index, 'sn': sn})
+            else:
+                b_blocks.append({'index': index, 'sn': sn})
 
-    def _remove_little_organic_blocks(self, tb_blocks):
-        max_ob_len = 0
-        max_ob_index = None
-        for i, block in enumerate(tb_blocks):
-            if block['sn'] == self.CONTEXT_ORGANIC_BLOCK and block['len'] >= max_ob_len:
-                max_ob_len = block['len']
-                max_ob_index = i
+        return t_blocks, b_blocks, r_blocks
 
-        if max_ob_index is None:
-            return tb_blocks
+    # def _remove_little_organic_blocks(self, tb_blocks):
+    #     max_ob_len = 0
+    #     max_ob_index = None
+    #     for i, block in enumerate(tb_blocks):
+    #         if block['sn'] == self.CONTEXT_ORGANIC_BLOCK and block['len'] >= max_ob_len:
+    #             max_ob_len = block['len']
+    #             max_ob_index = i
+    #
+    #     if max_ob_index is None:
+    #         return tb_blocks
+    #
+    #     blocks = []
+    #     for i, block in enumerate(tb_blocks):
+    #         if block['sn'] != self.CONTEXT_ORGANIC_BLOCK:
+    #             blocks.append(block)
+    #
+    #         if i != max_ob_index:
+    #             continue
+    #
+    #         blocks.append(block)
+    #     return blocks
 
-        blocks = []
-        for i, block in enumerate(tb_blocks):
-            if block['sn'] != self.CONTEXT_ORGANIC_BLOCK:
-                blocks.append(block)
+    # def _aggregate_organic_blocks(self, tb_blocks):
+    #     agg_blocks = []
+    #     ob_len = 0
+    #     old_ob_block = None
+    #     for block in tb_blocks:
+    #         if block['sn'] != self.CONTEXT_ORGANIC_BLOCK:
+    #             if ob_len:
+    #                 old_ob_block['len'] = ob_len
+    #                 agg_blocks.append(old_ob_block)
+    #                 old_ob_block = None
+    #                 ob_len = 0
+    #             agg_blocks.append(block)
+    #             continue
+    #
+    #         old_ob_block = block
+    #         ob_len += 1
+    #     if ob_len:
+    #         old_ob_block['len'] = ob_len
+    #         agg_blocks.append(old_ob_block)
+    #     return agg_blocks
 
-            if i != max_ob_index:
-                continue
-
-            blocks.append(block)
-        return blocks
-
-    def _aggregate_organic_blocks(self, tb_blocks):
-        agg_blocks = []
-        ob_len = 0
-        old_ob_block = None
-        for block in tb_blocks:
-            if block['sn'] != self.CONTEXT_ORGANIC_BLOCK:
-                if ob_len:
-                    old_ob_block['len'] = ob_len
-                    agg_blocks.append(old_ob_block)
-                    old_ob_block = None
-                    ob_len = 0
-                agg_blocks.append(block)
-                continue
-
-            old_ob_block = block
-            ob_len += 1
-        if ob_len:
-            old_ob_block['len'] = ob_len
-            agg_blocks.append(old_ob_block)
-        return agg_blocks
-
-    def _divide_context_tb_blocks(self, tb_blocks):
-        t_blocks = []
-        b_blocks = []
-        is_ob_exists = filter(lambda x: x['sn'] == self.CONTEXT_ORGANIC_BLOCK, tb_blocks)
-        if is_ob_exists:
-            is_bottom = False
-            for block in tb_blocks:
-                if block['sn'] == self.CONTEXT_ORGANIC_BLOCK:
-                    is_bottom = True
-                    continue
-
-                if is_bottom:
-                    b_blocks.append(block)
-                    continue
-
-                t_blocks.append(block)
-        else:
-            is_bottom = False
-            old_class = None
-            for block in tb_blocks:
-                sn = block['sn']
-                cur_class = filter(lambda x: re.match(ur'data-[\w\d]{4,}', x), sn.attrib)[0]
-                if old_class and cur_class != old_class:
-                    is_bottom = True
-                old_class = cur_class
-
-                if is_bottom:
-                    b_blocks.append(block)
-                    continue
-
-                t_blocks.append(block)
-
-        return t_blocks, b_blocks
+    # def _divide_context_tb_blocks(self, tb_blocks):
+    #     t_blocks = []
+    #     b_blocks = []
+    #     is_ob_exists = filter(lambda x: x['sn'] == self.CONTEXT_ORGANIC_BLOCK, tb_blocks)
+    #     if is_ob_exists:
+    #         is_bottom = False
+    #         for block in tb_blocks:
+    #             if block['sn'] == self.CONTEXT_ORGANIC_BLOCK:
+    #                 is_bottom = True
+    #                 continue
+    #
+    #             if is_bottom:
+    #                 b_blocks.append(block)
+    #                 continue
+    #
+    #             t_blocks.append(block)
+    #     else:
+    #         is_bottom = False
+    #         old_class = None
+    #         for block in tb_blocks:
+    #             sn = block['sn']
+    #             cur_class = filter(lambda x: re.match(ur'data-[\w\d]{4,}', x), sn.attrib)[0]
+    #             if old_class and cur_class != old_class:
+    #                 is_bottom = True
+    #             old_class = cur_class
+    #
+    #             if is_bottom:
+    #                 b_blocks.append(block)
+    #                 continue
+    #
+    #             t_blocks.append(block)
+    #
+    #     return t_blocks, b_blocks
 
     def _format_context_blocks(self, blocks):
         result = []
@@ -499,7 +498,12 @@ class YandexParser(object):
         if sn.xpath('.//div[contains(@class,"label_theme_direct")]'):
             return True
 
-        return 'serp-adv' in sn.attrib['class'] or 't-construct-adapter__adv' in sn.attrib['class']
+        if 'serp-adv' in sn.attrib['class'] or 't-construct-adapter__adv' in sn.attrib['class']:
+            return True
+
+        html = etree.tostring(sn, method='html')
+        html = HTMLParser().unescape(html)
+        return '<span class="HTxMVvNPhb">Реклама' in html
 
     def _is_card_narrow(self, sn):
         # боковая карта справа
