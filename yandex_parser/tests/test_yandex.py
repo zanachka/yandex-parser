@@ -2351,6 +2351,27 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][5]['t'], u'Wi-Fi-роутеры: быстрый и надёжный интернет - Делаем...')
         self.assertEquals(serp['sn'][5]['vu'], u'mvideo.ru›Wi-Fi-роутеры-быстры...')
 
+    def test141(self):
+        html = self.get_data('2022-05-13-1.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 6)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][0]['u'], 'https://yabs.yandex.ru/count/X2WejI_zO1e4zI0093e_V9zrNd-DZmK06WKn3OH-OW00000u109mnj2btVJeaQJ30O010OW1afo00P01njcNpAMGjgy6e07oxBsvre20W0Ae0VBilRbMk06qzexP8y010jW1ZBYYeW7W0UQNbA41w04ee0AsZ98Pm0AId82BnRkz0lW2yEhnuA76kDNb0PW3kfSaofC4-0JoeIk81VAXAv05gFmie0N3cGse1VZ_2h05-FyAk0Myjml01Ugiam781P2x9LAe1bAu1i83oGRiKdBHuLWGXm0Zv6HE22wx8x07W82O3BW7cWJG1mxO1mVW1uOAyGSeftl145UyW8AG1k08cuR93EW91u0A0PWA-TmgmGf9Wa5xFxhJFydu2e2r6AeB40RSZu4Zv000COft-kRU1G3P2-WByg4hy0i6Y0p-gU2-0QaCuCiTRGyD4R_e3AC2u0s3W830W82023_ifScBdPoMY8U048RQkI71i9A20T0G_vIm3W6O4PYY8w6vJmhIeF_hGZ-n4eX_gtZ9JkS_y18CY1C1lPh_yBB6nANW4xot2u0KW8202A0KlBSBg1Ie_2om5Al9W0-u583uoGJ0583izOuKo1G5q1JekCzis1I0cwIJ1kWKZ0BG5O2Rf9C6s1N1YlRieu-y_6Fmc1RmlUsJ1g0MaD_zamR95j0M_gdWlW615vWN-As1BgWN2S0Nj9O1q1VGXWFO5x2tFE0Nq9QAamRe5m7u5usryfC6cHYW60Ym68FL-PC6k1W6q1WX-1Y0sPNJtTcFbME06R3qkEBGlP6v890P0Q0PKh0Pk1d___y1qXaIUM5YSrzpPN9sPN8lSZOsCIqnw1c0mWFm6O320u4Q__yJqV7TGpU86i24FPWQrCDJe1hEnUsyYuMIyGUm6hlLoO-ozERSEhWQ0_KQ0G00088RJ34sDJ8qDJWrC3apDJCtDZ0jDZOuDZSpDpatDJOtCp0sCJCvDYrpONCoBJ0qC3OjSs5pBMmtBM9XR65kOsLoBJWmE30jGa5CBJGmCJAm6qYu6mFW6wZyBEaR0000m9fRQ47m6x3h-HVu6vsHkmo278WS1kaSW1t_VvaTi1sVyi42k1sWqO6-vTc5mOe1m1sFyi42u1tzwQu8e1u2g1u1q1wYYFccXe7Us9m1s1xwsXw87____m6H7tEizRy83Fa_e1-6shaXi1y1o1-6d95HsHy00000IardGU0Vm_Vq5kWVliNg1gaWi220We08s23__m7W804a8A64HXbc86DiPkm1Z3EltaNWBJiWXf2LPrpsX4RgR2Iz5yQsHBlC5j54YEJl13pU5Xs-m_4l6Z9EDx6lSM7TgjnjJ71sM3-ghK9yi85at05PNSObtokIohC-6SsbCeAh32-7v0gaKHv2o0TCjnshnGMcU9CZbaQ0JG00~1?etext=2202.B0PvlxAcrX-LO8ufZ8Q5OFmSFYhlgASQKxkp1kO_SH92bHZ1aXpsYW12anl6aHN5.553f5c26e306ade761f0c54a807d49bbf0ff4ad0&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%B0%D0%B2%D1%82%D0%BE+1')
+        self.assertEquals(serp['sn'][0]['t'], u'Renault Logan 1.6л AT (102 л.с.) 2022')
+        self.assertEquals(serp['sn'][0]['vu'], u'autocentr.su›Renault-Logan-Stepwa...')
+        self.assertEquals(serp['sn'][1]['a'], 'b')
+        self.assertEquals(serp['sn'][2]['a'], 'b')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['u'], 'https://yabs.yandex.ru/count/W-qejI_zODO37Hy0z3O_V9zrOYGxTWK0rWGn3OH-OW00000u18QJxD-OrksRdm600G680PsU-8k60P01oEoAtTQ0W802c078x8hTLg01lgW1lhW1vBszuIF00GBO0TgCqg81u06kiz6Y0UW1r0EW0e3obnd00WlO0WBm0el5kxq2-0Bmwl7WeSQurUK1c0Fd_YcW0mYe0ngm0mJe1957-0Irj0E81RMq0v05rBW3e0MIXG6e1Vfki0NwRhW5X7301Pxx1CW5mA41lCQp8BW6mWF91knISj7XM12702FaP4u8BhiZi0U0W9WCk0U01T075jW71-07XWhn1oYdUy4GLxomWe21m8A01k08WFdB3EW91u0A0PWAkOq6mGhtx-fpxH_dFydu2e2r6AeB40RSZu4Zv000COft-kRU1G3P2-WBjRG3y0i6Y0o2i-I-0QaCPY9laBAJKp_e3AC2u0s3W830W82028aEQ22MpHoIgkoboOkTd9Q8XzWE0g4FW12jnD4XmR2GWW6O4PYY8w6vXzRisWoU73_m4Wo84m6zcl_miiR4fU0JX72W58Hmg1JKk0Em5AM2FBWKuASIm1I0yF3a0SWK1z0KZScjRTWKkARqaWRe58m2q1MuflII1jWLmOhsxAEFlFnZy9WMyBtjamQW5f3V_PC6oHO0GD0MWhFalW615_0_c1UNYvekg1S9m1UqbW7G5z260zWNnSiww1S5cHYW60Im68FL-PC6k1XZq1WX-1Y0sPNJtTcFbME06R3qkEBGlP6v890P0Q0PKh0Pk1d___y1qXaIUM5YSrzpPN9sPN8lSZOsCIqnw1c0mWFm6O320u4Q__yJMHdeg7U86i24FPWQrCDJi1gxrScFilJct3gu6WBr6W4000226qmnDZKoD3KuDJ0vCpKpDpOmBJOsE3OtCpSvDpKsDpCmDZ4pEJOjSs5pCYqmD30sBNDXSoriDorYOMnXRcDbSYquC3WmBK91J2qqC34oi1j8k1i3wHi00000tDu5GV0Rn84h-1kIwms278WS1kaSW1t_VvaTu1tEp0Ne7V_fz8Vzw_tc1l0TbSY8plZh_UO6-1sHgf2Qog_AvWQW7WAe7W7G7iFBej3NYUILgW7O7lhQ7eWV____0Q0VhSJH8R0V1SWVhOQfKTaVu1_4WIkf8B0WX80Ws23__m7W804Z05fberU82JR2VWe3uX2IGHbF4Q5joc8aRGl6TbkxZ1J9D6CYlm4Abotwcm_dNgI98XqIo3gNUwqdA-MTcjD7vLM8hsu0YA-9pkhOEA098D0QoU0SBQGol7e8k09fT0nrzYCEkkS3D1aGd6eI_K-s8mO0~1?etext=2202.B0PvlxAcrX-LO8ufZ8Q5OFmSFYhlgASQKxkp1kO_SH92bHZ1aXpsYW12anl6aHN5.553f5c26e306ade761f0c54a807d49bbf0ff4ad0&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%BA%D1%83%D0%BF%D0%BB%D1%8E+%D0%B0%D0%B2%D1%82%D0%BE+1')
+        self.assertEquals(serp['sn'][5]['t'], u'Доставка авто из Германии')
+        self.assertEquals(serp['sn'][5]['vu'], u'korbut-auto.ru›Доставка авто из Германии')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
