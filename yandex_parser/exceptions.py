@@ -11,3 +11,6 @@ class YandexParserError(Exception):
 class YandexParserContentError(YandexParserError):
     pass
 
+
+class YandexParserContextError(YandexParserError):
+    pass

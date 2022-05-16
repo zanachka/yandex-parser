@@ -6,7 +6,7 @@ from urlparse import urlparse, parse_qs
 
 from pyquery import PyQuery
 import lxml.html
-from yandex_parser.exceptions import EmptySerp, YandexParserError, YandexParserContentError
+from yandex_parser.exceptions import EmptySerp, YandexParserError, YandexParserContentError, YandexParserContextError
 from yandex_parser.utils import to_unicode, get_full_domain_without_scheme
 from lxml import etree
 
@@ -80,6 +80,13 @@ class YandexParser(object):
         self._set_a(r_blocks, 'r')
 
         result = self._format_context_blocks(t_blocks + b_blocks + r_blocks)
+
+        if len(t_blocks) > 4:
+            raise YandexParserContextError('too many top-blocks')
+
+        if len(b_blocks) > 6:
+            raise YandexParserContextError('too many bottom-blocks')
+
         return {'pc': len(result), 'sn': result}
 
     def _find_context_r_or_tb_blocks(self, serp):
@@ -130,7 +137,7 @@ class YandexParser(object):
             title, url = self._get_title(sn, False)
 
             if not re.search('^https?://yabs\.yandex\.ru', url):
-                raise YandexParserError(u'incorrect context url={}'.format(url))
+                raise YandexParserContextError(u'incorrect context url={}'.format(url))
 
             result.append({
                 'u': url,
