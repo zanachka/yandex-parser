@@ -2373,6 +2373,30 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][5]['t'], u'Доставка авто из Германии')
         self.assertEquals(serp['sn'][5]['vu'], u'korbut-auto.ru›Доставка авто из Германии')
 
+    def test142(self):
+        html = self.get_data('context-2022-05-16.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 6)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][0]['u'], 'https://yabs.yandex.ru/count/WyqejI_zOCO37Hu013Kz2AToLwAlZWK0nWGGW0WnIK22OW00000u109mahx6sRNIjUEv0O01bOR-DuW1flFrar6G0P32zSusc07amhswFQ01_9tlpZQe0TZ2lRezk06yYTA07S010jW1wCp-6U01vf2w5-W18g02_gU_5zW20l02jgJNzmZu0l3gyU2XnhZLvG600-AGxPO9Y0FHYD7P1fW3vUuhdvy3-0ISZRy1Y0MSZRy1a0MAaUS2e0NVfZge1VhACB05-iemk0M7frl01PspmGB81P3RKRxJ_peDy9caXIKg3ga7l-FKJzqfdoIm1u20c0ou1xG6yGVjrezlxPsMf8081j08f8A0WSI0W0RW2F_Jtmle2V0_oGfYa0RK_8pnF_WAWBKOgWiGlOA3FB_Z002ThMpv7zy50DaBw0kSZRy1y0i6Y0oewjw-0QaCm3yyyRhRih_e3AC2u0s3W830W82023-DuEUash29bTWE0g4FoSdPWDcCy3_P3u0GZfYbeI0Ec16OeYEXkKAFZqRMfdK_iH8H9sABu4taF-aIzeMUGnQ8Rf3m4Wx0zkVOmgwSu1E7frkW58UdMwWKYf7d0i0KWClHpx_TamRe58m2o1M9qFMJimFG5S-_tPC6s1N1YlRieu-y_6Fmc1RmlUsJ1g0MaD_zamR95j0MgEhUlW615vWNZPRC6QWN2S0Nj9O1q1VGXWFO5x2MFkWN0PaOe1WFi1ZQteYK1hWO0z0O3_WOt9ZjZvNzwx2j0O0Pa1a1e1bIi1cu6V___m7I6H9vOM9pNtDbSdPbSYzoDZOpBJ7e6O320_0PWC83-1d7aQ8UWHh__-DoPf4A1OWQm8Gzc1hnmBG1i1hotyIEmftqxKJr6W4000226qmnDZKoDp0pCp0qEJatDpOpBJSqCp0tDZ0vE34vC3WpEJKmCZ8jTcnXCIqmE3GnBNPiOIriDorYOMnXRcDbSYquC3WmBK91J2qnE38ti1jZk1i4u1kAaUS2wHi00000pkT0GV0RvlgJ188SY1m2wHo07Vz_cHtW7RR41Q0U0QWU0T0UyksjXQMiXkuLs1xwsXw87____m6W7uwOfHMm7m787xIc_mpP7m000E3IMKb1u1_5sfq6i224W23O8F__0U0W0I800haKrSWu97zGnbb4Q9ww6CdbWl7Y5kx051TInD6GeuMIHPVjrHuDZsbIJ9epMiJeGuSFgCxwIkl9TL8XbeiB918umxJQuBrAxp8SGHOO99JY5XCI9uQTC326W_ESNTsFI0W526W2-cdruCTgXC03~1?etext=2202.hvcvpNHAyEzElGPJzJ2AGe2XtWLkBckQ2tHBz8DGWwxvjyOF6AfmEnleucQBmMshaWljeW93d3NrZXZvamdybg.4d512bfd77ab4792c95fc4ec0dc4287f927d0450&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BA%D0%B8+%D0%B2+%D0%BF%D1%80%D0%B8%D1%85%D0%BE%D0%B6%D1%83%D1%8E')
+        self.assertEquals(serp['sn'][0]['t'], u'Банкетки "Пуфмейстер" от 12 000 руб. Бесплатная…')
+        self.assertEquals(serp['sn'][0]['vu'], u'poufmeister.ru›Банкетки "Пуфмейстер" от 12 000 руб.')
+
+        self.assertEquals(serp['sn'][1]['a'], 'b')
+        self.assertEquals(serp['sn'][2]['a'], 'b')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['u'], 'https://yabs.yandex.ru/count/WviejI_zO9m3ZHm0j38z2AToty8g4GK0d0GGW0WnIK22OW00000u1Chkfvo-rVtLhG600G680SMmM901l86u_DRcbf07e07CZ-pFBQW1Zkx6YYku0PRiXFOOm042s07SpwiJu07AgP45w06E0vW2f9BS5Q02vFh22i02nR1Os082y0AsfDVt2FW2yEhnuA76kDNb0PW3bD0le0C8g0CQmlC2-0JR-Wc81Tlw2P05iy8Ae0NoX0Ee1Oh40h05YiG2k0MdrW9Ig0PIoGODy9caXIKg3ga7l-FKJzqfdoIm1u20c0ou1xG6q0SEs0S7u0U62l47xTQFR-sTbgI020RG29I2a874W806u0YolQ45w0a7W0e1c0hvt2h92lQFzRrn2Ua_-0g0jHYg2n2zWeCyl-C009sjRFaVtmK0sGle2zlw2V0B1eWCjBRUlW6f3000zdbK-qu_w0oZ0k0DWu20m820W0Y93cWWbiqSaggDuEUash29bTWE0g4FsG-04Bcxleo00fWHcA8Z2IntNYjHAZ_f4lQ5daCMY6wGy18EmFRdsCAkdE0JfzO2W1I0W808e1IdrWAe5BF22g3Lhk45w1IC0j0LyjQva0RO5S6AzkoZZxpyO_2O5l2zxPC6e1QGt_sJ1hWM0S0MASaMq1Qqjjw-0O4Nc1U8uOW3g1S9m1UqbW7O5y24FU0NxFwPzGNe5mBu5wpxm806cHYW60Im683yXvG6k1WLq1WF-1ZScEsFbVthiAq1W1cG6G6W6LAm6RWP____0T8P4dbXOdDVSsLoTcLoBt8sDZCjCUWPWC83y1c0mWE16l__0w_ASWH6Y1h0X3sO6l70j06m6lBVn8x2dVJjHFKQ0G00088RJ34sDJ8tC3CpC3GvEJStDZCjDpGpC3SsC3auCJamE3CvDJ0oCYrsR64nBJ0uD34jTcnXBMmtBM9XR65kOsLoBJWmE30jGa5CBJ4uCZUm6sEu6mI278WS0kaSW1t_VvaTk1tqzjwShOEkqnpW7VMkWmQW7WAe7W7G7lY_agQ2Y-Uogm7O7lhQ7eWV____0Q0VkRk-4B0V1SWVxkVL2R0WW8A02DWW__y1u2017W0BbOUy6Xg7v07Ak8S83L8C8_bRC1RSmfMOuXmLUJJaa3tISDdS455dXaWnQHwqY95t3b_0TFPqPPaRJtvM2yp3TVZwwNYNOGwG009PO_8KRNap-m3ThUiizVwRg4un2ifsy000~1?etext=2202.hvcvpNHAyEzElGPJzJ2AGe2XtWLkBckQ2tHBz8DGWwxvjyOF6AfmEnleucQBmMshaWljeW93d3NrZXZvamdybg.4d512bfd77ab4792c95fc4ec0dc4287f927d0450&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BA%D0%B8+%D0%B2+%D0%BF%D1%80%D0%B8%D1%85%D0%BE%D0%B6%D1%83%D1%8E')
+        self.assertEquals(serp['sn'][5]['t'], u'Банкетки, пуфы и сундуки для прихожей')
+        self.assertEquals(serp['sn'][5]['vu'], u'mebelion.ru›Банкетки-пуфы-и-сунд...')
+
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print

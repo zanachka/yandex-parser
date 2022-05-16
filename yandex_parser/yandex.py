@@ -79,13 +79,13 @@ class YandexParser(object):
         self._set_a(b_blocks, 'b')
         self._set_a(r_blocks, 'r')
 
-        result = self._format_context_blocks(t_blocks + b_blocks + r_blocks)
-
         if len(t_blocks) > 4:
             raise YandexParserContextError('too many top-blocks')
 
         if len(b_blocks) > 6:
             raise YandexParserContextError('too many bottom-blocks')
+
+        result = self._format_context_blocks(t_blocks + b_blocks + r_blocks)
 
         return {'pc': len(result), 'sn': result}
 
@@ -629,6 +629,9 @@ class YandexParser(object):
 
         # калькулятор
         if 'calculator__wrapper' in html:
+            return True
+
+        if '<div class="ProductGallery">' in html:
             return True
 
         # чаты с организациями
