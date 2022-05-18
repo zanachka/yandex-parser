@@ -2396,6 +2396,31 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][5]['t'], u'Банкетки, пуфы и сундуки для прихожей')
         self.assertEquals(serp['sn'][5]['vu'], u'mebelion.ru›Банкетки-пуфы-и-сунд...')
 
+    def test143(self):
+        html = self.get_data('context-2022-05-18.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 9)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][0]['u'], 'https://yabs.yandex.ru/count/W_yejI_zOEy3hHy0r3WP9m0QelF4mWK0xmGnMgU4OW00000u109mmj63eRpYZeEZ0O01bh6gZRgJcuYJ0OW1WVaUa06mlj2FcgV5r0UW0SYnq-Kjg060Z-AhAxW1YeY0WHd00GBO0U3ywnFW0Q2Oi0Ve0JAO0l2PZ1QW0fhYr1F00e7v7jW20l02jvRY_moO0uw18usT2VW4jySkY0MtnowG1UtCCg05aPeEg0MEwmkm1Oxh2xW5rEuCm0MWYDW1o0MWzpQu1i83oGPGR-SduCYPKwa7dD0eFAFECIMm1u20c3ou1xG6q0SEyGSnWB5qC19uke083D08X8AGWS20W0RW28snwWde2GU02W6O2fBTAi4AbzZCauhYpJ_92ZheQMyUNTW_-0g0jHYg2n1CtWWKdD0001qvdg94tmK0sGle2xV7Bl0B1eWCbEdUlW6f3DAav0BvTF2_w0oZ0k0DWu20m820W0W_qDwTluASyinJe0x0X3tO3WMX3wWVTCWBV_0_W13nekl0aX3G4CQHhm6G4GEO4SUz8w4HPtoUY_Pn94C_iHAYir4eSdNYFmIe4-lmYkc9fQtt5k0JrEuCW1I0W809e1JKxWoe5EtCCh0Kgzs5bW6u582muot850FG5CMLW1JO5E_kwee6w1IC0j0Lx-xgYWRO5S6AzkoZZxpyO_2O5f3V_PC6eCaMq1QKwTw-0O4Nc1UOiBi3g1S9m1UqbW7G5z260zWNkPmzw1S2cHYW60Qm6FweafG6k1WLq1WX-1ZPZO-HaPB4kaQ06R3qkEBGlP6v890P0Q0PgWEm6RWPqXaIUM5YSrzpPN9sPN8lSZOsCoqnw1c0mWFm6O320u4Q__yxSwwuINQ86i24FPWQrCDJe1hFaBR2YSIXeP01i1gxrScFilJct3hr6W4000226qqnDZKoE3OmDpOoD34uE30pBJ4qCpCqDZOvDp4oDZ0nE3WrCJamBNDXSp8jC3SvDYrpONCjR3SjOc5iOMvZPN8jE30uC2r2GKmjD3GsCR0RIBWR0-0RxSmowHi0001WTIAKGV0RXPgodW7u6wYUj2s278WS0kaSW1t_VvaTk1sqYkkoXzENfhW1u1tXd3sW7W6e7W7G7l7kzy2wgT-in07O7lhQ7k0UtVyXY1__0Q0VyQBh4B0V0SWViFxr2TaV0000u9Gib47W7zI2sfu1w1-0jDKlgI2m8822W0ZO8F___m7W804V048OF9C5AO0Z6uTa5ihOZ0XDt1gHH3_4xrkwX1J9D4JE7sag8oOkMrGtyoG6O2IXT4YCZ22XGDUSx8DrmR7yMBtXgt009vv8q6_Lc9WQu-XCDOI33Tev7NHM3qvLmtxDJsc440C0~1?etext=2202.FWPbaRGo6_SFOMwoatumtRdJsdzU5PibbGhJR-58WO9FhuhtwfKjJoyMLFNGntCNcG9oaXpmZHRtc3Nsd3dxZA.2dccf6b2abc8383fe85802123704fd601c765886&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%BA%D1%83%D0%BF%D0%B8%D1%82%D1%8C+%D0%B4%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BE%D0%B4')
+        self.assertEquals(serp['sn'][0]['t'], u'Комоды маленькие')
+        self.assertEquals(serp['sn'][0]['vu'], u'bestmebelshop.ru›Комоды-маленькие-ком...')
+
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 't')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+        self.assertEquals(serp['sn'][7]['a'], 'b')
+        self.assertEquals(serp['sn'][8]['a'], 'b')
+        self.assertEquals(serp['sn'][8]['u'], 'https://yabs.yandex.ru/count/WxKejI_zOBW3NHq0b3GP9m0QUiW_FWK0k0GnMgU4OW00000u1CBHWw6yuew3em600Ot5XiZMzwsHiW680OZtcT-E0P01e8UhhTQ0W802c06WXwkjLg01reQe0TQ6gwrMk07kmiNM8y010jW1gfcCeW7W0Ugwwnhe0KgO0ewll1MW0kh6knNO0WBm0hUMulyCW0FjugM32eW3xkVKs0gO0uRc9g032AW36gM82lW4ZP8EY0MDaWwG1OFs3w05dgW4g0MPp0Em1PdC0xW5aeO4m0NevVm1o0N8ea2u1i83oGPGR-SduCYPKwa7dD0eFAFECIMm1u20c3ou1xG6yGSnWB5qC19uke083D08j8A0WSI0W0RW2BNZtGhe2GV92WIdFTIy7x0_-0g0jHYg2n1CtWWKdD0001qvdg94tmK0sGle2usI3l0B1eWCbEdUlW6f38Nxe3YoQmN0w0oZ0k0DWu20m820W0Y93cWWbiqSaghGtfs_Wfpop5EW3i24FTWE1Q4Fm_KeN8_2jJ_P3u0GrSgk8Oo00W6G4GEO4SUz8s_J4_Mfw2K_1AWJw_2AwOcbhVSMu1EIXWI0580We1IIXWIe58Fs3ukU-9C6w1IC0iWLxC2jbvO6q1MBdlYJ1jWLmOhsxAEFlFnZy9WMaD_zamQWoHRmFz0MbEdUlW615m3mFvWNeuAG7wWN2S0Nj9O1s1V0X3tW5xN6a8W6w1SR-1UitOoH1faOe1WHi1ZZZ9AK1hWOQj0O8VWOsOsFaP6InBf6W1cmzBZYqBsHkI2G6G6W6Qe3i1cu6T8P4dbXOdDVSsLoTcLoBt8sDZCjCUWPWC83y1c0mWFu6Q3we2Y16l__Ttdf6VvZY1h0X3sO6jJ3Kw0QdDE2ZuwdlQqNi1gxrScFilJct3gu6WFr6W4000226qqnDZKoE3OmDpOoD34uE30pBJ4qCpCqDZOvDp4oDZ0nE3WrCJamBNDXSp8jC3SvDYrpONCjR3SjOc5iOMvZPN8jE30uC2r2GKmjD3GsCR0RIBWR0u8SY1m2wHo07Vz_cHq0y3_W7U6SFQ0U0QWU0T0Uv8YKvTI3wzc20TWU-jeUu1wUboE87_y1e1_LoguXi1y8o1_LZ8PHi224W23O8Fy1u2017W00CWo8W9lnFAIMqB3D0acuGVowrIL280tk92EFfZ8YNJQID4pFjjtCAGt0IEBga5XnX9TBVmY7LIwOu94Ch02osMA20BfyY6pF6GaA0VrtONKAV93zcc-gcVS_sOuO~1?etext=2202.FWPbaRGo6_SFOMwoatumtRdJsdzU5PibbGhJR-58WO9FhuhtwfKjJoyMLFNGntCNcG9oaXpmZHRtc3Nsd3dxZA.2dccf6b2abc8383fe85802123704fd601c765886&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%BA%D1%83%D0%BF%D0%B8%D1%82%D1%8C+%D0%B4%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BE%D0%B4')
+        self.assertEquals(serp['sn'][8]['t'], u'Комод купить купить в НОНТОН™. Устанавливаем свои цены')
+        self.assertEquals(serp['sn'][8]['vu'], u'msk.nonton.ru›Комоды-в-Нонтон')
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:

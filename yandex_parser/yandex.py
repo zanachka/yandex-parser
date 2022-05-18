@@ -608,6 +608,9 @@ class YandexParser(object):
         if 'ecommerce_carousel' in html:
             return True
 
+        if '<div class="ECommerceCarousel">' in html:
+            return True
+
         if 't-construct-adapter__market' in sn.attrib['class']:
             if re.search(ur'<div class="organic typo typo_text_m typo_line_s">\s*<div class="organic__content-wrapper clearfix">', html, re.I | re.M):
                 return True
