@@ -2422,6 +2422,31 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][8]['t'], u'Комод купить купить в НОНТОН™. Устанавливаем свои цены')
         self.assertEquals(serp['sn'][8]['vu'], u'msk.nonton.ru›Комоды-в-Нонтон')
 
+    def test144(self):
+        html = self.get_data('context-2022-06-01.html')
+
+        parser = YandexParser(html)
+        serp = parser.get_context_serp()
+
+        self.assertTrue(YandexParser.is_yandex(html))
+        self.assertEquals(serp['pc'], 8)
+
+        self.assertEquals(serp['sn'][0]['a'], 't')
+        self.assertEquals(serp['sn'][0]['u'], 'https://yabs.yandex.ru/count/WyOejI_zOC03vHq0n3D6_Y1n0-9SsmK0m0GGW0WnadcKOW00000u109mWEQszwNXkvgh0O01wzhXFeW1qyYssOy1a070afYAse20W0AO0S2Ic8fQk07knVR29BkOem7W0UwCq0le0S81e0Amo8S6s082y0BOW-AL1_W2yEhnuA76kDNb0PW3XQCqiTG2-0IBuXg81OlY6f05Xi8be0MWbGYe1ONd1h05XUS6k0Nkn0d01TRgqG781RsiDRW6mWF91knISj7XM127gGVvusmUHNJtAB07W82O3BW7j0Rn1sMDC1MgdSrNW0WC1k08cEI30-W9y3_92XmkBfX4eT0_-0g0jHYg2n1v6ghX-UC00AEq1Wmsu0K0sGle2ulY6l0B1eWCbC3UlW6f3Fvwxhdcw_c_w0oZ0k0DWu20m820W0W_xAN9YvsSbeY7s0u2eGyJgij_uyJmFzaFW13Is_GX6-O_6SWGeA82q12AeAzV-10I0w4H0U18n4EZBVynFx4IlBjQpOKWup_m4XAzcl_miiR4fU0JxiG9e1Jkn0ce58R29S0KWEgjwGVFousK1kWKZ0BG5S_BZPG6s1N1YlRieu-y_6Fme1QGWxsK1iaMy3_G5fJ0thu1WHUO5z6WYGoe5md05xIM0T0Nq8O3s1Ui_plW5_YIjF85w1S1-9aOe1W9i1Z1oT6K1hWO2D0O8VWOWDcLqztPZvLZW1cG6G6W6Qe3i1cu6V___m7I6H9vOM9pNtDbSdPbSYzoDZOtBJBe6O320_0PWC83WHh___-lmePhduWQm8Gzc1hpf2gW6hR_ejR0k-6YNB0QkzN9ZxBqvjmwk1e3zHe10000WXjDCJOrCpWvDpOnDpavC3auD2qnD3CtDpGuDJaoCpCqDZ4sDZ0pC2rsR64nBJKnDp8jTcnXBMmtBM9XR65kOsLoBJWmE30jGa5CBJGpCJEm6nwu6mBW6uR29UaR0000m1wCbq7m6yNDdha1-1kheA4OWXo870Bf780T_t-P7SWTm8Gzu1sXmWMW7W6e7W7G7ic1uShVWPIKIzWU-jeUY1____y1e1_Is_GXi1y1o1_IdSnHsHy0003WnJEPGU0Vp_oWnW7e7yYVbX7W804b8664YZAACSQK2GmziZeUaX2NoJZD2QtSsaZk1emPiqy9MPnzWbSSZqYyCCR1lJcQOJItVdduxvOH1leGIDrTGchTH9LIHMRzWmE4WhRhKfnYmAG2TH-IitWSfpotIpwQ1fWBs3Z8JQbyBSxiHNh0V_2-wiZBIEAiiQr6A7W0~1?etext=2202.Al_UwzJPng9boUBPDTC3zsWn3Zngiswz8hJ1q7RUtaq3IJsgBgtemQRXyZOh7guyZ2NqcmVnb3Nvb2tnd2x3Yw.44aaf8a97ff1a0f4b3d6665afef58bf64791243b&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%BA%D1%83%D0%BF%D0%B8%D1%82%D1%8C+%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BA%D1%83')
+        self.assertEquals(serp['sn'][0]['t'], u'Банкетки в ТВОЙ ДОМ. Официальный сайт')
+        self.assertEquals(serp['sn'][0]['vu'], u'tvoydom.ru›ТВОЙ-ДОМ')
+
+        self.assertEquals(serp['sn'][1]['a'], 't')
+        self.assertEquals(serp['sn'][2]['a'], 't')
+        self.assertEquals(serp['sn'][3]['a'], 'b')
+        self.assertEquals(serp['sn'][4]['a'], 'b')
+        self.assertEquals(serp['sn'][5]['a'], 'b')
+        self.assertEquals(serp['sn'][6]['a'], 'b')
+        self.assertEquals(serp['sn'][7]['a'], 'b')
+        self.assertEquals(serp['sn'][7]['u'], 'https://yabs.yandex.ru/count/WyCejI_zOB03pHq0L3L6_Y1nsqK1hmK0i0GGW0WnadcKOW00000u1CBHWw6yuew3em600G680OtnbG6G0PBjrFosWf_I1g01vCN1fjg0W802g07anS6cMhW1thRRo2J00GBO0QxebAO1u066W-wZ0UW1X0AW0j3r_nZ00etnbTY3ufK7-0Bmwl7WeSQurUK1c0FhWX-W0mYe0nhBv0Vu182sB8W5WBOia0MtcIwW1Tl63QW5pAKBi0NCfGku1RNV2y05bFvwo0MVeX_kcfod1hW6mWF91knISj7XM127gGVvusmUHNJtAB07W82O3BW7j0RG1mxO1mVW1uOAyGTbZJ0LgftDLu083D08b8AGWSI0W0RW2EZwlmpe2GU02W6O2lhSAiaAlwg2bVzmrp_u2e2r6AeB47aQgk7vum00exG633RW1G3P2-WBWBOiy0i6Y0oKmDw-0QaCjRAtIajMzR_e3AC2u0s3W830W82028aEQ22MpHoIgkoboOkTd9Q8Xm6W3i24FTWE0g4FsG-049VoiYEWAFWG4WEX4G7WASqmcOLr1Z_m4XAzcl_miiR4fU0JjTyBW1I0W808e1Irtmke5BUPBWVtaCUK1kWKZ0B85SdaYTst1T0Lzv37b0RO5S6AzkoZZxpyO_2W5f23lPG6oHRG5fJ0thu1WHUO5yRljYwe5md05xIM0T0Nq8O3s1Ump3xe5mEP6A0O5h0OmSdHb0Qu61JG627u683PbTFTsO-LOu0Pa1a1e1cg0x0Pk1d___y1qXaIUM5YSrzpPN9sPN8lSZOsDoqow1c0mWFm6O320u4Q__-N7htQSrA86i24FPWQywGge1gG_zkniOgRxYUm6hlLoO-ozERSElKQ0G00088RJJ4sDJCuEJSsCJSvEJ0vE3GjCJGpDpSqE3KvCZCpD3OnDZOmCp0jTcnXCIqrCJSoBNPiOIriDorYOMnXRcDbSYquC3WmBK91J2qqCp4pi1iUk1i2wHi00000vsqlGV0Rcf_t0O8SY1m2wHo07Vz_cHsu7RMmjPJZr8wh1iWTm8Gzu1sqfDS5e1u2g1u1q1whiDRasTkmgkK1s1xwsXw87____m6W7vVoiYEm7mV87vUqYbFP7m000A13cZ51u1-X-PG2i220We08u2017m0VmYWu97zGnbf4wDsc64dNWZ7QxjCUYWifucZ8EQFaq6Lx86-cLLyMRpvykZM8-noI07N19L3hGUYYSfN18vWVlYOCC044iiRaATxoDe0ym0_GP6DKf-JByKQFgA1iPmm0~1?etext=2202.Al_UwzJPng9boUBPDTC3zsWn3Zngiswz8hJ1q7RUtaq3IJsgBgtemQRXyZOh7guyZ2NqcmVnb3Nvb2tnd2x3Yw.44aaf8a97ff1a0f4b3d6665afef58bf64791243b&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%BA%D1%83%D0%BF%D0%B8%D1%82%D1%8C+%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BA%D1%83')
+        self.assertEquals(serp['sn'][7]['t'], u'Банкетка Асита')
+        self.assertEquals(serp['sn'][7]['vu'], u'presentformyroom.ru›Банкетка-Асита')
+
     def _print_context_sn(self, serp):
         for sn in serp['sn']:
             print
