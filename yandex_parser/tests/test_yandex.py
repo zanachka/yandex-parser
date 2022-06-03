@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
 
-from yandex_parser.exceptions import YandexParserContentError, YandexParserError
+from yandex_parser.exceptions import YandexParserContentError, YandexParserError, YandexParserBadContentError
 from yandex_parser.tests import YandexParserTests
 from yandex_parser.yandex import YandexParser
 from yandex_parser.yandex_bar import YandexBarParser
@@ -2446,6 +2446,16 @@ Suite 701 Toronto, Ontario M5V 1R9 Phone Tel: 416-340-8845 Fax:
         self.assertEquals(serp['sn'][7]['u'], 'https://yabs.yandex.ru/count/WyCejI_zOB03pHq0L3L6_Y1nsqK1hmK0i0GGW0WnadcKOW00000u1CBHWw6yuew3em600G680OtnbG6G0PBjrFosWf_I1g01vCN1fjg0W802g07anS6cMhW1thRRo2J00GBO0QxebAO1u066W-wZ0UW1X0AW0j3r_nZ00etnbTY3ufK7-0Bmwl7WeSQurUK1c0FhWX-W0mYe0nhBv0Vu182sB8W5WBOia0MtcIwW1Tl63QW5pAKBi0NCfGku1RNV2y05bFvwo0MVeX_kcfod1hW6mWF91knISj7XM127gGVvusmUHNJtAB07W82O3BW7j0RG1mxO1mVW1uOAyGTbZJ0LgftDLu083D08b8AGWSI0W0RW2EZwlmpe2GU02W6O2lhSAiaAlwg2bVzmrp_u2e2r6AeB47aQgk7vum00exG633RW1G3P2-WBWBOiy0i6Y0oKmDw-0QaCjRAtIajMzR_e3AC2u0s3W830W82028aEQ22MpHoIgkoboOkTd9Q8Xm6W3i24FTWE0g4FsG-049VoiYEWAFWG4WEX4G7WASqmcOLr1Z_m4XAzcl_miiR4fU0JjTyBW1I0W808e1Irtmke5BUPBWVtaCUK1kWKZ0B85SdaYTst1T0Lzv37b0RO5S6AzkoZZxpyO_2W5f23lPG6oHRG5fJ0thu1WHUO5yRljYwe5md05xIM0T0Nq8O3s1Ump3xe5mEP6A0O5h0OmSdHb0Qu61JG627u683PbTFTsO-LOu0Pa1a1e1cg0x0Pk1d___y1qXaIUM5YSrzpPN9sPN8lSZOsDoqow1c0mWFm6O320u4Q__-N7htQSrA86i24FPWQywGge1gG_zkniOgRxYUm6hlLoO-ozERSElKQ0G00088RJJ4sDJCuEJSsCJSvEJ0vE3GjCJGpDpSqE3KvCZCpD3OnDZOmCp0jTcnXCIqrCJSoBNPiOIriDorYOMnXRcDbSYquC3WmBK91J2qqCp4pi1iUk1i2wHi00000vsqlGV0Rcf_t0O8SY1m2wHo07Vz_cHsu7RMmjPJZr8wh1iWTm8Gzu1sqfDS5e1u2g1u1q1whiDRasTkmgkK1s1xwsXw87____m6W7vVoiYEm7mV87vUqYbFP7m000A13cZ51u1-X-PG2i220We08u2017m0VmYWu97zGnbf4wDsc64dNWZ7QxjCUYWifucZ8EQFaq6Lx86-cLLyMRpvykZM8-noI07N19L3hGUYYSfN18vWVlYOCC044iiRaATxoDe0ym0_GP6DKf-JByKQFgA1iPmm0~1?etext=2202.Al_UwzJPng9boUBPDTC3zsWn3Zngiswz8hJ1q7RUtaq3IJsgBgtemQRXyZOh7guyZ2NqcmVnb3Nvb2tnd2x3Yw.44aaf8a97ff1a0f4b3d6665afef58bf64791243b&from=yandex.ru%3Bsearch%26%23x2F%3B%3Bweb%3B%3B0%3B&q=%D0%BA%D1%83%D0%BF%D0%B8%D1%82%D1%8C+%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5%D1%82%D0%BA%D1%83')
         self.assertEquals(serp['sn'][7]['t'], u'Банкетка Асита')
         self.assertEquals(serp['sn'][7]['vu'], u'presentformyroom.ru›Банкетка-Асита')
+
+    def test145(self):
+        html = self.get_data('2022-06-03.html')
+
+        parser = YandexParser(html)
+        with self.assertRaises(YandexParserBadContentError) as e:
+            parser.get_serp()
+
+        with self.assertRaises(YandexParserBadContentError) as e:
+            parser.get_context_serp()
 
     def _print_context_sn(self, serp):
         for sn in serp['sn']:

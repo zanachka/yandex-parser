@@ -8,6 +8,10 @@ class YandexParserError(Exception):
     pass
 
 
+class YandexParserBadContentError(Exception):
+    pass
+
+
 class YandexParserContentError(YandexParserError):
     pass
 

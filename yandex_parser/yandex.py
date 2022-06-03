@@ -6,7 +6,8 @@ from urlparse import urlparse, parse_qs
 
 from pyquery import PyQuery
 import lxml.html
-from yandex_parser.exceptions import EmptySerp, YandexParserError, YandexParserContentError, YandexParserContextError
+from yandex_parser.exceptions import EmptySerp, YandexParserError, YandexParserContentError, YandexParserContextError, \
+    YandexParserBadContentError
 from yandex_parser.utils import to_unicode, get_full_domain_without_scheme
 from lxml import etree
 
@@ -63,7 +64,13 @@ class YandexParser(object):
 
         return 'b'
 
+    def raise_on_bad_content(self):
+        if '<title>400</title>' in self.content:
+            raise YandexParserBadContentError
+
     def get_context_serp(self):
+        self.raise_on_bad_content()
+
         # очищаем встроенные в рекламу сниппеты serp-item
         content = re.sub(
             ur'<div class=direct-map-modal__snippet><div class=serp-item.*?</div>\s*</div>',
@@ -244,6 +251,8 @@ class YandexParser(object):
         return int(match.group(1))
 
     def get_serp(self):
+        self.raise_on_bad_content()
+
         if self.is_not_found():
             return {'pc': 0, 'sn': []}
 
